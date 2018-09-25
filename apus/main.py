@@ -1,11 +1,14 @@
 import asyncio
 
-from apus import dcord, tg
+from apus.bot import dcord, tg
+from apus.dom.dom import Game
 
 
-async def main():
-    await asyncio.gather(dcord.main(), tg.main())
+async def main(game):
+    await asyncio.gather(dcord.main(game), tg.main(game))
 
+
+game = Game()
 loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+loop.run_until_complete(main(game))
 loop.close()
