@@ -1,6 +1,10 @@
 from discord.ext.commands import Bot
 
-from apus import secret
+from apus import secret, util
+
+
+def dcprt(s):
+    util.gprint('[DC] ' + s)
 
 
 async def main():
@@ -8,6 +12,5 @@ async def main():
 
     @dcbot.event
     async def on_ready():
-        await dcbot.send_message(destination=dcbot.get_channel('472757559732731914'), content='<@334343501728710656> SUCKSSSSSS')
-
+        dcprt('Ready')
     await dcbot.start(secret.discord_token)
