@@ -3,6 +3,9 @@ from typing import List
 from telegram.ext import Updater,MessageHandler,CommandHandler,RegexHandler
 import random
 
+#cardname should be capitallized
+#regexhandler for admin functions
+
 card_market = ['village','witch','silver','gold']
 counter = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
 card = ["copper","silver","gold"]
@@ -23,20 +26,19 @@ action = 1
 def show(bot,update):
     update.message.reply_text(x)
 
+
 def draw(bot,update):
     global gold
     global points
     global player1
     global turn
     global hand
-    global show_draw
     if turn == True:
         update.message.reply_text('Your turn of drawing has ended')
     else:
         for i in range(5):
             temp = (random.choice(player1))
             hand.append(temp)
-            show_draw.append(temp)
             player1.remove(temp)
             if temp == 'copper':
                 gold += 1
@@ -46,7 +48,7 @@ def draw(bot,update):
                 gold += 3
             if player1 == []:
                 player1 = buy_hand
-        update.message.reply_text('You got' + show_draw)
+        update.message.reply_text('You got ' + str(hand) + ' . Type ( /buy ) or ( /use ) to proceed')
         turn = True
         return(gold,player1)
 
@@ -57,22 +59,25 @@ def buy(bot,update):
     update.message.reply_text('Cards available : ' + str(card_market))
     buy_turn = True
     if gold >= 5:
-        update.message.reply_text('Buy witch cost 5 dollars( /witch )')
+        update.message.reply_text('Buy Witch cost 5 dollars( /witch )')
     if gold >= 4:
         update.message.reply_text('You can buy some cards')
     if gold >= 3:
-        update.message.reply_text('Buy village cost 3 dollars( /village )')
+        update.message.reply_text('Buy Village cost 3 dollars( /village )')
         update.message.reply_text('Buy Silver cost 3 dollars( /silver )')
     if gold >= 2:
           update.message.reply_text('You can buy some cards')
 
+
 def village(bot,update):
     global gold
     global buy_temp
-    if (buy_turn == True) and (gold-3>=0):
-        buy_temp.append(village)
+    global buy_time
+    if (buy_turn == True) and (gold - 3 >= 0):
+        buy_temp.append(Village)
         gold -= 3
-        update.message.reply_text(('You have bought Village. Type ( /end ) to finish buying'))
+        buy_time -= 1
+        update.message.reply_text('You have bought Village . Type ( /end ) to finish buying.')
     else:
         update.message.reply_text('You dont have enough gold or it is not your turn.')
     return gold
@@ -88,18 +93,15 @@ def use_village(bot,update):
         hand.append(temp)
         player1.remove(temp)
         action += 2
-        update.message.reply_text('You still have' + str(buy_time) + 'buys')
-        update.message.reply_text('You still have' + str(action) + 'actions')
+        update.message.reply_text('You still have' + str(buy_time) + 'buys ' + 'You still have' + str(action) + 'actions')
 
 def end(bot,update):
     global gold
     global buy_hand
     global buy_temp
     global hand
-    global player1
     gold = 0
     buy_hand = hand + buy_temp
-    player1 = buy_hand
     hand = []
     buy_temp = []
     update.message.reply_text('done!')
@@ -144,18 +146,6 @@ def reset(bot,update):
 
 def status(bot,update):
     update.message.reply_text('normal')
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
