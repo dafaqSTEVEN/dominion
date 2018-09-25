@@ -1,0 +1,1 @@
+discord_token = 'NDk0MDUwNTgxMzEzMzU1Nzc4.DouI8A.7JpT1uc53Pz88UlON2bcoFZhgE8'
