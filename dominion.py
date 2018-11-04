@@ -5,17 +5,13 @@ import random
 
 #cardname should be capitallized
 #regexhandler for admin functions
-#buy_temp=bought
-#buy_hand=discard
-#hand
-#player1=deck
 
 card_market = ['village','witch','silver','gold']
 counter = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
 card = ["copper","silver","gold"]
 player1 = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
 player2 = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
-buy_hand = []
+buy_hand = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
 buy_temp = []
 show_draw = []
 hand = []
@@ -29,7 +25,7 @@ user1_id = 'null'
 user2_id = 'null'
 user3_id = 'null'
 current_player = 1
-courtyard_temp = 'null'
+courtyard_temp = 0
 
 
 def show(bot,update):
@@ -46,10 +42,8 @@ def draw(bot,update):
     if turn == True:
         update.message.reply_text('Your turn of drawing has ended')
     else:
-        if courtyard_temp != 'null':
-            hand.append(courtyard_temp)
-            courtyard_temp = 'null'
-            for i in range(4):
+        for i in range(5):
+            if courtyard_temp == 0:
                 temp = (random.choice(player1))
                 hand.append(temp)
                 player1.remove(temp)
@@ -59,21 +53,12 @@ def draw(bot,update):
                     gold += 2
                 elif temp == 'gold':
                     gold += 3
-                if player1 == []:
-                    player1 = buy_hand
-        else:
-            for i in range(5):
-                if player1 == []:
-                    player1 = buy_hand
-                temp = (random.choice(player1))
-                hand.append(temp)
-                player1.remove(temp)
-                if temp == 'copper':
-                    gold += 1
-                elif temp == 'silver':
-                    gold += 2
-                elif temp == 'gold':
-                    gold += 3
+            else:
+                hand.append(courtyard_temp)
+                courtyard_temp = 0
+                update.message.reply_text('for admin : cleared courtyard')
+            if player1 == []:
+                player1 = buy_hand
         update.message.reply_text('You got ' + str(hand) + ' . Type ( /buy ) or ( /use ) to proceed')
         turn = True
         return(gold,player1,courtyard_temp)
@@ -137,19 +122,15 @@ def use_courtyard(bot,update):
             update.message.reply_text('You got a <' + str(temp) + '>')
             hand.append(temp)
             player1.remove(temp)
-            if player1 == []:
-                player1 = buy_hand
             if temp == 'copper':
                 gold += 1
             elif temp == 'silver':
                 gold += 2
             elif temp == 'gold':
                 gold += 3
-            if player1 == []:
-                player1 = buy_hand
         update.message.reply_text('Select a card to place on top of your deck')
         update.message.reply_text(str(hand))
-        update.message.reply_text('type in the card name + _d , for example : /village_d')
+        update.message.reply_text('type in the card name + _d , for example : Village_d')
     else:
         update.message.reply_text('error')
     return (buy_time, action, player1,hand,gold)
@@ -208,12 +189,10 @@ def village_d(bot,update):
         courtyard_temp.append('Village')
     update.message.reply_text('Type in the name of the next card you use or to end this turn , type /end . ')
     update.message.reply_text('You still have ' + str(buy_time) + ' buys ' + str(gold) + ' dollars, ' + '  and ' + str(action) + ' actions')
-    return (hand,courtyard_temp)
 
 def courtyard_d(bot,update):
     global hand
     global courtyard_temp
-    update.message.reply_text('normal')
     if 'Courtyard' not in hand:
         update.message.reply_text('You can not place this card')
     else:
@@ -256,8 +235,7 @@ def end(bot,update):
     global buy_temp
     global hand
     gold = 0
-    buy_hand += hand
-    buy_hand += buy_temp
+    buy_hand = hand + buy_temp
     hand = []
     buy_temp = []
     update.message.reply_text('done!')
@@ -285,7 +263,6 @@ def have(bot,update):
     update.message.reply_text(buy_temp)
     update.message.reply_text(hand)
     update.message.reply_text(player1)
-    update.message.reply_text(courtyard_temp)
 
 
 def money(bot,update):
@@ -345,16 +322,15 @@ def main():
     test.add_handler(CommandHandler('start',start))
     test.add_handler(RegexHandler('.*reset.*',reset))
     test.add_handler(CommandHandler('status',status))
-    test.add_handler(CommandHandler('estates_d',estates_d))
-    test.add_handler(CommandHandler('copper_d',copper_d))
-    test.add_handler(CommandHandler('silver_d',silver_d))
-    test.add_handler(CommandHandler('gold_d',gold_d))
-    test.add_handler(CommandHandler('village_d',village_d))
-    test.add_handler(CommandHandler('courtyard_d',courtyard_d))
     test.add_handler(RegexHandler('village',use_village))
     test.add_handler(RegexHandler('courtyard',use_courtyard))
     test.add_handler(RegexHandler('pass',pass_next))
-
+    test.add_handler(RegexHandler('estates_d',estates_d))
+    test.add_handler(RegexHandler('copper_d',copper_d))
+    test.add_handler(RegexHandler('silver_d',silver_d))
+    test.add_handler(RegexHandler('gold_d',gold_d))
+    test.add_handler(RegexHandler('Village_d',village_d))
+    test.add_handler(RegexHandler('Courtyard_d',courtyard_d))
     updater.start_polling()
     updater.idle()
 
