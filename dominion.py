@@ -11,7 +11,7 @@ counter = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
 card = ["copper","silver","gold"]
 player1 = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
 player2 = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
-buy_hand = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
+buy_hand = []
 buy_temp = []
 show_draw = []
 hand = []
@@ -53,12 +53,13 @@ def draw(bot,update):
                     gold += 2
                 elif temp == 'gold':
                     gold += 3
+                if player1 == []:
+                        player1 = buy_hand
             else:
                 hand.append(courtyard_temp)
                 courtyard_temp = 0
                 update.message.reply_text('for admin : cleared courtyard')
-            if player1 == []:
-                player1 = buy_hand
+
         update.message.reply_text('You got ' + str(hand) + ' . Type ( /buy ) or ( /use ) to proceed')
         turn = True
         return(gold,player1,courtyard_temp)
@@ -235,7 +236,8 @@ def end(bot,update):
     global buy_temp
     global hand
     gold = 0
-    buy_hand = hand + buy_temp
+    buy_hand += hand
+    buy_hand += buy_temp
     hand = []
     buy_temp = []
     update.message.reply_text('done!')
@@ -263,6 +265,7 @@ def have(bot,update):
     update.message.reply_text(buy_temp)
     update.message.reply_text(hand)
     update.message.reply_text(player1)
+    update.message.reply_text(courtyard_temp)
 
 
 def money(bot,update):
@@ -325,12 +328,12 @@ def main():
     test.add_handler(RegexHandler('village',use_village))
     test.add_handler(RegexHandler('courtyard',use_courtyard))
     test.add_handler(RegexHandler('pass',pass_next))
-    test.add_handler(RegexHandler('estates_d',estates_d))
-    test.add_handler(RegexHandler('copper_d',copper_d))
-    test.add_handler(RegexHandler('silver_d',silver_d))
-    test.add_handler(RegexHandler('gold_d',gold_d))
-    test.add_handler(RegexHandler('Village_d',village_d))
-    test.add_handler(RegexHandler('Courtyard_d',courtyard_d))
+    test.add_handler(CommandHandler('estates_d',estates_d))
+    test.add_handler(CommandHandler('copper_d',copper_d))
+    test.add_handler(CommandHandler('silver_d',silver_d))
+    test.add_handler(CommandHandler('gold_d',gold_d))
+    test.add_handler(CommandHandler('village_d',village_d))
+    test.add_handler(CommandHandler('courtyard_d',courtyard_d))
     updater.start_polling()
     updater.idle()
 
