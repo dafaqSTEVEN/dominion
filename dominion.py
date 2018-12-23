@@ -1,6 +1,6 @@
 from typing import List
-
-from telegram.ext import Updater,MessageHandler,CommandHandler,RegexHandler
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Updater,MessageHandler,CommandHandler,RegexHandler,CallbackQueryHandler
 import random
 
 #cardname should be capitallized
@@ -26,6 +26,39 @@ user2_id = 'null'
 user3_id = 'null'
 current_player = 1
 courtyard_temp = 0
+inlinehand=[]
+
+def option(bot,update):
+    keyboard=[[InlineKeyboardButton("gold",callback_data="1")],[InlineKeyboardButton('buy_time',callback_data="2")]]
+    update.message.reply_text('option is given',reply_markup=InlineKeyboardMarkup(keyboard))
+
+def button(bot,update):
+    global inlinehand
+    query = update.callback_query
+    query.edit_message_text("success")
+    if query.data == "1":
+        query.message.reply_text("gold value is " + str(gold))
+    if query.data =="2":
+        query.message.reply_text('buy_time value')
+    if query.data == "3":
+        keyboard=[[]]
+        inlinehand=hand
+        i = 0
+        while i < len(inlinehand):
+            temp = (random.choice(inlinehand))
+            keyboard.append([InlineKeyboardButton(temp,callback_data = "4")])
+            inlinehand.remove(temp)
+            i += 1
+        query.message.reply_text("Deck",reply_markup=InlineKeyboardMarkup(keyboard))
+
+
+def handshow(bot,update):
+    keyboard=[[InlineKeyboardButton("You dont have any cards, Click me",callback_data="3")]]
+    update.message.reply_text('See deck.',reply_markup=InlineKeyboardMarkup(keyboard))
+
+
+
+
 
 
 def show(bot,update):
@@ -118,6 +151,7 @@ def use_courtyard(bot,update):
     elif buy_time >= 1 and action >= 1:
         action -= 1
         hand.remove('Courtyard')
+        buy_hand.append('Courtyard')
         for i in range(3):
             temp = (random.choice(player1))
             update.message.reply_text('You got a <' + str(temp) + '>')
@@ -131,7 +165,7 @@ def use_courtyard(bot,update):
                 gold += 3
         update.message.reply_text('Select a card to place on top of your deck')
         update.message.reply_text(str(hand))
-        update.message.reply_text('type in the card name + _d , for example : Village_d')
+        update.message.reply_text('type in the card name + _d , for example : /village_d')
     else:
         update.message.reply_text('error')
     return (buy_time, action, player1,hand,gold)
@@ -214,6 +248,7 @@ def use_village(bot,update):
     elif buy_time >= 1 and action >= 1 :
         action -= 1
         hand.remove('Village')
+        buy_hand('Village')
         temp = (random.choice(player1))
         update.message.reply_text('You got a <' + str(temp) + '>')
         hand.append(temp)
@@ -257,8 +292,6 @@ def pass_next(bot,update):
     action = 1
     update.message.reply_text('success')
 
-def handshow(bot,update):
-    update.message.reply_text('u have ' + str(hand))
 
 def have(bot,update):
     update.message.reply_text(buy_hand)
@@ -334,6 +367,8 @@ def main():
     test.add_handler(CommandHandler('gold_d',gold_d))
     test.add_handler(CommandHandler('village_d',village_d))
     test.add_handler(CommandHandler('courtyard_d',courtyard_d))
+    test.add_handler(CommandHandler('option',option))
+    test.add_handler(CallbackQueryHandler(button))
     updater.start_polling()
     updater.idle()
 
