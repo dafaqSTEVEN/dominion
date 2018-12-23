@@ -3,8 +3,6 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater,MessageHandler,CommandHandler,RegexHandler,CallbackQueryHandler
 import random
 
-#cardname should be capitallized
-#regexhandler for admin functions
 
 card_market = ['village','witch','silver','gold']
 counter = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
@@ -35,7 +33,7 @@ def option(bot,update):
 def button(bot,update):
     global inlinehand
     query = update.callback_query
-    query.edit_message_text("success")
+    query.edit_message_text("Success")
     if query.data == "1":
         query.message.reply_text("gold value is " + str(gold))
     if query.data =="2":
@@ -45,12 +43,11 @@ def button(bot,update):
         inlinehand=hand
         i = 0
         while i < len(inlinehand):
-            temp = (random.choice(inlinehand))
-            keyboard.append([InlineKeyboardButton(temp,callback_data = "4")])
+            temp = str(random.choice(inlinehand))
+            keyboard.append([InlineKeyboardButton(temp, callback_data="5")])
             inlinehand.remove(temp)
-            i += 1
-        query.message.reply_text("Deck",reply_markup=InlineKeyboardMarkup(keyboard))
-
+        reply_markup =InlineKeyboardMarkup(keyboard)
+        query.message.reply_text("Deck",reply_markup=reply_markup)
 
 def handshow(bot,update):
     keyboard=[[InlineKeyboardButton("You dont have any cards, Click me",callback_data="3")]]
