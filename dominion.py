@@ -3,18 +3,26 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater,MessageHandler,CommandHandler,RegexHandler,CallbackQueryHandler
 import random
 
-
 card_market = ['village','witch','silver','gold']
-counter = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
 card = ["copper","silver","gold"]
-player1 = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
-player2 = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
-buy_hand = []
+deckplayer1 = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
+deckplayer2 = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
+deckplayer3=['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
+grave = []
+grave2 = []
+grave3 = []
 buy_temp = []
-show_draw = []
+buy_temp2 = []
+buy_temp3 = []
 hand = []
+hand2 = []
+hand3 = []
 gold = 0
+gold2 = 0
+gold3 = []
 points = 0
+points2 = []
+points3 = []
 turn = False
 buy_turn = False
 buy_time = 1
@@ -26,257 +34,181 @@ current_player = 1
 courtyard_temp = 0
 inlinehand=[]
 
-def option(bot,update):
-    keyboard=[[InlineKeyboardButton("gold",callback_data="1")],[InlineKeyboardButton('buy_time',callback_data="2")]]
-    update.message.reply_text('option is given',reply_markup=InlineKeyboardMarkup(keyboard))
-
 def button(bot,update):
-    global inlinehand
+    global gold
+    global buy_temp
+    global buy_time
     query = update.callback_query
-    query.edit_message_text("Success")
-    if query.data == "1":
-        query.message.reply_text("gold value is " + str(gold))
-    if query.data =="2":
-        query.message.reply_text('buy_time value')
-    if query.data == "3":
-        keyboard=[[]]
-        inlinehand=hand
-        i = 0
-        while i < len(inlinehand):
-            temp = str(random.choice(inlinehand))
-            keyboard.append([InlineKeyboardButton(temp, callback_data="5")])
-            inlinehand.remove(temp)
-        reply_markup =InlineKeyboardMarkup(keyboard)
-        query.message.reply_text("Deck",reply_markup=reply_markup)
+    if query.data=="Witch":
+        if (buy_turn == True) and (gold - 5 >= 0):
+            buy_temp.append('Witch')
+            gold -= 3
+            buy_time -= 1
+            query.edit_message_text('You have bought Witch . Type ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or it is not your turn.')
+        return (gold, buy_time, buy_temp)
+    if query.data=="Village":
+        if (buy_turn == True) and (gold - 3 >= 0):
+            buy_temp.append('Village')
+            gold -= 3
+            buy_time -= 1
+            query.edit_message_text('You have bought Village . Type ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or it is not your turn.')
+        return (gold, buy_time, buy_temp)
+    if query.data=="Courtyard":
+        if (buy_turn == True) and (gold - 2 >= 0):
+            buy_temp.append('Courtyard')
+            gold -= 2
+            buy_time -= 1
+            query.edit_message_text('You have bought Courtyard . Type ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or it is not your turn.')
+        return (gold, buy_time, buy_temp)
 
-def handshow(bot,update):
-    keyboard=[[InlineKeyboardButton("You dont have any cards, Click me",callback_data="3")]]
-    update.message.reply_text('See deck.',reply_markup=InlineKeyboardMarkup(keyboard))
-
-
-
-
-
-
-def show(bot,update):
-    update.message.reply_text(x)
+def start(bot,update):
+    global user1_id
+    global user2_id
+    global user3_id
+    update.message.reply_text('Welcome ' + str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ')
+    if user1_id == 'null':
+        user1_id = str(update.message.from_user.id)
+    elif user2_id== 'null':
+        user2_id = str(update.message.from_user.id)
+    elif user3_id == 'null':
+        user3_id = str(update.message.from_user.id)
+    update.message.from_user('Current player list : ' + str(user1_id) + ' / ' + str(user2_id) + ' / ' + str(user3_id))
+    return (user1_id,user2_id,user3_id)
 
 
 def draw(bot,update):
     global gold
     global points
-    global player1
+    global deckplayer1
     global turn
     global hand
-    global courtyard_temp
+    update.message.reply_text(str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ' + ' is drawing.')
     if turn == True:
         update.message.reply_text('Your turn of drawing has ended')
     else:
-        for i in range(5):
-            if courtyard_temp == 0:
-                temp = (random.choice(player1))
-                hand.append(temp)
-                player1.remove(temp)
-                if temp == 'copper':
-                    gold += 1
-                elif temp == 'silver':
-                    gold += 2
-                elif temp == 'gold':
-                    gold += 3
-                if player1 == []:
-                        player1 = buy_hand
-            else:
-                hand.append(courtyard_temp)
-                courtyard_temp = 0
-                update.message.reply_text('for admin : cleared courtyard')
-
-        update.message.reply_text('You got ' + str(hand) + ' . Type ( /buy ) or ( /use ) to proceed')
-        turn = True
-        return(gold,player1,courtyard_temp)
+        if str(update.message.from_user.id) == user1_id:
+            for i in range(5):
+                    temp = (random.choice(deckplayer1))
+                    hand.append(temp)
+                    deckplayer1.remove(temp)
+                    if temp == 'copper':
+                        gold += 1
+                    elif temp == 'silver':
+                        gold += 2
+                    elif temp == 'gold':
+                        gold += 3
+                    if deckplayer1 == []:
+                        deckplayer1 = grave
+                    turn = True
+            update.message.reply_text('You got ' + str(hand) + ' . Type ( /buy ) or ( /use ) to proceed')
+        elif str(update.message.from_user.id) == user2_id:
+            for i in range(5):
+                    temp = (random.choice(deckplayer2))
+                    hand2.append(temp)
+                    deckplayer2.remove(temp)
+                    if temp == 'copper':
+                        gold += 1
+                    elif temp == 'silver':
+                        gold += 2
+                    elif temp == 'gold':
+                        gold += 3
+                    if deckplayer2 == []:
+                        deckplayer2 = grave2
+                    turn = True
+            update.message.reply_text('You got ' + str(hand2) + ' . Type ( /buy ) or ( /use ) to proceed')
+        elif str(update.message.from_user.id) == user3_id:
+            for i in range(5):
+                    temp = (random.choice(deckplayer3))
+                    hand.append(temp)
+                    deckplayer3.remove(temp)
+                    if temp == 'copper':
+                        gold += 1
+                    elif temp == 'silver':
+                        gold += 2
+                    elif temp == 'gold':
+                        gold += 3
+                    if deckplayer3 == []:
+                        deckplayer1 = grave3
+                    turn = True
+            update.message.reply_text('You got ' + str(hand3) + ' . Type ( /buy ) or ( /use ) to proceed')
+        else:
+            update.message.reply_text('failed')
+        return(gold,deckplayer1)
 
 def buy(bot,update):
     global gold
     global buy_turn
     update.message.reply_text('You have <' + str(gold) + '> dollar')
-    update.message.reply_text('Cards available : ' + str(card_market))
     buy_turn = True
+    keyboard = [[]]
     if gold >= 5:
-        update.message.reply_text('Buy Witch cost 5 dollars( /witch )')
+        update.message.reply_text('Buy Witch cost 5 dollars')
+        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
+
     if gold >= 4:
         update.message.reply_text('You can buy some cards')
+        keyboard.append([InlineKeyboardButton("Some", callback_data="Some")])
     if gold >= 3:
-        update.message.reply_text('Buy Village cost 3 dollars( /village )')
-        update.message.reply_text('Buy Silver cost 3 dollars( /silver )')
+        update.message.reply_text('Buy Village cost 3 dollars')
+        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
+        update.message.reply_text('Buy Silver cost 3 dollars')
+        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
     if gold >= 2:
-          update.message.reply_text('Buy Courtyard costs 2 dollar ( /courtyard)')
-
-
-def village(bot,update):
-    global gold
-    global buy_temp
-    global buy_time
-    if (buy_turn == True) and (gold - 3 >= 0):
-        buy_temp.append('Village')
-        gold -= 3
-        buy_time -= 1
-        update.message.reply_text('You have bought Village . Type ( /end ) to finish buying.')
-    else:
-        update.message.reply_text('You dont have enough gold or it is not your turn.')
-    return (gold,buy_time,buy_temp)
-
-def courtyard(bot,update):
-    global gold
-    global buy_temp
-    global buy_time
-    if (buy_turn == True) and (gold - 2 >= 0):
-        buy_temp.append('Courtyard')
-        gold -= 2
-        buy_time -= 1
-        update.message.reply_text('You have bought Courtyard . Type ( /end ) to finish buying.')
-    else:
-        update.message.reply_text('You dont have enough gold or it is not your turn.')
-    return (gold, buy_time, buy_temp)
-
-def use_courtyard(bot,update):
-    global buy_time
-    global action
-    global player1
-    global hand
-    global gold
-    if 'Courtyard' not in hand:
-        update.message.reply_text('You dont have this card')
-    elif buy_time >= 1 and action >= 1:
-        action -= 1
-        hand.remove('Courtyard')
-        buy_hand.append('Courtyard')
-        for i in range(3):
-            temp = (random.choice(player1))
-            update.message.reply_text('You got a <' + str(temp) + '>')
-            hand.append(temp)
-            player1.remove(temp)
-            if temp == 'copper':
-                gold += 1
-            elif temp == 'silver':
-                gold += 2
-            elif temp == 'gold':
-                gold += 3
-        update.message.reply_text('Select a card to place on top of your deck')
-        update.message.reply_text(str(hand))
-        update.message.reply_text('type in the card name + _d , for example : /village_d')
-    else:
-        update.message.reply_text('error')
-    return (buy_time, action, player1,hand,gold)
-
-def estates_d(bot,update):
-    global hand
-    global courtyard_temp
-    if 'estates' not in hand:
-        update.message.reply_text('You can not place this card')
-    else:
-        hand.remove('estates')
-        courtyard_temp.append('estates')
-    update.message.reply_text('Type in the name of the next card you use or to end this turn , type /end . ')
-    update.message.reply_text('You still have ' + str(buy_time) + ' buys ' + str(gold) + ' dollars, ' + '  and ' + str(action) + ' actions')
-
-def copper_d(bot,update):
-    global hand
-    global courtyard_temp
-    if 'copper' not in hand:
-        update.message.reply_text('You can not place this card')
-    else:
-        hand.remove('copper')
-        courtyard_temp.append('copper')
-    update.message.reply_text('Type in the name of the next card you use or to end this turn , type /end . ')
-    update.message.reply_text('You still have ' + str(buy_time) + ' buys ' + str(gold) + ' dollars, ' + '  and ' + str(action) + ' actions')
-
-def silver_d(bot,update):
-    global hand
-    global courtyard_temp
-    if 'silver' not in hand:
-        update.message.reply_text('You can not place this card')
-    else:
-        hand.remove('silver')
-        courtyard_temp.append('silver')
-    update.message.reply_text('Type in the name of the next card you use or to end this turn , type /end . ')
-    update.message.reply_text('You still have ' + str(buy_time) + ' buys ' + str(gold) + ' dollars, ' + '  and ' + str(action) + ' actions')
-
-def gold_d(bot,update):
-    global hand
-    global courtyard_temp
-    if 'gold' not in hand:
-        update.message.reply_text('You can not place this card')
-    else:
-        hand.remove('gold')
-        courtyard_temp.append('gold')
-    update.message.reply_text('Type in the name of the next card you use or to end this turn , type /end . ')
-    update.message.reply_text('You still have ' + str(buy_time) + ' buys ' + str(gold) + ' dollars, ' + '  and ' + str(action) + ' actions')
-
-def village_d(bot,update):
-    global hand
-    global courtyard_temp
-    if 'Village' not in hand:
-        update.message.reply_text('You can not place this card')
-    else:
-        hand.remove('Village')
-        courtyard_temp.append('Village')
-    update.message.reply_text('Type in the name of the next card you use or to end this turn , type /end . ')
-    update.message.reply_text('You still have ' + str(buy_time) + ' buys ' + str(gold) + ' dollars, ' + '  and ' + str(action) + ' actions')
-
-def courtyard_d(bot,update):
-    global hand
-    global courtyard_temp
-    if 'Courtyard' not in hand:
-        update.message.reply_text('You can not place this card')
-    else:
-        hand.remove('Courtyard')
-        courtyard_temp.append('Courtyard')
-    update.message.reply_text('Type in the name of the next card you use or to end this turn , type /end . ')
-    update.message.reply_text('You still have ' + str(buy_time) + ' buys ' + str(gold) + ' dollars, ' + '  and ' + str(action) + ' actions')
-
-def use_village(bot,update):
-    global buy_time
-    global action
-    global player1
-    global hand
-    global hand
-    global gold
-    if 'Village' not in hand :
-        update.message.reply_text('You dont have this card')
-    elif buy_time >= 1 and action >= 1 :
-        action -= 1
-        hand.remove('Village')
-        buy_hand('Village')
-        temp = (random.choice(player1))
-        update.message.reply_text('You got a <' + str(temp) + '>')
-        hand.append(temp)
-        player1.remove(temp)
-        if temp == 'copper':
-            gold += 1
-        elif temp == 'silver':
-            gold += 2
-        elif temp == 'gold':
-            gold += 3
-        action += 2
-        update.message.reply_text('You still have ' + str(buy_time) + ' buys ' + str(gold) +' dollars, ' + ' and ' + str(action) + ' actions')
-    else:
-        update.message.reply_text('error')
-    return (buy_time,action,player1,hand)
+        update.message.reply_text('Buy Courtyard costs 2 dollar')
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
+    update.message.reply_text('Cards available : ',reply_markup=InlineKeyboardMarkup(keyboard))
 
 def end(bot,update):
     global gold
-    global buy_hand
+    global grave
     global buy_temp
     global hand
-    gold = 0
-    buy_hand += hand
-    buy_hand += buy_temp
-    hand = []
-    buy_temp = []
-    update.message.reply_text('done!')
+    if update.message.from_user == user1_id:
+        gold = 0
+        grave += hand
+        grave += buy_temp
+        hand = []
+        buy_temp = []
+    elif update.message.from_user == user2_id:
+        gold = 0
+        grave2 += hand2
+        grave2 += buy_temp2
+        hand2 = []
+        buy_temp2 = []
+    elif update.message.from_user == user3_id:
+        gold = 0
+        grave3 += hand3
+        grave3 += buy_temp3
+        hand3 = []
+        buy_temp3 = []
+    update.message.reply_text(str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ' + 'is done!')
 
-def use(bot,update):
-    update.message.reply_text('You have ' + str(hand))
-    update.message.reply_text('Type in the name of the cards to use it')
+def money(bot,update):
+    update.message.reply_text('You have <' + str(gold) + '> dollar')
+
+def point(bot,update):
+    update.message.reply_text('You have <' + str(points) + '> points')
+
+def reset(bot,update):
+    global gold
+    global deckplayer1
+    global turn
+    global hand
+    turn = False
+    gold = 0
+    hand = []
+    deckplayer1 = ['copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'estates', 'estates', 'estates']
+    update.message.reply_text('success')
+    return gold
+
+def status(bot,update):
+    update.message.reply_text('normal')
 
 def pass_next(bot,update):
     global turn
@@ -290,81 +222,19 @@ def pass_next(bot,update):
     update.message.reply_text('success')
 
 
-def have(bot,update):
-    update.message.reply_text(buy_hand)
-    update.message.reply_text(buy_temp)
-    update.message.reply_text(hand)
-    update.message.reply_text(player1)
-    update.message.reply_text(courtyard_temp)
-
-
-def money(bot,update):
-    update.message.reply_text('You have <' + str(gold) + '> dollar')
-
-def point(bot,update):
-    update.message.reply_text('You have <' + str(points) + '> points')
-
-def reset(bot,update):
-    global gold
-    global player1
-    global turn
-    global hand
-    turn = False
-    gold = 0
-    hand = []
-    player1 = ['copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'estates', 'estates', 'estates']
-    update.message.reply_text('success')
-    return gold
-
-
-def status(bot,update):
-    update.message.reply_text('normal')
-
-def command_list(bot,update):
-    update.message.reply_text('/draw to draw - /buy to buy -  /end to end - pass to reset to next player - ')
-
-def start(bot,update):
-    global user1_id
-    global user2_id
-    global user3_id
-    update.message.reply_text('Welcome ' + str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ')
-    if user1_id == 'null':
-        user1_id = update.message.from_user.id
-    elif user2_id== 'null':
-        user2_id = update.message.from_user.id
-    elif user3_id == 'null':
-        user3_id = update.message.from_user.id
-    update.message.reply_text('Current player list : ' + str(user1_id) + ' / ' + str(user2_id) + ' / ' + str(user3_id))
-    return (user1_id,user2_id,user3_id)
-
 def main():
     updater = Updater('599551578:AAE709inuNhedfLCwIVKF9fWXJNJ-pqv5lg')
     test = updater.dispatcher
-    test.add_handler(CommandHandler('show',show))
     test.add_handler(CommandHandler('draw',draw))
     test.add_handler(CommandHandler('money',money))
     test.add_handler(CommandHandler('point',point))
-    test.add_handler(CommandHandler('have',have))
     test.add_handler(CommandHandler('buy',buy))
-    test.add_handler(CommandHandler('use',use))
     test.add_handler(CommandHandler('end',end))
-    test.add_handler(CommandHandler('village',village))
-    test.add_handler(CommandHandler('courtyard',courtyard))
-    test.add_handler(CommandHandler('handshow',handshow))
-    test.add_handler(CommandHandler('command',command_list))
     test.add_handler(CommandHandler('start',start))
     test.add_handler(RegexHandler('.*reset.*',reset))
     test.add_handler(CommandHandler('status',status))
-    test.add_handler(RegexHandler('village',use_village))
-    test.add_handler(RegexHandler('courtyard',use_courtyard))
     test.add_handler(RegexHandler('pass',pass_next))
-    test.add_handler(CommandHandler('estates_d',estates_d))
-    test.add_handler(CommandHandler('copper_d',copper_d))
-    test.add_handler(CommandHandler('silver_d',silver_d))
-    test.add_handler(CommandHandler('gold_d',gold_d))
-    test.add_handler(CommandHandler('village_d',village_d))
-    test.add_handler(CommandHandler('courtyard_d',courtyard_d))
-    test.add_handler(CommandHandler('option',option))
+
     test.add_handler(CallbackQueryHandler(button))
     updater.start_polling()
     updater.idle()
