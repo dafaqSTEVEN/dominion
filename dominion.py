@@ -2,12 +2,23 @@ from typing import List
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater,MessageHandler,CommandHandler,RegexHandler,CallbackQueryHandler
 import random
+import logging
+from telegram.error import (TelegramError, Unauthorized, BadRequest,
+                            TimedOut, ChatMigrated, NetworkError)
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    filename='logging.txt',
+                    level=logging.INFO)
+
+logger = logging.getLogger(__name__)
+
+
 
 card_market = ['village','witch','silver','gold']
 card = ["copper","silver","gold"]
 deckplayer1 = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
 deckplayer2 = ['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
-deckplayer3=['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
+deckplayer3 =['copper','copper','copper','copper','copper','copper','copper','estates','estates','estates']
 grave = []
 grave2 = []
 grave3 = []
@@ -30,9 +41,27 @@ action = 1
 user1_id = 'null'
 user2_id = 'null'
 user3_id = 'null'
+user1_name = 'null'
+user2_name = 'null'
+user3_name = 'null'
 current_player = 1
 courtyard_temp = 0
 inlinehand=[]
+turn_count=0
+turnnum = 0
+start_game=False
+
+def start(bot,update):
+    global turn_count
+    global turnnum
+    global start_game
+    start_game = True
+    update.message.reply_text("Loby is closed\n" + str(user1_name) + ' is drawing.')
+    turn_count = 1
+
+    turnnum = 1
+    return(turn_count,turnnum)
+
 
 def button(bot,update):
     global gold
@@ -44,7 +73,7 @@ def button(bot,update):
             buy_temp.append('Witch')
             gold -= 3
             buy_time -= 1
-            query.edit_message_text('You have bought Witch . Type ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Witch .\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
         return (gold, buy_time, buy_temp)
@@ -53,7 +82,7 @@ def button(bot,update):
             buy_temp.append('Village')
             gold -= 3
             buy_time -= 1
-            query.edit_message_text('You have bought Village . Type ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Village .\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
         return (gold, buy_time, buy_temp)
@@ -62,83 +91,96 @@ def button(bot,update):
             buy_temp.append('Courtyard')
             gold -= 2
             buy_time -= 1
-            query.edit_message_text('You have bought Courtyard . Type ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Courtyard .\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
         return (gold, buy_time, buy_temp)
 
-def start(bot,update):
+def join(bot,update):
     global user1_id
     global user2_id
     global user3_id
-    update.message.reply_text('Welcome ' + str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ')
-    if user1_id == 'null':
-        user1_id = str(update.message.from_user.id)
-    elif user2_id== 'null':
-        user2_id = str(update.message.from_user.id)
-    elif user3_id == 'null':
-        user3_id = str(update.message.from_user.id)
-    update.message.from_user('Current player list : ' + str(user1_id) + ' / ' + str(user2_id) + ' / ' + str(user3_id))
-    return (user1_id,user2_id,user3_id)
-
+    global user1_name
+    global user2_name
+    global user3_name
+    if start_game == True:
+       update.message.reply_text('The Loby is closed')
+    else:
+        update.message.reply_text('Welcome ' + str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ')
+        if user1_id == 'null':
+            user1_id = str(update.message.from_user.id)
+            user1_name = str(update.message.from_user.first_name) + str(update.message.from_user.last_name)
+        elif user2_id== 'null':
+            user2_id = str(update.message.from_user.id)
+            user2_name = str(update.message.from_user.first_name) + str(update.message.from_user.last_name)
+        elif user3_id == 'null':
+            user3_id = str(update.message.from_user.id)
+            user3_name = str(update.message.from_user.first_name) + str(update.message.from_user.last_name)
+        update.message.reply_text('Current player list :\n [' + str(user1_name) + ' / ' + str(user2_name) + ' / ' + str(user3_name) + ']\nType /join to join the game.\nType /start to start the game.')
+    return (user1_id,user2_id,user3_id,user1_name,user2_name,user3_name)
 
 def draw(bot,update):
     global gold
     global points
     global deckplayer1
+    global deckplayer2
+    global deckplayer3
     global turn
     global hand
-    update.message.reply_text(str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ' + ' is drawing.')
-    if turn == True:
-        update.message.reply_text('Your turn of drawing has ended')
+    global turnum
+    if turn_count == 0:
+        update.message.reply_text('Type /join to join the game\nType /start to start the game.')
     else:
-        if str(update.message.from_user.id) == user1_id:
-            for i in range(5):
-                    temp = (random.choice(deckplayer1))
-                    hand.append(temp)
-                    deckplayer1.remove(temp)
-                    if temp == 'copper':
-                        gold += 1
-                    elif temp == 'silver':
-                        gold += 2
-                    elif temp == 'gold':
-                        gold += 3
-                    if deckplayer1 == []:
-                        deckplayer1 = grave
-                    turn = True
-            update.message.reply_text('You got ' + str(hand) + ' . Type ( /buy ) or ( /use ) to proceed')
-        elif str(update.message.from_user.id) == user2_id:
-            for i in range(5):
-                    temp = (random.choice(deckplayer2))
-                    hand2.append(temp)
-                    deckplayer2.remove(temp)
-                    if temp == 'copper':
-                        gold += 1
-                    elif temp == 'silver':
-                        gold += 2
-                    elif temp == 'gold':
-                        gold += 3
-                    if deckplayer2 == []:
-                        deckplayer2 = grave2
-                    turn = True
-            update.message.reply_text('You got ' + str(hand2) + ' . Type ( /buy ) or ( /use ) to proceed')
-        elif str(update.message.from_user.id) == user3_id:
-            for i in range(5):
-                    temp = (random.choice(deckplayer3))
-                    hand.append(temp)
-                    deckplayer3.remove(temp)
-                    if temp == 'copper':
-                        gold += 1
-                    elif temp == 'silver':
-                        gold += 2
-                    elif temp == 'gold':
-                        gold += 3
-                    if deckplayer3 == []:
-                        deckplayer1 = grave3
-                    turn = True
-            update.message.reply_text('You got ' + str(hand3) + ' . Type ( /buy ) or ( /use ) to proceed')
+        if turn == True:
+            update.message.reply_text('Your turn of drawing has ended')
         else:
-            update.message.reply_text('failed')
+            if str(update.message.from_user.id) == user1_id and turn_count == 1:
+                for i in range(5):
+                        temp = (random.choice(deckplayer1))
+                        hand.append(temp)
+                        deckplayer1.remove(temp)
+                        if temp == 'copper':
+                            gold += 1
+                        elif temp == 'silver':
+                            gold += 2
+                        elif temp == 'gold':
+                            gold += 3
+                        if deckplayer1 == []:
+                            deckplayer1 = grave
+                        turn = True
+                update.message.reply_text('You got ' + str(hand) + ' .\nType ( /buy ) or ( /use ) to proceed')
+            elif str(update.message.from_user.id) == user2_id and turn_count == 2:
+                for i in range(5):
+                        temp = (random.choice(deckplayer2))
+                        hand2.append(temp)
+                        deckplayer2.remove(temp)
+                        if temp == 'copper':
+                            gold += 1
+                        elif temp == 'silver':
+                            gold += 2
+                        elif temp == 'gold':
+                            gold += 3
+                        if deckplayer2 == []:
+                            deckplayer2 = grave2
+                        turn = True
+                update.message.reply_text('You got ' + str(hand2) + ' .\nType ( /buy ) or ( /use ) to proceed')
+            elif str(update.message.from_user.id) == user3_id and turn_count == 3:
+                for i in range(5):
+                        temp = (random.choice(deckplayer3))
+                        hand.append(temp)
+                        deckplayer3.remove(temp)
+                        if temp == 'copper':
+                            gold += 1
+                        elif temp == 'silver':
+                            gold += 2
+                        elif temp == 'gold':
+                            gold += 3
+                        if deckplayer3 == []:
+                            deckplayer1 = grave3
+                        turn = True
+                update.message.reply_text('You got ' + str(hand3) + ' .\nType ( /buy ) or ( /use ) to proceed')
+            else:
+                update.message.reply_text('Its not your turn or you havent joined the game yet.')
         return(gold,deckplayer1)
 
 def buy(bot,update):
@@ -150,7 +192,6 @@ def buy(bot,update):
     if gold >= 5:
         update.message.reply_text('Buy Witch cost 5 dollars')
         keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
-
     if gold >= 4:
         update.message.reply_text('You can buy some cards')
         keyboard.append([InlineKeyboardButton("Some", callback_data="Some")])
@@ -165,10 +206,19 @@ def buy(bot,update):
     update.message.reply_text('Cards available : ',reply_markup=InlineKeyboardMarkup(keyboard))
 
 def end(bot,update):
+    global turn
     global gold
     global grave
     global buy_temp
     global hand
+    global turn_count
+    global turnnum
+    turn = False
+    turnnum += 1
+    turn=False
+    turn_count += 1
+    if turn_count == 4:
+        turn_count = 1
     if update.message.from_user == user1_id:
         gold = 0
         grave += hand
@@ -188,6 +238,14 @@ def end(bot,update):
         hand3 = []
         buy_temp3 = []
     update.message.reply_text(str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ' + 'is done!')
+    if turn_count==1:
+        update.message.reply_text("Its now your turn , " + str(user1_name))
+    elif turn_count==2:
+        update.message.reply_text("Its now your turn , " + str(user2_name))
+    elif turn_count==3:
+        update.message.reply_text("Its now your turn , " + str(user3_name))
+
+
 
 def money(bot,update):
     update.message.reply_text('You have <' + str(gold) + '> dollar')
@@ -215,12 +273,20 @@ def pass_next(bot,update):
     global buy_turn
     global action
     global buy_time
+    global turn_count
     turn = False
+    turn_count += 1
     buy_turn = False
     buy_time = 1
     action = 1
     update.message.reply_text('success')
 
+
+def admin(bot,update):
+    update.message.reply_text('/join\n/start\n/draw')
+
+def error(bot,update,error):
+    logger.warning('Update "%s" caused error "%s"', update, error)
 
 def main():
     updater = Updater('599551578:AAE709inuNhedfLCwIVKF9fWXJNJ-pqv5lg')
@@ -230,10 +296,13 @@ def main():
     test.add_handler(CommandHandler('point',point))
     test.add_handler(CommandHandler('buy',buy))
     test.add_handler(CommandHandler('end',end))
+    test.add_handler(CommandHandler('join',join))
     test.add_handler(CommandHandler('start',start))
-    test.add_handler(RegexHandler('.*reset.*',reset))
-    test.add_handler(CommandHandler('status',status))
+    test.add_handler(RegexHandler('.*status.*',status))
+    test.add_handler(RegexHandler('.*reset.*', reset))
     test.add_handler(RegexHandler('pass',pass_next))
+    test.add_handler(RegexHandler('admin',admin))
+    test.add_error_handler(error)
 
     test.add_handler(CallbackQueryHandler(button))
     updater.start_polling()
