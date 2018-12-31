@@ -571,3 +571,16 @@ Traceback (most recent call last):
   File "E:/Program/GITHUB/dominion/dominion.py", line 299, in error
     update.message.reply_text('NETWORK ISSUE')
 AttributeError: 'NoneType' object has no attribute 'message'
+2019-01-01 06:17:10,218 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 149, in draw
+    deckplayer1 = grave
+UnboundLocalError: local variable 'grave' referenced before assignment
+2019-01-01 06:19:31,946 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-01-01 06:19:31,946 - __main__ - WARNING - Update "{'update_id': 773021335, 'message': {'date': 1546294760, 'new_chat_photo': [], 'caption_entities': [], 'entities': [{'offset': 0, 'length': 4, 'type': 'bot_command'}], 'group_chat_created': False, 'message_id': 4376, 'supergroup_chat_created': False, 'text': '/buy', 'channel_chat_created': False, 'from': {'username': 'Fukai_217', 'id': 337412327, 'language_code': 'zh-hans', 'first_name': 'Fukai', 'is_bot': False}, 'new_chat_members': [], 'photo': [], 'chat': {'title': 'GitHub repoes', 'id': -273384150, 'all_members_are_administrators': True, 'type': 'group'}, 'reply_to_message': {'date': 1546294759, 'new_chat_photo': [], 'caption_entities': [], 'entities': [{'offset': 69, 'length': 4, 'type': 'bot_command'}, {'offset': 81, 'length': 4, 'type': 'bot_command'}], 'group_chat_created': False, 'message_id': 4375, 'supergroup_chat_created': False, 'text': "You got ['estates', 'copper', 'copper', 'copper', 'copper'] .\nType ( /buy ) or ( /use ) to proceed", 'channel_chat_created': False, 'from': {'username': 'DOMINION_IM_BOT', 'id': 599551578, 'first_name': 'DOMINION', 'is_bot': True}, 'new_chat_members': [], 'photo': [], 'chat': {'title': 'GitHub repoes', 'id': -273384150, 'all_members_are_administrators': True, 'type': 'group'}, 'delete_chat_photo': False}, 'delete_chat_photo': False}}" caused error "Timed out"
+2019-01-01 06:25:41,156 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-01-01 06:25:41,156 - __main__ - WARNING - Update "{'message': {'supergroup_chat_created': False, 'date': 1546295130, 'chat': {'title': 'GitHub repoes', 'id': -273384150, 'all_members_are_administrators': True, 'type': 'group'}, 'photo': [], 'channel_chat_created': False, 'message_id': 4406, 'new_chat_photo': [], 'text': '/buy@DOMINION_IM_BOT', 'delete_chat_photo': False, 'group_chat_created': False, 'new_chat_members': [], 'from': {'is_bot': False, 'language_code': 'zh-hans', 'username': 'inuwazz', 'first_name': '¤j©M', 'id': 436384576}, 'caption_entities': [], 'entities': [{'offset': 0, 'length': 20, 'type': 'bot_command'}]}, 'update_id': 773021345}" caused error "Timed out"

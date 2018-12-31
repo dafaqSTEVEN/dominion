@@ -56,7 +56,7 @@ def start(bot,update):
     global turnnum
     global start_game
     start_game = True
-    update.message.reply_text("Loby is closed\n" + str(user1_name) + ' is drawing.')
+    update.message.reply_text("Loby is closed\n" + str(user1_name) + ' is drawing.\nType /draw.')
     turn_count = 1
 
     turnnum = 1
@@ -125,6 +125,9 @@ def draw(bot,update):
     global deckplayer1
     global deckplayer2
     global deckplayer3
+    global grave
+    global grave2
+    global grave3
     global turn
     global hand
     global turnum
@@ -147,6 +150,7 @@ def draw(bot,update):
                             gold += 3
                         if deckplayer1 == []:
                             deckplayer1 = grave
+                            grave = []
                         turn = True
                 update.message.reply_text('You got ' + str(hand) + ' .\nType ( /buy ) or ( /use ) to proceed')
             elif str(update.message.from_user.id) == user2_id and turn_count == 2:
@@ -162,6 +166,7 @@ def draw(bot,update):
                             gold += 3
                         if deckplayer2 == []:
                             deckplayer2 = grave2
+                            grave2 = []
                         turn = True
                 update.message.reply_text('You got ' + str(hand2) + ' .\nType ( /buy ) or ( /use ) to proceed')
             elif str(update.message.from_user.id) == user3_id and turn_count == 3:
@@ -176,12 +181,65 @@ def draw(bot,update):
                         elif temp == 'gold':
                             gold += 3
                         if deckplayer3 == []:
-                            deckplayer1 = grave3
+                            deckplayer3 = grave3
+                            grave3 = []
                         turn = True
                 update.message.reply_text('You got ' + str(hand3) + ' .\nType ( /buy ) or ( /use ) to proceed')
             else:
                 update.message.reply_text('Its not your turn or you havent joined the game yet.')
         return(gold,deckplayer1)
+
+def use(bot,update):
+    if turn_count == 1:
+        keyboard = [[]]
+        temp = []
+        x = 0
+        while x <= len(hand):
+            update.message.reply_text(str(user1_name) + ', you have : ' + str(hand))
+            hand[x] = str(tempp)
+            temp.append(hand[x])
+            x + 1
+            if tempp == 'Village':
+                keyboard.append([InlineKeyboardButton('village', callback_data="usevillage")])
+            elif tempp == 'Witch':
+                keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
+            elif tempp == 'Courtyard':
+                keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
+        update.message.reply_text('Cards available : ', reply_markup=InlineKeyboardMarkup(keyboard))
+    elif turn_count == 2:
+        keyboard = [[]]
+        temp = []
+        x = 0
+        while x <= len(hand):
+            update.message.reply_text(str(user1_name) + ', you have : ' + str(hand2))
+            hand2[x] = str(tempp)
+            temp.append(hand2[x])
+            x + 1
+            if tempp == 'Village':
+                keyboard.append([InlineKeyboardButton('village', callback_data="usevillage")])
+            elif tempp == 'Witch':
+                keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
+            elif tempp == 'Courtyard':
+                keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
+        update.message.reply_text('Cards available : ', reply_markup=InlineKeyboardMarkup(keyboard))
+    elif turn_count == 3:
+        keyboard = [[]]
+        temp = []
+        x = 0
+        while x <= len(hand):
+            update.message.reply_text(str(user1_name) + ', you have : ' + str(hand3))
+            hand3[x] = str(tempp)
+            temp.append(hand3[x])
+            x + 1
+            if tempp == 'Village':
+                keyboard.append([InlineKeyboardButton('village', callback_data="usevillage")])
+            elif tempp == 'Witch':
+                keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
+            elif tempp == 'Courtyard':
+                keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
+        update.message.reply_text('Cards available : ', reply_markup=InlineKeyboardMarkup(keyboard))
+
+
 
 def buy(bot,update):
     global gold
@@ -217,21 +275,23 @@ def end(bot,update):
     turnnum += 1
     turn=False
     turn_count += 1
-    if turn_count == 4:
+    if user3_name == 'null' and turn_count == 3:
         turn_count = 1
-    if update.message.from_user == user1_id:
+    elif turn_count == 4:
+        turn_count = 1
+    if update.message.from_user == user1_id and turn_count == 1:
         gold = 0
         grave += hand
         grave += buy_temp
         hand = []
         buy_temp = []
-    elif update.message.from_user == user2_id:
+    elif update.message.from_user == user2_id and turn_count == 2:
         gold = 0
         grave2 += hand2
         grave2 += buy_temp2
         hand2 = []
         buy_temp2 = []
-    elif update.message.from_user == user3_id:
+    elif update.message.from_user == user3_id and turn_count == 3:
         gold = 0
         grave3 += hand3
         grave3 += buy_temp3
@@ -239,11 +299,11 @@ def end(bot,update):
         buy_temp3 = []
     update.message.reply_text(str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ' + 'is done!')
     if turn_count==1:
-        update.message.reply_text("Its now your turn , " + str(user1_name))
+        update.message.reply_text("Its now your turn , " + str(user1_name) + '\nType /draw')
     elif turn_count==2:
-        update.message.reply_text("Its now your turn , " + str(user2_name))
+        update.message.reply_text("Its now your turn , " + str(user2_name) + '\nType /draw')
     elif turn_count==3:
-        update.message.reply_text("Its now your turn , " + str(user3_name))
+        update.message.reply_text("Its now your turn , " + str(user3_name) + '\nType /draw')
 
 
 
@@ -298,6 +358,7 @@ def main():
     test.add_handler(CommandHandler('end',end))
     test.add_handler(CommandHandler('join',join))
     test.add_handler(CommandHandler('start',start))
+    test.add_handler(CommandHandler('use',use))
     test.add_handler(RegexHandler('.*status.*',status))
     test.add_handler(RegexHandler('.*reset.*', reset))
     test.add_handler(RegexHandler('pass',pass_next))
