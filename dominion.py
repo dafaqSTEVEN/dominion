@@ -23,8 +23,6 @@ grave = []
 grave2 = []
 grave3 = []
 buy_temp = []
-buy_temp2 = []
-buy_temp3 = []
 hand = []
 hand2 = []
 hand3 = []
@@ -58,17 +56,23 @@ def start(bot,update):
     start_game = True
     update.message.reply_text("Loby is closed\n" + str(user1_name) + ' is drawing.\nType /draw.')
     turn_count = 1
-
     turnnum = 1
     return(turn_count,turnnum)
 
 
 def button(bot,update):
+    global action
     global gold
     global buy_temp
     global buy_time
     query = update.callback_query
-    if query.data=="Witch":
+    if query.data == 'silver':
+        if (buy_turn == True) and (gold - 3 >= 0):
+            buy_temp.append('silver')
+            gold -= 3
+            buy_time -= 1
+            query.edit_message_text('You have bought Silver.\nType ( /end ) to finish buying.')
+    if query.data=='Witch':
         if (buy_turn == True) and (gold - 5 >= 0):
             buy_temp.append('Witch')
             gold -= 3
@@ -95,6 +99,78 @@ def button(bot,update):
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
         return (gold, buy_time, buy_temp)
+    if query.data=='usevillage':
+        if action>0:
+            action-=1
+            action +=2
+            if turn_count == 1:
+                hand.remove('Village')
+                temp = random.choice(deckplayer1)
+                hand.append(temp)
+                if temp == 'copper':
+                    gold += 1
+                elif temp == 'silver':
+                    gold += 2
+                elif temp == 'gold':
+                    gold += 3
+                query.message.reply_text('You have draw ' + str(temp) + ' and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
+            elif turn_count == 2:
+                hand2.remove('Village')
+                temp = random.choice(deckplayer2)
+                hand.append(temp)
+                if temp == 'copper':
+                    gold += 1
+                elif temp == 'silver':
+                    gold += 2
+                elif temp == 'gold':
+                    gold += 3
+                query.message.reply_text('You have draw ' + str(temp) + ' and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
+            elif turn_count == 3:
+                hand3.remove('Village')
+                temp = random.choice(deckplayer3)
+                hand.append(temp)
+                if temp == 'copper':
+                    gold += 1
+                elif temp == 'silver':
+                    gold += 2
+                elif temp == 'gold':
+                    gold += 3
+                query.message.reply_text('You have draw ' + str(temp) + ' and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
+            else:
+                query.message.reply_text('You dont have enough Action.')
+    if query.data == 'usewitch':
+        if action >0:
+            action -= 1
+            if turn_count == 1:
+                hand.remove('Witch')
+                grave2.append('Curse')
+                grave3.append('Curse')
+                temp = random.choice(deckplayer1)
+                hand.append(temp)
+                tempp =random.choice(deckplayer1)
+                hand.append(tempp)
+                query.message.reply_text('You have draw ' + str(temp) + ' and' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            elif turn_count == 2:
+                hand2.remove('Witch')
+                grave1.append('Curse')
+                grave3.append('Curse')
+                temp = random.choice(deckplayer2)
+                hand.append(temp)
+                tempp = random.choice(deckplayer2)
+                hand.append(tempp)
+                query.message.reply_text('You have draw ' + str(temp) + ' and' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            elif turn_count == 3:
+                hand3.remove('Witch')
+                grave.append('Curse')
+                grave2.append('Curse')
+                temp = random.choice(deckplayer3)
+                hand.append(temp)
+                tempp = random.choice(deckplayer3)
+                hand.append(tempp)
+                query.message.reply_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            else:
+                query.message.reply_text('You dont have enough Action.')
+
 
 def join(bot,update):
     global user1_id
@@ -130,13 +206,14 @@ def draw(bot,update):
     global grave3
     global turn
     global hand
-    global turnum
+    global turnnum
     if turn_count == 0:
         update.message.reply_text('Type /join to join the game\nType /start to start the game.')
     else:
         if turn == True:
             update.message.reply_text('Your turn of drawing has ended')
         else:
+            update.message.reply_text('Turn ' + str(turnnum))
             if str(update.message.from_user.id) == user1_id and turn_count == 1:
                 for i in range(5):
                         temp = (random.choice(deckplayer1))
@@ -190,54 +267,41 @@ def draw(bot,update):
         return(gold,deckplayer1)
 
 def use(bot,update):
+    keyboard = [[]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
     if turn_count == 1:
-        keyboard = [[]]
-        temp = []
-        x = 0
-        while x <= len(hand):
-            update.message.reply_text(str(user1_name) + ', you have : ' + str(hand))
-            hand[x] = str(tempp)
-            temp.append(hand[x])
-            x + 1
+        update.message.reply_text(str(user1_name) + ', you have : ' + str(hand))
+        for i in range(len(hand)):
+            tempp = hand[i]
             if tempp == 'Village':
-                keyboard.append([InlineKeyboardButton('village', callback_data="usevillage")])
+                keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
             elif tempp == 'Witch':
                 keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
             elif tempp == 'Courtyard':
                 keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
-        update.message.reply_text('Cards available : ', reply_markup=InlineKeyboardMarkup(keyboard))
+        update.message.reply_text('Cards available : ', reply_markup=reply_markup)
     elif turn_count == 2:
-        keyboard = [[]]
-        temp = []
-        x = 0
-        while x <= len(hand):
-            update.message.reply_text(str(user1_name) + ', you have : ' + str(hand2))
-            hand2[x] = str(tempp)
-            temp.append(hand2[x])
-            x + 1
+        update.message.reply_text(str(user1_name) + ', you have : ' + str(hand2))
+        for i in range(len(hand)):
+            tempp = hand[i]
             if tempp == 'Village':
-                keyboard.append([InlineKeyboardButton('village', callback_data="usevillage")])
+                keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
             elif tempp == 'Witch':
                 keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
             elif tempp == 'Courtyard':
                 keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
-        update.message.reply_text('Cards available : ', reply_markup=InlineKeyboardMarkup(keyboard))
+        update.message.reply_text('Cards available : ', reply_markup=reply_markup)
     elif turn_count == 3:
-        keyboard = [[]]
-        temp = []
-        x = 0
-        while x <= len(hand):
-            update.message.reply_text(str(user1_name) + ', you have : ' + str(hand3))
-            hand3[x] = str(tempp)
-            temp.append(hand3[x])
-            x + 1
+        update.message.reply_text(str(user1_name) + ', you have : ' + str(hand))
+        for i in range(len(hand)):
+            tempp = hand[i]
             if tempp == 'Village':
-                keyboard.append([InlineKeyboardButton('village', callback_data="usevillage")])
+                keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
             elif tempp == 'Witch':
                 keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
             elif tempp == 'Courtyard':
                 keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
-        update.message.reply_text('Cards available : ', reply_markup=InlineKeyboardMarkup(keyboard))
+        update.message.reply_text('Cards available : ', reply_markup=reply_markup)
 
 
 
@@ -257,7 +321,7 @@ def buy(bot,update):
         update.message.reply_text('Buy Village cost 3 dollars')
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         update.message.reply_text('Buy Silver cost 3 dollars')
-        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
+        keyboard.append([InlineKeyboardButton("Silver", callback_data="silver")])
     if gold >= 2:
         update.message.reply_text('Buy Courtyard costs 2 dollar')
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
@@ -267,36 +331,40 @@ def end(bot,update):
     global turn
     global gold
     global grave
+    global grave2
+    global grave3
     global buy_temp
     global hand
+    global hand2
+    global hand3
     global turn_count
     global turnnum
     turn = False
     turnnum += 1
     turn=False
-    turn_count += 1
-    if user3_name == 'null' and turn_count == 3:
-        turn_count = 1
-    elif turn_count == 4:
-        turn_count = 1
-    if update.message.from_user == user1_id and turn_count == 1:
+    if  turn_count == 1:
         gold = 0
         grave += hand
         grave += buy_temp
         hand = []
         buy_temp = []
-    elif update.message.from_user == user2_id and turn_count == 2:
+    elif turn_count == 2:
         gold = 0
         grave2 += hand2
-        grave2 += buy_temp2
+        grave2 += buy_temp
         hand2 = []
-        buy_temp2 = []
-    elif update.message.from_user == user3_id and turn_count == 3:
+        buy_temp = []
+    elif turn_count == 3:
         gold = 0
         grave3 += hand3
-        grave3 += buy_temp3
+        grave3 += buy_temp
         hand3 = []
-        buy_temp3 = []
+        buy_temp = []
+    turn_count += 1
+    if user3_name == 'null' and turn_count == 3:
+        turn_count = 1
+    elif turn_count == 4:
+        turn_count = 1
     update.message.reply_text(str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ' + 'is done!')
     if turn_count==1:
         update.message.reply_text("Its now your turn , " + str(user1_name) + '\nType /draw')
