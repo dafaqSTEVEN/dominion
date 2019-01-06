@@ -1,1 +1,1 @@
-web: python manage.py runserver 220.246.178.73:$PORT
+web: python dominion.py runserver 220.246.178.73:$PORT
