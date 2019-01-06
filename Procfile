@@ -1,1 +1,1 @@
-web: python dominion.py runserver 220.246.178.73:$PORT
+worker: python dominion.py runserver 220.246.178.73:$PORT
