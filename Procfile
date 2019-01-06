@@ -1,1 +1,1 @@
-web: python dominion.py --port=$PORT
+worker: python dominion.py --port=$PORT
