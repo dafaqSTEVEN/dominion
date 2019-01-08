@@ -28,10 +28,10 @@ hand2 = []
 hand3 = []
 gold = 0
 gold2 = 0
-gold3 = []
+gold3 = 0
 points = 0
-points2 = []
-points3 = []
+points2 = 0
+points3 = 0
 turn = False
 buy_turn = False
 buy_time = 1
@@ -283,7 +283,7 @@ def use(bot,update):
     elif turn_count == 2:
         update.message.reply_text(str(user2_name) + ', you have : ' + str(hand2))
         for i in range(len(hand2)):
-            tempp = hand[i]
+            tempp = hand2[i]
             if tempp == 'Village':
                 keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
             elif tempp == 'Witch':
@@ -294,7 +294,7 @@ def use(bot,update):
     elif turn_count == 3:
         update.message.reply_text(str(user3_name) + ', you have : ' + str(hand))
         for i in range(len(hand3)):
-            tempp = hand[i]
+            tempp = hand3[i]
             if tempp == 'Village':
                 keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
             elif tempp == 'Witch':
@@ -349,13 +349,13 @@ def end(bot,update):
         hand = []
         buy_temp = []
     elif turn_count == 2:
-        gold = 0
+        gold2 = 0
         grave2 += hand2
         grave2 += buy_temp
         hand2 = []
         buy_temp = []
     elif turn_count == 3:
-        gold = 0
+        gold3 = 0
         grave3 += hand3
         grave3 += buy_temp
         hand3 = []
@@ -384,13 +384,50 @@ def point(bot,update):
 def reset(bot,update):
     global gold
     global deckplayer1
+    global deckplayer2
+    global deckplayer3
+    global grave
+    global grave2
+    global grave3
+    global buy_temp
+    global hand
+    global hand2
+    global hand3
+    global gold2,gold3,points,points2,points3,buy_turn,buy_time,action,user1_id,user1_name,user2_id,user2_name,user3_id,user3_name,current_player,inlinehand,courtyard_temp,turn_count,turnnum,start_game
     global turn
     global hand
-    turn = False
-    gold = 0
+    deckplayer1 = ['copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'estates', 'estates','estates']
+    deckplayer2 = ['copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'estates', 'estates','estates']
+    deckplayer3 = ['copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'estates', 'estates','estates']
+    grave = []
+    grave2 = []
+    grave3 = []
+    buy_temp = []
     hand = []
-    deckplayer1 = ['copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'copper', 'estates', 'estates', 'estates']
-    update.message.reply_text('success')
+    hand2 = []
+    hand3 = []
+    gold = 0
+    gold2 = 0
+    gold3 = 0
+    points = 0
+    points2 = 0
+    points3 = 0
+    turn = False
+    buy_turn = False
+    buy_time = 1
+    action = 1
+    user1_id = 'null'
+    user2_id = 'null'
+    user3_id = 'null'
+    user1_name = 'null'
+    user2_name = 'null'
+    user3_name = 'null'
+    current_player = 1
+    courtyard_temp = 0
+    inlinehand = []
+    turn_count = 0
+    turnnum = 0
+    start_game = False
     return gold
 
 def status(bot,update):
