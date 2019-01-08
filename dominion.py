@@ -80,7 +80,6 @@ def button(bot,update):
             query.edit_message_text('You have bought Witch .\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
-        return (gold, buy_time, buy_temp)
     if query.data=="Village":
         if (buy_turn == True) and (gold - 3 >= 0):
             buy_temp.append('Village')
@@ -89,7 +88,6 @@ def button(bot,update):
             query.edit_message_text('You have bought Village .\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
-        return (gold, buy_time, buy_temp)
     if query.data=="Courtyard":
         if (buy_turn == True) and (gold - 2 >= 0):
             buy_temp.append('Courtyard')
@@ -98,7 +96,6 @@ def button(bot,update):
             query.edit_message_text('You have bought Courtyard .\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
-        return (gold, buy_time, buy_temp)
     if query.data=='usevillage':
         if action>0:
             action-=1
@@ -117,7 +114,7 @@ def button(bot,update):
             elif turn_count == 2:
                 hand2.remove('Village')
                 temp = random.choice(deckplayer2)
-                hand.append(temp)
+                hand2.append(temp)
                 if temp == 'copper':
                     gold += 1
                 elif temp == 'silver':
@@ -128,7 +125,7 @@ def button(bot,update):
             elif turn_count == 3:
                 hand3.remove('Village')
                 temp = random.choice(deckplayer3)
-                hand.append(temp)
+                hand3.append(temp)
                 if temp == 'copper':
                     gold += 1
                 elif temp == 'silver':
@@ -155,7 +152,7 @@ def button(bot,update):
                 grave1.append('Curse')
                 grave3.append('Curse')
                 temp = random.choice(deckplayer2)
-                hand.append(temp)
+                hand2.append(temp)
                 tempp = random.choice(deckplayer2)
                 hand.append(tempp)
                 query.edit_message_text('You have draw ' + str(temp) + ' and' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
@@ -166,7 +163,7 @@ def button(bot,update):
                 temp = random.choice(deckplayer3)
                 hand.append(temp)
                 tempp = random.choice(deckplayer3)
-                hand.append(tempp)
+                hand3.append(tempp)
                 query.edit_message_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             else:
                 query.edit_message_text('You dont have enough Action.')
@@ -330,6 +327,8 @@ def buy(bot,update):
 def end(bot,update):
     global turn
     global gold
+    global gold2
+    global gold3
     global grave
     global grave2
     global grave3
