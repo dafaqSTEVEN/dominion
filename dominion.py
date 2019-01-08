@@ -154,18 +154,18 @@ def button(bot,update):
                 temp = random.choice(deckplayer2)
                 hand2.append(temp)
                 tempp = random.choice(deckplayer2)
-                hand.append(tempp)
+                hand2.append(tempp)
                 query.edit_message_text('You have draw ' + str(temp) + ' and' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 3:
                 hand3.remove('Witch')
                 grave.append('Curse')
                 grave2.append('Curse')
                 temp = random.choice(deckplayer3)
-                hand.append(temp)
+                hand3.append(temp)
                 tempp = random.choice(deckplayer3)
                 hand3.append(tempp)
                 query.edit_message_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
-            else:
+        else:
                 query.edit_message_text('You dont have enough Action.')
 
 
