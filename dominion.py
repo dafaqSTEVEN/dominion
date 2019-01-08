@@ -341,6 +341,7 @@ def end(bot,update):
     turn = False
     turnnum += 1
     turn=False
+    action = 0
     gold = 0
     gold2 = 0
     gold3 = 0
@@ -472,7 +473,6 @@ def main():
     test.add_handler(RegexHandler('pass',pass_next))
     test.add_handler(RegexHandler('admin',admin))
     test.add_error_handler(error)
-
     test.add_handler(CallbackQueryHandler(button))
     updater.start_polling()
     updater.idle()
