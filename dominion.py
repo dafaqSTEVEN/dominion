@@ -249,7 +249,7 @@ def draw(bot,update):
             elif str(update.message.from_user.id) == user3_id and turn_count == 3:
                 for i in range(5):
                         temp = (random.choice(deckplayer3))
-                        hand.append(temp)
+                        hand3.append(temp)
                         deckplayer3.remove(temp)
                         if temp == 'copper':
                             gold += 1
