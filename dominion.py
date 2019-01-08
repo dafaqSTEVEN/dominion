@@ -133,7 +133,7 @@ def button(bot,update):
                 elif temp == 'gold':
                     gold += 3
                 query.edit_message_text('You have draw ' + str(temp) + ' and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
-            else:
+        else:
                 query.edit_message_text('You dont have enough Action.')
     if query.data == 'usewitch':
         if action >0:
@@ -341,30 +341,34 @@ def end(bot,update):
     turn = False
     turnnum += 1
     turn=False
+    gold = 0
+    gold2 = 0
+    gold3 = 0
     if  turn_count == 1:
-        gold = 0
         grave += hand
         grave += buy_temp
         hand = []
         buy_temp = []
+        update.message.reply_text(str(user1_name) + ' is done!')
     elif turn_count == 2:
         gold2 = 0
         grave2 += hand2
         grave2 += buy_temp
         hand2 = []
         buy_temp = []
+        update.message.reply_text(str(user2_name) + ' is done!')
     elif turn_count == 3:
         gold3 = 0
         grave3 += hand3
         grave3 += buy_temp
         hand3 = []
         buy_temp = []
+        update.message.reply_text(str(user3_name) + ' is done!')
     turn_count += 1
     if user3_name == 'null' and turn_count == 3:
         turn_count = 1
     elif turn_count == 4:
         turn_count = 1
-    update.message.reply_text(str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ' + 'is done!')
     if turn_count==1:
         update.message.reply_text("Its now your turn , " + str(user1_name) + '\nType /draw')
     elif turn_count==2:
