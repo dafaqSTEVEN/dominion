@@ -338,11 +338,11 @@ def end(bot,update):
     global hand3
     global turn_count
     global turnnum
-    global Action
+    global action
     turn = False
     turnnum += 1
     turn=False
-    action = 0
+    action = 1
     gold = 0
     gold2 = 0
     gold3 = 0
