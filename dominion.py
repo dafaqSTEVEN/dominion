@@ -113,7 +113,7 @@ def button(bot,update):
                     gold += 2
                 elif temp == 'gold':
                     gold += 3
-                query.message.reply_text('You have draw ' + str(temp) + ' and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
+                query.edit.reply_text('You have draw ' + str(temp) + ' and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
             elif turn_count == 2:
                 hand2.remove('Village')
                 temp = random.choice(deckplayer2)
@@ -124,7 +124,7 @@ def button(bot,update):
                     gold += 2
                 elif temp == 'gold':
                     gold += 3
-                query.message.reply_text('You have draw ' + str(temp) + ' and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
+                query.edit.reply_text('You have draw ' + str(temp) + ' and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
             elif turn_count == 3:
                 hand3.remove('Village')
                 temp = random.choice(deckplayer3)
@@ -149,7 +149,7 @@ def button(bot,update):
                 hand.append(temp)
                 tempp =random.choice(deckplayer1)
                 hand.append(tempp)
-                query.message.reply_text('You have draw ' + str(temp) + ' and' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                query.edit.reply_text('You have draw ' + str(temp) + ' and' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 2:
                 hand2.remove('Witch')
                 grave1.append('Curse')
@@ -167,7 +167,7 @@ def button(bot,update):
                 hand.append(temp)
                 tempp = random.choice(deckplayer3)
                 hand.append(tempp)
-                query.message.reply_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                query.edit.reply_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             else:
                 query.message.reply_text('You dont have enough Action.')
 
@@ -281,8 +281,8 @@ def use(bot,update):
                 keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
         update.message.reply_text('Cards available : ', reply_markup=reply_markup)
     elif turn_count == 2:
-        update.message.reply_text(str(user1_name) + ', you have : ' + str(hand2))
-        for i in range(len(hand)):
+        update.message.reply_text(str(user2_name) + ', you have : ' + str(hand2))
+        for i in range(len(hand2)):
             tempp = hand[i]
             if tempp == 'Village':
                 keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
@@ -292,8 +292,8 @@ def use(bot,update):
                 keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
         update.message.reply_text('Cards available : ', reply_markup=reply_markup)
     elif turn_count == 3:
-        update.message.reply_text(str(user1_name) + ', you have : ' + str(hand))
-        for i in range(len(hand)):
+        update.message.reply_text(str(user3_name) + ', you have : ' + str(hand))
+        for i in range(len(hand3)):
             tempp = hand[i]
             if tempp == 'Village':
                 keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
