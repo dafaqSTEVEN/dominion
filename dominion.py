@@ -483,6 +483,8 @@ def pass_next(bot,update):
     action = 1
     update.message.reply_text('success')
 
+def show (bot,update):
+    update.message.reply_text(str(action))
 
 def admin(bot,update):
     update.message.reply_text('/join\n/start\n/draw')
@@ -505,6 +507,7 @@ def main():
     test.add_handler(RegexHandler('.*reset.*', reset))
     test.add_handler(RegexHandler('pass',pass_next))
     test.add_handler(RegexHandler('admin',admin))
+    test.add_handler(RegexHandler('.*show.*',show))
     test.add_error_handler(error)
     test.add_handler(CallbackQueryHandler(button))
     updater.start_polling()
