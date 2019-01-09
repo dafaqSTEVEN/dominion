@@ -340,6 +340,7 @@ def end(bot,update):
     turn=False
     action = 1
     if  turn_count == 1 :
+        gold = 0
         grave += hand
         grave += buy_temp
         hand = []
