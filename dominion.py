@@ -131,7 +131,7 @@ def button(bot,update):
                 elif temp == 'gold':
                     gold += 3
                 query.edit_message_text('You have draw ' + str(temp) + ' and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
-        else:
+            else:
                 query.edit_message_text('You dont have enough Action.')
     if query.data == 'usewitch':
         if action >0:
@@ -199,7 +199,7 @@ def button(bot,update):
                 elif tempp == 'gold':
                     gold += 3
                 query.edit_message_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
-        else:
+            else:
                 query.edit_message_text('You dont have enough Action.')
 
 

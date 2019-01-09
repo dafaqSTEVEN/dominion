@@ -1,0 +1,8 @@
+2019-01-10 00:58:48,765 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 00:58:48,765 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-10 00:58:54,040 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 00:58:54,040 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-10 00:58:59,821 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 00:58:59,821 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-10 00:59:06,353 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 00:59:06,353 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
