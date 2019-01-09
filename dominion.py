@@ -144,7 +144,19 @@ def button(bot,update):
                 hand.append(temp)
                 tempp =random.choice(deckplayer1)
                 hand.append(tempp)
-                query.edit_message_text('You have draw ' + str(temp) + ' and' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                if temp == 'copper':
+                    gold += 1
+                elif temp == 'silver':
+                    gold += 2
+                elif temp == 'gold':
+                    gold += 3
+                if tempp == 'copper':
+                    gold += 1
+                elif tempp == 'silver':
+                    gold += 2
+                elif tempp == 'gold':
+                    gold += 3
+                query.edit_message_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 2:
                 hand2.remove('Witch')
                 grave1.append('Curse')
@@ -153,7 +165,19 @@ def button(bot,update):
                 hand2.append(temp)
                 tempp = random.choice(deckplayer2)
                 hand2.append(tempp)
-                query.edit_message_text('You have draw ' + str(temp) + ' and' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                if temp == 'copper':
+                    gold += 1
+                elif temp == 'silver':
+                    gold += 2
+                elif temp == 'gold':
+                    gold += 3
+                if tempp == 'copper':
+                    gold += 1
+                elif tempp == 'silver':
+                    gold += 2
+                elif tempp == 'gold':
+                    gold += 3
+                query.edit_message_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 3:
                 hand3.remove('Witch')
                 grave.append('Curse')
@@ -162,6 +186,18 @@ def button(bot,update):
                 hand3.append(temp)
                 tempp = random.choice(deckplayer3)
                 hand3.append(tempp)
+                if temp == 'copper':
+                    gold += 1
+                elif temp == 'silver':
+                    gold += 2
+                elif temp == 'gold':
+                    gold += 3
+                if tempp == 'copper':
+                    gold += 1
+                elif tempp == 'silver':
+                    gold += 2
+                elif tempp == 'gold':
+                    gold += 3
                 query.edit_message_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
         else:
                 query.edit_message_text('You dont have enough Action.')
