@@ -339,20 +339,20 @@ def end(bot,update):
     turnnum += 1
     turn=False
     action = 1
-    if  turn_count == 1 and update.message.from_user.id == user1_id:
+    if  turn_count == 1 :
         grave += hand
         grave += buy_temp
         hand = []
         buy_temp = []
         update.message.reply_text(str(user1_name) + ' is done!')
-    elif turn_count == 2 and update.message.from_user.id == user2_id:
+    elif turn_count == 2 :
         gold = 0
         grave2 += hand2
         grave2 += buy_temp
         hand2 = []
         buy_temp = []
         update.message.reply_text(str(user2_name) + ' is done!')
-    elif turn_count == 3 and update.message.from_user.id == user3_id:
+    elif turn_count == 3 :
         gold = 0
         grave3 += hand3
         grave3 += buy_temp
