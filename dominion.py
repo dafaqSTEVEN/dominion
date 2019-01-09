@@ -27,8 +27,6 @@ hand = []
 hand2 = []
 hand3 = []
 gold = 0
-gold2 = 0
-gold3 = 0
 points = 0
 points2 = 0
 points3 = 0
@@ -327,8 +325,6 @@ def buy(bot,update):
 def end(bot,update):
     global turn
     global gold
-    global gold2
-    global gold3
     global grave
     global grave2
     global grave3
@@ -343,29 +339,28 @@ def end(bot,update):
     turnnum += 1
     turn=False
     action = 1
-    gold = 0
-    gold2 = 0
-    gold3 = 0
-    if  turn_count == 1:
+    if  turn_count == 1 and update.message.from_user.id == user1_id:
         grave += hand
         grave += buy_temp
         hand = []
         buy_temp = []
         update.message.reply_text(str(user1_name) + ' is done!')
-    elif turn_count == 2:
-        gold2 = 0
+    elif turn_count == 2 and update.message.from_user.id == user2_id:
+        gold = 0
         grave2 += hand2
         grave2 += buy_temp
         hand2 = []
         buy_temp = []
         update.message.reply_text(str(user2_name) + ' is done!')
-    elif turn_count == 3:
-        gold3 = 0
+    elif turn_count == 3 and update.message.from_user.id == user3_id:
+        gold = 0
         grave3 += hand3
         grave3 += buy_temp
         hand3 = []
         buy_temp = []
         update.message.reply_text(str(user3_name) + ' is done!')
+    else:
+        update.message.reply_text('Its not your turn.')
     turn_count += 1
     if user3_name == 'null' and turn_count == 3:
         turn_count = 1
