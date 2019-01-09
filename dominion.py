@@ -428,7 +428,7 @@ def reset(bot,update):
     turn_count = 0
     turnnum = 0
     start_game = False
-    return gold
+    update.message.reply_text('Success')
 
 def status(bot,update):
     update.message.reply_text('normal')
