@@ -155,7 +155,7 @@ def button(bot,update):
             action -= 1
             if turn_count == 1:
                 hand.remove('Witch')
-                grave.appned('Witch')
+                grave.append('Witch')
                 grave2.append('Curse')
                 grave3.append('Curse')
                 temp = random.choice(deckplayer1)
@@ -361,7 +361,6 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("gold", callback_data="c_gold")])
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             query.message.reply_text('You can put one card on top of your deck\nCards availbale:',replymarkup=replymarkup)
-
         else:
             query.edit_message_text('You dont have enough Action.')
     if query.data == 'c_witch':
@@ -563,7 +562,6 @@ def draw(bot,update):
                 update.message.reply_text('You got ' + str(hand3) + ' .\nType ( /buy ) or ( /use ) to proceed')
             else:
                 update.message.reply_text('Its not your turn or you havent joined the game yet.')
-        return(gold,deckplayer1)
 
 def use(bot,update):
     keyboard = [[]]
@@ -753,6 +751,27 @@ def admin(bot,update):
 def error(bot,update,error):
     logger.warning('Update "%s" caused error "%s"', update, error)
 
+def log(bot,update):
+    fp = open('logging.txt', "r")
+    lines = fp.readlines()
+    fp.close()
+    n = len(lines) - 10
+    for i in range(10):
+        temp = (str(lines[n]))
+        n += 1
+        update.message.reply_text(str(temp))
+
+def lg(bot,update):
+    fp = open('logging.txt', "r")
+    lines = fp.readlines()
+    fp.close()
+    n = len(lines) - 3
+    for i in range(3):
+        temp = (str(lines[n]))
+        n += 1
+        update.message.reply_text(str(temp))
+
+
 def main():
     updater = Updater('599551578:AAE709inuNhedfLCwIVKF9fWXJNJ-pqv5lg')
     test = updater.dispatcher
@@ -768,6 +787,8 @@ def main():
     test.add_handler(RegexHandler('.*reset.*', reset))
     test.add_handler(RegexHandler('admin',admin))
     test.add_handler(RegexHandler('.*show.*',show))
+    test.add_handler(RegexHandler('.*log.*',log))
+    test.add_handler(RegexHandler('.*lg.*', lg))
     test.add_error_handler(error)
     test.add_handler(CallbackQueryHandler(button))
     updater.start_polling()

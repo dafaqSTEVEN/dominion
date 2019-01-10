@@ -118,3 +118,251 @@
 2019-01-10 23:57:22,002 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
 2019-01-10 23:57:56,354 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
 2019-01-10 23:57:56,355 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-10 23:58:30,707 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 23:58:30,708 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-10 23:59:05,288 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 23:59:05,289 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-10 23:59:10,628 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 23:59:10,628 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-10 23:59:16,472 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 23:59:16,472 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-10 23:59:23,065 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 23:59:23,066 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-10 23:59:31,285 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 23:59:31,286 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-10 23:59:40,697 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 23:59:40,697 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-10 23:59:52,641 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-10 23:59:52,641 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:00:08,378 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:00:08,378 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:00:29,811 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:00:29,811 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:01:01,083 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:01:01,084 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:01:06,930 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:01:06,930 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:01:24,032 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:01:24,033 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:01:41,623 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:01:41,854 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:01:46,974 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:01:46,974 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:13:11,653 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:13:11,653 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:13:17,505 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:13:17,506 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:13:23,361 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:13:23,361 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:13:28,676 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:13:28,945 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:13:34,020 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:13:34,020 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:13:39,365 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:13:39,365 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:13:45,223 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:13:45,223 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:13:50,565 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:13:50,565 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:14:00,626 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:14:00,626 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:14:05,973 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:14:05,974 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:14:12,322 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:14:12,322 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:14:18,918 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:14:18,918 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:14:27,139 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:14:27,139 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:14:36,546 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:14:36,546 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:14:48,487 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:14:48,487 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:15:04,224 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:15:04,224 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:15:25,657 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:15:25,904 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:15:31,504 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:15:31,504 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:15:36,853 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:15:37,923 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:15:42,699 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:15:42,699 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:15:59,221 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:15:59,221 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:19:11,165 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-01-11 00:19:11,165 - __main__ - WARNING - Update "{'message': {'caption_entities': [], 'chat': {'title': 'GitHub repoes', 'all_members_are_administrators': True, 'type': 'group', 'id': -273384150}, 'text': '/draw@DOMINION_IM_BOT', 'photo': [], 'group_chat_created': False, 'entities': [{'type': 'bot_command', 'offset': 0, 'length': 21}], 'channel_chat_created': False, 'new_chat_members': [], 'date': 1547137120, 'supergroup_chat_created': False, 'delete_chat_photo': False, 'message_id': 9119, 'from': {'first_name': '大和', 'is_bot': False, 'language_code': 'zh-hans', 'username': 'inuwazz', 'id': 436384576}, 'new_chat_photo': []}, 'update_id': 773023299}" caused error "Timed out"
+2019-01-11 00:19:28,835 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-01-11 00:19:28,836 - __main__ - WARNING - Update "{'message': {'photo': [], 'date': 1547137145, 'message_id': 9131, 'delete_chat_photo': False, 'caption_entities': [], 'from': {'first_name': '大和', 'is_bot': False, 'username': 'inuwazz', 'language_code': 'zh-hans', 'id': 436384576}, 'new_chat_members': [], 'text': '/join', 'new_chat_photo': [], 'supergroup_chat_created': False, 'channel_chat_created': False, 'entities': [{'type': 'bot_command', 'offset': 0, 'length': 5}], 'chat': {'all_members_are_administrators': True, 'type': 'group', 'title': 'GitHub repoes', 'id': -273384150}, 'group_chat_created': False}, 'update_id': 773023301}" caused error "Timed out"
+2019-01-11 00:19:47,222 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-01-11 00:19:47,223 - __main__ - WARNING - Update "None" caused error "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)"
+2019-01-11 00:20:34,754 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-01-11 00:20:34,755 - __main__ - WARNING - Update "{'update_id': 773023313, 'message': {'photo': [], 'delete_chat_photo': False, 'new_chat_members': [], 'channel_chat_created': False, 'message_id': 9160, 'from': {'username': 'Fukai_217', 'language_code': 'en', 'first_name': 'Fukai', 'id': 337412327, 'is_bot': False}, 'date': 1547137211, 'group_chat_created': False, 'chat': {'all_members_are_administrators': True, 'type': 'group', 'id': -273384150, 'title': 'GitHub repoes'}, 'entities': [{'type': 'bot_command', 'length': 20, 'offset': 0}], 'new_chat_photo': [], 'caption_entities': [], 'supergroup_chat_created': False, 'text': '/buy@DOMINION_IM_BOT'}}" caused error "Timed out"
+2019-01-11 00:22:19,157 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-01-11 00:22:19,157 - __main__ - WARNING - Update "{'update_id': 773023330, 'message': {'photo': [], 'delete_chat_photo': False, 'new_chat_members': [], 'channel_chat_created': False, 'message_id': 9203, 'from': {'username': 'Fukai_217', 'language_code': 'en', 'first_name': 'Fukai', 'id': 337412327, 'is_bot': False}, 'date': 1547137316, 'group_chat_created': False, 'chat': {'all_members_are_administrators': True, 'type': 'group', 'id': -273384150, 'title': 'GitHub repoes'}, 'entities': [{'type': 'bot_command', 'length': 20, 'offset': 0}], 'new_chat_photo': [], 'caption_entities': [], 'supergroup_chat_created': False, 'text': '/buy@DOMINION_IM_BOT'}}" caused error "Timed out"
+2019-01-11 00:22:26,080 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-01-11 00:22:26,080 - __main__ - WARNING - Update "{'update_id': 773023331, 'message': {'photo': [], 'delete_chat_photo': False, 'new_chat_members': [], 'channel_chat_created': False, 'message_id': 9205, 'from': {'username': 'inuwazz', 'language_code': 'zh-hans', 'first_name': '大和', 'id': 436384576, 'is_bot': False}, 'date': 1547137322, 'group_chat_created': False, 'chat': {'all_members_are_administrators': True, 'type': 'group', 'id': -273384150, 'title': 'GitHub repoes'}, 'entities': [], 'new_chat_photo': [], 'caption_entities': [], 'supergroup_chat_created': False, 'text': 'status'}, '_effective_message': {'photo': [], 'delete_chat_photo': False, 'new_chat_members': [], 'channel_chat_created': False, 'message_id': 9205, 'from': {'username': 'inuwazz', 'language_code': 'zh-hans', 'first_name': '大和', 'id': 436384576, 'is_bot': False}, 'date': 1547137322, 'group_chat_created': False, 'chat': {'all_members_are_administrators': True, 'type': 'group', 'id': -273384150, 'title': 'GitHub repoes'}, 'entities': [], 'new_chat_photo': [], 'caption_entities': [], 'supergroup_chat_created': False, 'text': 'status'}}" caused error "Timed out"
+2019-01-11 00:24:14,841 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 158, in button
+    grave.appned('Witch')
+AttributeError: 'list' object has no attribute 'appned'
+2019-01-11 00:45:37,393 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 755, in log
+    with open(filepath) as fp:
+NameError: name 'filepath' is not defined
+2019-01-11 00:46:03,334 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 755, in log
+    with open(logging.txt) as fp:
+AttributeError: module 'logging' has no attribute 'txt'
+2019-01-11 00:46:24,658 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 762, in log
+    if n == 0:
+NameError: name 'n' is not defined
+2019-01-11 00:47:03,022 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 762, in log
+    if n == 0:
+NameError: name 'n' is not defined
+2019-01-11 00:47:42,891 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 762, in log
+    if n == 0:
+NameError: name 'n' is not defined
+2019-01-11 00:50:32,718 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 757, in log
+    line = fp.seek(cnt)
+ValueError: negative seek position -5
+2019-01-11 00:52:17,011 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 762, in log
+    line = fp.seek(n,2)
+io.UnsupportedOperation: can't do nonzero end-relative seeks
+2019-01-11 00:52:47,225 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 762, in log
+    line = fp.seek(n,2)
+io.UnsupportedOperation: can't do nonzero end-relative seeks
+2019-01-11 00:52:51,244 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 762, in log
+    line = fp.seek(n,2)
+io.UnsupportedOperation: can't do nonzero end-relative seeks
+2019-01-11 00:52:52,732 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 762, in log
+    line = fp.seek(n,2)
+io.UnsupportedOperation: can't do nonzero end-relative seeks
+2019-01-11 00:52:53,492 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 762, in log
+    line = fp.seek(n,2)
+io.UnsupportedOperation: can't do nonzero end-relative seeks
+2019-01-11 00:52:54,108 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 762, in log
+    line = fp.seek(n,2)
+io.UnsupportedOperation: can't do nonzero end-relative seeks
+2019-01-11 00:58:54,989 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 755, in log
+    with open(filename.txt, 'r') as fp:
+NameError: name 'filename' is not defined
+2019-01-11 00:59:13,603 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 755, in log
+    with open(logging.txt, 'r') as fp:
+AttributeError: module 'logging' has no attribute 'txt'
+2019-01-11 00:59:31,975 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-01-11 00:59:31,975 - __main__ - WARNING - Update "{'_effective_message': {'channel_chat_created': False, 'caption_entities': [], 'from': {'is_bot': False, 'username': 'inuwazz', 'id': 436384576, 'first_name': '大和', 'language_code': 'zh-hans'}, 'photo': [], 'group_chat_created': False, 'text': 'log', 'supergroup_chat_created': False, 'new_chat_photo': [], 'new_chat_members': [], 'delete_chat_photo': False, 'entities': [], 'date': 1547139552, 'chat': {'all_members_are_administrators': True, 'id': -273384150, 'title': 'GitHub repoes', 'type': 'group'}, 'message_id': 9310}, 'update_id': 773023372, 'message': {'channel_chat_created': False, 'caption_entities': [], 'from': {'is_bot': False, 'username': 'inuwazz', 'id': 436384576, 'first_name': '大和', 'language_code': 'zh-hans'}, 'photo': [], 'group_chat_created': False, 'text': 'log', 'supergroup_chat_created': False, 'new_chat_photo': [], 'new_chat_members': [], 'delete_chat_photo': False, 'entities': [], 'date': 1547139552, 'chat': {'all_members_are_administrators': True, 'id': -273384150, 'title': 'GitHub repoes', 'type': 'group'}, 'message_id': 9310}}" caused error "Message is too long"
+2019-01-11 01:03:19,761 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 760, in log
+    update.message.reply_text(str(lines[n]))
+TypeError: list indices must be integers or slices, not str
+2019-01-11 01:03:43,154 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 760, in log
+    update.message.reply_text(str(lines[n]))
+IndexError: list index out of range
+2019-01-11 01:04:42,849 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\regexhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 760, in log
+    update.message.reply_text(str(lines[n]))
+IndexError: list index out of range
