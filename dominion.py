@@ -611,15 +611,15 @@ def buy(bot,update):
     buy_turn = True
     keyboard = [[]]
     if gold >=6 :
-        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
-        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
-        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
-        keyboard.append([InlineKeyboardButton("Silver", callback_data="silver")])
         keyboard.append([InlineKeyboardButton("Gold", callback_data="gold")])
+        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
+        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
+        keyboard.append([InlineKeyboardButton("Silver", callback_data="silver")])
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
         update.message.reply_text('Buy Gold costs 6 dollars\nBuy Witch cost 5 dollars\nBuy Village cost 3 dollars\nBuy Silver cost 3 dollars\nBuy Courtyard costs 2 dollar')
     elif gold == 5:
-        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
+        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="silver")])
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
         update.message.reply_text('Buy Witch cost 5 dollars\nBuy Village cost 3 dollars\nBuy Silver cost 3 dollars\nBuy Courtyard costs 2 dollar')
