@@ -26,6 +26,9 @@ buy_temp = []
 hand = []
 hand2 = []
 hand3 = []
+temp_deck_top=[]
+temp_deck_top2 = []
+temp_deck_top3 = []
 gold = 0
 points = 0
 points2 = 0
@@ -59,6 +62,9 @@ def start(bot,update):
 
 
 def button(bot,update):
+    global deckplayer1,deckplayer2,deckplayer3
+    global grave,grave2,grave3
+    global temp_deck_top,temp_deck_top2,temp_deck_top3
     global action
     global gold
     global buy_temp
@@ -94,12 +100,21 @@ def button(bot,update):
             query.edit_message_text('You have bought Courtyard .\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
+    if query.data=="gold":
+        if (buy_turn == True) and (gold - 6 >= 0):
+            buy_temp.append('gold')
+            gold -= 6
+            buy_time -= 1
+            query.edit_message_text('You have bought Gold .\nType ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=='usevillage':
         if action>0:
             action-=1
             action +=2
             if turn_count == 1:
                 hand.remove('Village')
+                grave.append('Village')
                 temp = random.choice(deckplayer1)
                 hand.append(temp)
                 if temp == 'copper':
@@ -111,6 +126,7 @@ def button(bot,update):
                 query.edit_message_text('You have draw ' + str(temp) + ' and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
             elif turn_count == 2:
                 hand2.remove('Village')
+                grave2.append('Village')
                 temp = random.choice(deckplayer2)
                 hand2.append(temp)
                 if temp == 'copper':
@@ -122,6 +138,7 @@ def button(bot,update):
                 query.edit_message_text('You have draw ' + str(temp) + ' and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
             elif turn_count == 3:
                 hand3.remove('Village')
+                grave3.append('Village')
                 temp = random.choice(deckplayer3)
                 hand3.append(temp)
                 if temp == 'copper':
@@ -138,6 +155,7 @@ def button(bot,update):
             action -= 1
             if turn_count == 1:
                 hand.remove('Witch')
+                grave.appned('Witch')
                 grave2.append('Curse')
                 grave3.append('Curse')
                 temp = random.choice(deckplayer1)
@@ -159,6 +177,7 @@ def button(bot,update):
                 query.edit_message_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 2:
                 hand2.remove('Witch')
+                grave2.append('Witch')
                 grave1.append('Curse')
                 grave3.append('Curse')
                 temp = random.choice(deckplayer2)
@@ -180,6 +199,7 @@ def button(bot,update):
                 query.edit_message_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 3:
                 hand3.remove('Witch')
+                grave3.append('Witch')
                 grave.append('Curse')
                 grave2.append('Curse')
                 temp = random.choice(deckplayer3)
@@ -201,6 +221,199 @@ def button(bot,update):
                 query.edit_message_text('You have draw ' + str(temp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             else:
                 query.edit_message_text('You dont have enough Action.')
+    if query.data == 'usecourtyard':
+        keyboard = [[]]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        if action >0:
+            action -= 1
+            if turn_count == 1:
+                hand.remove('Courtyard')
+                grave.append('Courtyard')
+                temp = random.choice(deckplayer1)
+                hand.append(temp)
+                tempp =random.choice(deckplayer1)
+                hand.append(tempp)
+                temppp = random.choice(deckplayer1)
+                if deckplayer1 == []:
+                    deckplayer1 = grave
+                    grave = []
+                if temp == 'copper':
+                    gold += 1
+                elif temp == 'silver':
+                    gold += 2
+                elif temp == 'gold':
+                    gold += 3
+                if tempp == 'copper':
+                    gold += 1
+                elif tempp == 'silver':
+                    gold += 2
+                elif tempp == 'gold':
+                    gold += 3
+                if temppp == 'copper':
+                    gold += 1
+                elif temppp == 'silver':
+                    gold += 2
+                elif temppp == 'gold':
+                    gold += 3
+                for i in range(len(hand)):
+                    c_temp = hand[i]
+                    if c_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="c_village")])
+                    elif c_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_witch")])
+                    elif c_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="c_courtyard")])
+                    elif c_temp == 'copper':
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
+                    elif c_temp == 'silver':
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
+                    elif c_temp == 'gold':
+                        keyboard.append([InlineKeyboardButton("gold", callback_data="c_gold")])
+                update.message.reply_text('Cards available : ', reply_markup=reply_markup)
+                query.edit_message_text('You have draw ' + str(temp) + ' , ' +str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            elif turn_count == 2:
+                hand2.remove('Courtyard')
+                grave2.append('Courtyard')
+                temp = random.choice(deckplayer2)
+                hand2.append(temp)
+                tempp = random.choice(deckplayer2)
+                hand2.append(tempp)
+                temppp = random.choice(deckplayer2)
+                if deckplayer2 == []:
+                    deckplayer2 = grave2
+                    grave = []
+                if temp == 'copper':
+                    gold += 1
+                elif temp == 'silver':
+                    gold += 2
+                elif temp == 'gold':
+                    gold += 3
+                if tempp == 'copper':
+                    gold += 1
+                elif tempp == 'silver':
+                    gold += 2
+                elif tempp == 'gold':
+                    gold += 3
+                if temppp == 'copper':
+                    gold += 1
+                elif temppp == 'silver':
+                    gold += 2
+                elif temppp == 'gold':
+                    gold += 3
+                for i in range(len(hand2)):
+                    c_temp = hand2[i]
+                    if c_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="c_village")])
+                    elif c_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_witch")])
+                    elif c_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="c_courtyard")])
+                    elif c_temp == 'copper':
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
+                    elif c_temp == 'silver':
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
+                    elif c_temp == 'gold':
+                        keyboard.append([InlineKeyboardButton("gold", callback_data="c_gold")])
+                update.message.reply_text('Cards available : ', reply_markup=reply_markup)
+                query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            elif turn_count == 3:
+                hand3.remove('Courtyard')
+                grave3.append('Courtyard')
+                temp = random.choice(deckplayer3)
+                hand3.append(temp)
+                tempp = random.choice(deckplayer3)
+                hand3.append(tempp)
+                temppp = random.choice(deckplayer3)
+                if deckplayer3 == []:
+                    deckplayer3 = grave3
+                    grave = []
+                if temp == 'copper':
+                    gold += 1
+                elif temp == 'silver':
+                    gold += 2
+                elif temp == 'gold':
+                    gold += 3
+                if tempp == 'copper':
+                    gold += 1
+                elif tempp == 'silver':
+                    gold += 2
+                elif tempp == 'gold':
+                    gold += 3
+                if temppp == 'copper':
+                    gold += 1
+                elif temppp == 'silver':
+                    gold += 2
+                elif temppp == 'gold':
+                    gold += 3
+                for i in range(len(hand3)):
+                    c_temp = hand3[i]
+                    if c_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="c_village")])
+                    elif c_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_witch")])
+                    elif c_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="c_courtyard")])
+                    elif c_temp == 'copper':
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
+                    elif c_temp == 'silver':
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
+                    elif c_temp == 'gold':
+                        keyboard.append([InlineKeyboardButton("gold", callback_data="c_gold")])
+                query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            query.message.reply_text('You can put one card on top of your deck\nCards availbale:',replymarkup=replymarkup)
+
+        else:
+            query.edit_message_text('You dont have enough Action.')
+    if query.data == 'c_witch':
+        global temp_deck_top
+        if turn_count == 1:
+            temp_deck_top.append('Witch')
+        elif turn_count ==2:
+            temp_deck_top2.append('Witch')
+        elif turn_count==3:
+            temp_deck_top3.append('Witch')
+        query.edit_message_text('Witch is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'c_village':
+        if turn_count == 1:
+            temp_deck_top.append('Village')
+        elif turn_count == 2:
+            temp_deck_top2.append('Village')
+        elif turn_count == 3:
+            temp_deck_top3.append('Village')
+        query.edit_message_text('Village is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'c_courtyard':
+        if turn_count == 1:
+            temp_deck_top.append('Courtyard')
+        elif turn_count == 2:
+            temp_deck_top2.append('Courtyard')
+        elif turn_count == 3:
+            temp_deck_top3.append('Courtyard')
+        query.edit_message_text('Courtyard is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'c_copper':
+        if turn_count == 1:
+            temp_deck_top.append('copper')
+        elif turn_count == 2:
+            temp_deck_top2.append('copper')
+        elif turn_count == 3:
+            temp_deck_top3.append('copper')
+        query.edit_message_text('Copper is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'c_silver':
+        if turn_count == 1:
+            temp_deck_top.append('silver')
+        elif turn_count == 2:
+            temp_deck_top2.append('silver')
+        elif turn_count == 3:
+            temp_deck_top3.append('silver')
+        query.edit_message_text('Silver is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'c_gold':
+        if turn_count == 1:
+            temp_deck_top.append('gold')
+        elif turn_count == 2:
+            temp_deck_top2.append('gold')
+        elif turn_count == 3:
+            temp_deck_top3.append('gold')
+        query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+
 
 
 def join(bot,update):
@@ -227,6 +440,7 @@ def join(bot,update):
     return (user1_id,user2_id,user3_id,user1_name,user2_name,user3_name)
 
 def draw(bot,update):
+    global temp_deck_top,temp_deck_top2,temp_deck_top3
     global gold
     global points
     global deckplayer1
@@ -246,23 +460,44 @@ def draw(bot,update):
         else:
             update.message.reply_text('Turn ' + str(turnnum))
             if str(update.message.from_user.id) == user1_id and turn_count == 1:
-                for i in range(5):
-                        temp = (random.choice(deckplayer1))
-                        hand.append(temp)
-                        deckplayer1.remove(temp)
-                        if temp == 'copper':
-                            gold += 1
-                        elif temp == 'silver':
-                            gold += 2
-                        elif temp == 'gold':
-                            gold += 3
-                        if deckplayer1 == []:
-                            deckplayer1 = grave
-                            grave = []
-                        turn = True
+                if temp_deck_top != []:
+                    hand.append(temp_deck_top)
+                    temp_deck_top = []
+                    for i in range(4):
+                            temp = (random.choice(deckplayer1))
+                            hand.append(temp)
+                            deckplayer1.remove(temp)
+                            if temp == 'copper':
+                                gold += 1
+                            elif temp == 'silver':
+                                gold += 2
+                            elif temp == 'gold':
+                                gold += 3
+                            if deckplayer1 == []:
+                                deckplayer1 = grave
+                                grave = []
+                            turn = True
+                else:
+                    for i in range(5):
+                            temp = (random.choice(deckplayer1))
+                            hand.append(temp)
+                            deckplayer1.remove(temp)
+                            if temp == 'copper':
+                                gold += 1
+                            elif temp == 'silver':
+                                gold += 2
+                            elif temp == 'gold':
+                                gold += 3
+                            if deckplayer1 == []:
+                                deckplayer1 = grave
+                                grave = []
+                            turn = True
                 update.message.reply_text('You got ' + str(hand) + ' .\nType ( /buy ) or ( /use ) to proceed')
             elif str(update.message.from_user.id) == user2_id and turn_count == 2:
-                for i in range(5):
+                if temp_deck_top2 != []:
+                    hand2.append(temp_deck_top2)
+                    temp_deck_top2 = []
+                    for i in range(4):
                         temp = (random.choice(deckplayer2))
                         hand2.append(temp)
                         deckplayer2.remove(temp)
@@ -272,13 +507,31 @@ def draw(bot,update):
                             gold += 2
                         elif temp == 'gold':
                             gold += 3
-                        if deckplayer2 == []:
+                        if deckplayer1 == []:
                             deckplayer2 = grave2
                             grave2 = []
                         turn = True
+                else:
+                    for i in range(5):
+                            temp = (random.choice(deckplayer2))
+                            hand2.append(temp)
+                            deckplayer2.remove(temp)
+                            if temp == 'copper':
+                                gold += 1
+                            elif temp == 'silver':
+                                gold += 2
+                            elif temp == 'gold':
+                                gold += 3
+                            if deckplayer2 == []:
+                                deckplayer2 = grave2
+                                grave2 = []
+                            turn = True
                 update.message.reply_text('You got ' + str(hand2) + ' .\nType ( /buy ) or ( /use ) to proceed')
             elif str(update.message.from_user.id) == user3_id and turn_count == 3:
-                for i in range(5):
+                if temp_deck_top != []:
+                    hand3.append(temp_deck_top3)
+                    temp_deck_top3 = []
+                    for i in range(4):
                         temp = (random.choice(deckplayer3))
                         hand3.append(temp)
                         deckplayer3.remove(temp)
@@ -292,6 +545,21 @@ def draw(bot,update):
                             deckplayer3 = grave3
                             grave3 = []
                         turn = True
+                else:
+                    for i in range(5):
+                            temp = (random.choice(deckplayer3))
+                            hand3.append(temp)
+                            deckplayer3.remove(temp)
+                            if temp == 'copper':
+                                gold += 1
+                            elif temp == 'silver':
+                                gold += 2
+                            elif temp == 'gold':
+                                gold += 3
+                            if deckplayer3 == []:
+                                deckplayer3 = grave3
+                                grave3 = []
+                            turn = True
                 update.message.reply_text('You got ' + str(hand3) + ' .\nType ( /buy ) or ( /use ) to proceed')
             else:
                 update.message.reply_text('Its not your turn or you havent joined the game yet.')
@@ -342,18 +610,25 @@ def buy(bot,update):
     update.message.reply_text('You have <' + str(gold) + '> dollar')
     buy_turn = True
     keyboard = [[]]
-    if gold >= 5:
-        update.message.reply_text('Buy Witch cost 5 dollars')
-        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
-    if gold >= 4:
-        update.message.reply_text('You can buy some cards')
-        keyboard.append([InlineKeyboardButton("Some", callback_data="Some")])
-    if gold >= 3:
-        update.message.reply_text('Buy Village cost 3 dollars')
+    if gold >=6 :
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
-        update.message.reply_text('Buy Silver cost 3 dollars')
+        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="silver")])
-    if gold >= 2:
+        keyboard.append([InlineKeyboardButton("Gold", callback_data="gold")])
+        update.message.reply_text('Buy Gold costs 6 dollars\nBuy Witch cost 5 dollars\nBuy Village cost 3 dollars\nBuy Silver cost 3 dollars\nBuy Courtyard costs 2 dollar')
+    elif gold == 5:
+        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
+        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
+        keyboard.append([InlineKeyboardButton("Silver", callback_data="silver")])
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
+        update.message.reply_text('Buy Witch cost 5 dollars\nBuy Village cost 3 dollars\nBuy Silver cost 3 dollars\nBuy Courtyard costs 2 dollar')
+    elif gold == 4 or gold == 3 :
+        update.message.reply_text('Buy Village cost 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
+        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
+        keyboard.append([InlineKeyboardButton("Silver", callback_data="silver")])
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
+    elif gold == 2:
         update.message.reply_text('Buy Courtyard costs 2 dollar')
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
     update.message.reply_text('Cards available : ',reply_markup=InlineKeyboardMarkup(keyboard))
@@ -470,18 +745,6 @@ def reset(bot,update):
 def status(bot,update):
     update.message.reply_text('normal')
 
-def pass_next(bot,update):
-    global turn
-    global buy_turn
-    global action
-    global buy_time
-    global turn_count
-    turn = False
-    turn_count += 1
-    buy_turn = False
-    buy_time = 1
-    action = 1
-    update.message.reply_text('success')
 
 def show (bot,update):
     update.message.reply_text(str(action))
@@ -505,7 +768,6 @@ def main():
     test.add_handler(CommandHandler('use',use))
     test.add_handler(RegexHandler('.*status.*',status))
     test.add_handler(RegexHandler('.*reset.*', reset))
-    test.add_handler(RegexHandler('pass',pass_next))
     test.add_handler(RegexHandler('admin',admin))
     test.add_handler(RegexHandler('.*show.*',show))
     test.add_error_handler(error)
