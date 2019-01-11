@@ -269,6 +269,8 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
                     elif c_temp == 'gold':
                         keyboard.append([InlineKeyboardButton("gold", callback_data="c_gold")])
+                    elif c_temp == 'estates':
+                        keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
                 query.message.reply_text('Cards available : ', reply_markup=reply_markup)
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' +str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 2:
@@ -314,6 +316,8 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
                     elif c_temp == 'gold':
                         keyboard.append([InlineKeyboardButton("gold", callback_data="c_gold")])
+                    elif c_temp == 'estates':
+                        keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
                 query.message.reply_text('Cards available : ', reply_markup=reply_markup)
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 3:
@@ -359,6 +363,8 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
                     elif c_temp == 'gold':
                         keyboard.append([InlineKeyboardButton("gold", callback_data="c_gold")])
+                    elif c_temp == 'estates':
+                        keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             query.message.reply_text('You can put one card on top of your deck\nCards availbale:',replymarkup=replymarkup)
         else:
@@ -367,51 +373,80 @@ def button(bot,update):
         global temp_deck_top
         if turn_count == 1:
             temp_deck_top.append('Witch')
+            hand.remove('Witch')
         elif turn_count ==2:
             temp_deck_top2.append('Witch')
+            hand2.remove('Witch')
         elif turn_count==3:
             temp_deck_top3.append('Witch')
+            hand3.remove('Witch')
         query.edit_message_text('Witch is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_village':
         if turn_count == 1:
             temp_deck_top.append('Village')
+            hand.remove('Village')
         elif turn_count == 2:
             temp_deck_top2.append('Village')
+            hand2.remove('Village')
         elif turn_count == 3:
             temp_deck_top3.append('Village')
+            hand3.remove('Village')
         query.edit_message_text('Village is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_courtyard':
         if turn_count == 1:
             temp_deck_top.append('Courtyard')
+            hand.remove('Courtyard')
         elif turn_count == 2:
             temp_deck_top2.append('Courtyard')
+            hand2.remove('Courtyard')
         elif turn_count == 3:
             temp_deck_top3.append('Courtyard')
+            hand3.remove('Courtyard')
         query.edit_message_text('Courtyard is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_copper':
         if turn_count == 1:
             temp_deck_top.append('copper')
+            hand.remove('copper')
         elif turn_count == 2:
             temp_deck_top2.append('copper')
+            hand2.remove('copper')
         elif turn_count == 3:
             temp_deck_top3.append('copper')
+            hand3.remove('copper')
         query.edit_message_text('Copper is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_silver':
         if turn_count == 1:
             temp_deck_top.append('silver')
+            hand.remove('silver')
         elif turn_count == 2:
             temp_deck_top2.append('silver')
+            hand2.remove('silver')
         elif turn_count == 3:
             temp_deck_top3.append('silver')
+            hand3.remove('silver')
         query.edit_message_text('Silver is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_gold':
         if turn_count == 1:
             temp_deck_top.append('gold')
+            hand.remove('gold')
         elif turn_count == 2:
             temp_deck_top2.append('gold')
+            hand2.remove('gold')
         elif turn_count == 3:
             temp_deck_top3.append('gold')
+            hand3.remove('gold')
         query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'c_estates':
+        if turn_count == 1:
+            temp_deck_top.append('estates')
+            hand.remove('estates')
+        elif turn_count == 2:
+            temp_deck_top2.append('estates')
+            hand2.remove('estates')
+        elif turn_count == 3:
+            temp_deck_top3.append('estates')
+            hand3.remove('estates')
+        query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
 
 
 
