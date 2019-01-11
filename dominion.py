@@ -269,7 +269,7 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
                     elif c_temp == 'gold':
                         keyboard.append([InlineKeyboardButton("gold", callback_data="c_gold")])
-                update.message.reply_text('Cards available : ', reply_markup=reply_markup)
+                query.message.reply_text('Cards available : ', reply_markup=reply_markup)
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' +str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 2:
                 hand2.remove('Courtyard')
@@ -314,7 +314,7 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
                     elif c_temp == 'gold':
                         keyboard.append([InlineKeyboardButton("gold", callback_data="c_gold")])
-                update.message.reply_text('Cards available : ', reply_markup=reply_markup)
+                query.message.reply_text('Cards available : ', reply_markup=reply_markup)
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 3:
                 hand3.remove('Courtyard')
