@@ -460,7 +460,7 @@ def draw(bot,update):
             update.message.reply_text('Turn ' + str(turnnum))
             if str(update.message.from_user.id) == user1_id and turn_count == 1:
                 if temp_deck_top != []:
-                    c = temp_deck_top[1]
+                    c = temp_deck_top[0]
                     hand.append(c)
                     temp_deck_top = []
                     for i in range(4):
@@ -495,7 +495,7 @@ def draw(bot,update):
                 update.message.reply_text('You got ' + str(hand) + ' .\nType ( /buy ) or ( /use ) to proceed')
             elif str(update.message.from_user.id) == user2_id and turn_count == 2:
                 if temp_deck_top2 != []:
-                    c = temp_deck_top2[1]
+                    c = temp_deck_top2[0]
                     hand2.append(c)
                     temp_deck_top2 = []
                     for i in range(4):
@@ -530,7 +530,7 @@ def draw(bot,update):
                 update.message.reply_text('You got ' + str(hand2) + ' .\nType ( /buy ) or ( /use ) to proceed')
             elif str(update.message.from_user.id) == user3_id and turn_count == 3:
                 if temp_deck_top != []:
-                    c = temp_deck_top3[1]
+                    c = temp_deck_top3[0]
                     hand3.append(c)
                     temp_deck_top3 = []
                     for i in range(4):
