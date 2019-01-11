@@ -178,7 +178,7 @@ def button(bot,update):
             elif turn_count == 2:
                 hand2.remove('Witch')
                 grave2.append('Witch')
-                grave1.append('Curse')
+                grave.append('Curse')
                 grave3.append('Curse')
                 temp = random.choice(deckplayer2)
                 hand2.append(temp)
