@@ -1060,7 +1060,8 @@ def end(bot,update):
             grave += buy_temp
             hand = []
             buy_temp = []
-            update.message.reply_text(str(user1_name) + ' is done!')
+            update.message.reply_text(str(user1_name) + ' is done!\nIts now your turn , ' + str(user1_name) + ' @' + user1_tag +'\nType /draw')
+            turn_count += 1
     elif turn_count == 2 :
         if str(update.message.from_user.id) != user2_id:
             update.message.reply_text('It is not your turn.')
@@ -1069,7 +1070,10 @@ def end(bot,update):
             grave2 += buy_temp
             hand2 = []
             buy_temp = []
-            update.message.reply_text(str(user2_name) + ' is done!')
+            update.message.reply_text(str(user2_name) + ' is done!\nIts now your turn , ' + str(user2_name) + ' @' + user2_tag +'\nType /draw')
+            turn_count += 1
+            if user3_name == 'null' and turn_count == 3:
+                turn_count = 1
     elif turn_count == 3 :
         if str(update.message.from_user.id) != user3_id:
             update.message.reply_text('It is not your turn.')
@@ -1078,20 +1082,13 @@ def end(bot,update):
             grave3 += buy_temp
             hand3 = []
             buy_temp = []
-            update.message.reply_text(str(user3_name) + ' is done!')
+            update.message.reply_text(str(user2_name) + ' is done!\nIts now your turn , ' + str(user3_name) + ' @' + user3_tag + '\nType /draw')
+            turn_count += 1
+            if turn_count == 4:
+                turn_count = 1
     else:
         update.message.reply_text('You havent join the game yet.')
-    turn_count += 1
-    if user3_name == 'null' and turn_count == 3:
-        turn_count = 1
-    elif turn_count == 4:
-        turn_count = 1
-    if turn_count==1:
-        update.message.reply_text("Its now your turn , " + str(user1_name) + ' @' + user1_tag + '\nType /draw')
-    elif turn_count==2:
-        update.message.reply_text("Its now your turn , " + str(user2_name) + ' @' + user2_tag +'\nType /draw')
-    elif turn_count==3:
-        update.message.reply_text("Its now your turn , " + str(user3_name) + ' @' + user3_tag +'\nType /draw')
+
 
 def playerlist(bot,update):
     update.message.reply_text('Current player list :\n [' + str(user1_name) + ' / ' + str(user2_name) + ' / ' + str(user3_name) + ']\nSupport Max to 3 player')
