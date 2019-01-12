@@ -560,6 +560,7 @@ def button(bot,update):
             else:
                 query.edit_message_text('You dont have enough Action.')
     if query.data == 'useworkshop':
+        global keyboard
         keyboard=[[]]
         reply_markup=InlineKeyboardMarkup(keyboard)
         if action>0:
@@ -570,8 +571,9 @@ def button(bot,update):
             keyboard.append([InlineKeyboardButton("Village", callback_data="w_village")])
             keyboard.append([InlineKeyboardButton("Silver", callback_data="w_silver")])
             keyboard.append([InlineKeyboardButton("Courtyard", callback_data="w_courtyard")])
+            keyboard.append([InlineKeyboardButton("Clickme", callback_data="clickme")])
             query.message.reply_text('Cards availbale:',reply_markup=reply_markup)
-            keyboard.append([InlineKeyboardButton("Click me to end", callback_data="clickme")])
+            keyboard.append([InlineKeyboardButton("Click me to end", callback_data="end")])
         else:
             query.edit_message_text('You dont have enough action')
     if query.data == 'c_witch':
@@ -781,7 +783,9 @@ def button(bot,update):
         query.edit_message_text('Workshop is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'clickme':
         query.edit_message_text('END')
-
+    if query.data == 'end':
+        reply_markup=InlineKeyboardMarkup(keyboard)
+        query.edit_message_text('end',reply_markup=reply_markup)
 
 def join(bot,update):
     global user1_id
@@ -1148,7 +1152,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('normal\nv1.2.3.2_beta')
+    update.message.reply_text('normal\nv 1.2.3.3 (beta)')
 
 
 def show (bot,update):
