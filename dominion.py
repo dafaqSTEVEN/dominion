@@ -486,7 +486,7 @@ def join(bot,update):
     if start_game == True:
        update.message.reply_text('The Loby is closed')
     else:
-        if update.message.from_user.id == user1_id:
+        if str(update.message.from_user.id) == user1_id:
             update.message.reply_text('You have already joined the game.')
         else:
             update.message.reply_text('Welcome ' + str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ')
@@ -814,7 +814,7 @@ def status(bot,update):
 
 def show (bot,update):
     update.message.reply_text(str(action)+'\nTurn count is '+str(turn_count)+'\n'+str(hand)+'\n'+str(hand2)+'\n'+str(hand3))
-    update.message.reply_text(user1_id+str(update.message.from_user.id))
+    update.message.reply_text(user1_id+ '\n' +str(update.message.from_user.id))
 
 def admin(bot,update):
     update.message.reply_text('/join\n/start\n/draw')
