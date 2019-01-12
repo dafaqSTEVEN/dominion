@@ -402,7 +402,7 @@ def button(bot,update):
             query.message.reply_text('You can put one card on top of your deck\nCards availbale:',replymarkup=replymarkup)
         else:
             query.edit_message_text('You dont have enough Action.')
-    if query.data == 'use harbinger':
+    if query.data == 'useharbinger':
         keyboard = [[]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         if turn_count == 1:
