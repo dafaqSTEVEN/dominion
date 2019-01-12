@@ -560,9 +560,7 @@ def button(bot,update):
             else:
                 query.edit_message_text('You dont have enough Action.')
     if query.data == 'useworkshop':
-        global clickarray
         keyboard=[[]]
-        clickarray = [[]]
         reply_markup=InlineKeyboardMarkup(keyboard)
         if action>0:
             action -=1
@@ -572,10 +570,6 @@ def button(bot,update):
             keyboard.append([InlineKeyboardButton("Village", callback_data="w_village")])
             keyboard.append([InlineKeyboardButton("Silver", callback_data="w_silver")])
             keyboard.append([InlineKeyboardButton("Courtyard", callback_data="w_courtyard")])
-            keyboard.append([InlineKeyboardButton("Clickme", callback_data="end")])
-            query.edit_message_text('Cards availbale:',reply_markup=reply_markup)
-            keyboard.append([InlineKeyboardButton("Click me to end", callback_data="clickme")])
-            clickarray=keyboard
         else:
             query.edit_message_text('You dont have enough action')
     if query.data == 'c_witch':
@@ -783,11 +777,6 @@ def button(bot,update):
         elif turn_count == 3:
             grave3.append('Workshop')
         query.edit_message_text('Workshop is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
-    if query.data == 'clickme':
-        query.edit_message_text('END')
-    if query.data == 'end':
-        reply_markup=InlineKeyboardMarkup(clickarray)
-        query.edit_message_text('end',reply_markup=reply_markup)
 
 def join(bot,update):
     global user1_id
@@ -1064,25 +1053,34 @@ def end(bot,update):
     action = 1
     gold = 0
     if  turn_count == 1 :
-        grave += hand
-        grave += buy_temp
-        hand = []
-        buy_temp = []
-        update.message.reply_text(str(user1_name) + ' is done!')
+        if str(update.message.from_user.id) != user1_id:
+            update.message.reply_text('It is not your turn.')
+        else:
+            grave += hand
+            grave += buy_temp
+            hand = []
+            buy_temp = []
+            update.message.reply_text(str(user1_name) + ' is done!')
     elif turn_count == 2 :
-        grave2 += hand2
-        grave2 += buy_temp
-        hand2 = []
-        buy_temp = []
-        update.message.reply_text(str(user2_name) + ' is done!')
+        if str(update.message.from_user.id) != user2_id:
+            update.message.reply_text('It is not your turn.')
+        else:
+            grave2 += hand2
+            grave2 += buy_temp
+            hand2 = []
+            buy_temp = []
+            update.message.reply_text(str(user2_name) + ' is done!')
     elif turn_count == 3 :
-        grave3 += hand3
-        grave3 += buy_temp
-        hand3 = []
-        buy_temp = []
-        update.message.reply_text(str(user3_name) + ' is done!')
+        if str(update.message.from_user.id) != user3_id:
+            update.message.reply_text('It is not your turn.')
+        else:
+            grave3 += hand3
+            grave3 += buy_temp
+            hand3 = []
+            buy_temp = []
+            update.message.reply_text(str(user3_name) + ' is done!')
     else:
-        update.message.reply_text('Its not your turn.')
+        update.message.reply_text('You havent join the game yet.')
     turn_count += 1
     if user3_name == 'null' and turn_count == 3:
         turn_count = 1
@@ -1154,7 +1152,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('normal\nv 1.2.3.3 (beta)')
+    update.message.reply_text('normal\nv 1.3.0 (beta ready)')
 
 
 def show (bot,update):
