@@ -572,9 +572,9 @@ def button(bot,update):
             keyboard.append([InlineKeyboardButton("Village", callback_data="w_village")])
             keyboard.append([InlineKeyboardButton("Silver", callback_data="w_silver")])
             keyboard.append([InlineKeyboardButton("Courtyard", callback_data="w_courtyard")])
-            keyboard.append([InlineKeyboardButton("Clickme", callback_data="clickme")])
+            keyboard.append([InlineKeyboardButton("Clickme", callback_data="end")])
             query.message.reply_text('Cards availbale:',reply_markup=reply_markup)
-            keyboard.append([InlineKeyboardButton("Click me to end", callback_data="end")])
+            keyboard.append([InlineKeyboardButton("Click me to end", callback_data="clickme")])
             keyboard = clickarray
         else:
             query.edit_message_text('You dont have enough action')
