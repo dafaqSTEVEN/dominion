@@ -486,7 +486,7 @@ def join(bot,update):
     if start_game == True:
        update.message.reply_text('The Loby is closed')
     else:
-        if update.message.from_user.id == user1_id or update.message.from_user.id == user2_id or update.message.from_user.id == user3_id:
+        if update.message.from_user.id == user1_id:
             update.message.reply_text('You have already joined the game.')
         else:
             update.message.reply_text('Welcome ' + str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ')
