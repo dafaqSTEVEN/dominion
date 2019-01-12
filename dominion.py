@@ -405,75 +405,78 @@ def button(bot,update):
     if query.data == 'useharbinger':
         keyboard = [[]]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        if turn_count == 1:
-            query.edit_message_text('You have ' + str(grave) +' in your discarded pile')
-            hand.remove('Harbinger')
-            for i in range(len(grave)):
-                h_temp = grave[i]
-                if h_temp == 'Village':
-                    keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
-                elif h_temp == 'Witch':
-                    keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
-                elif h_temp == 'Courtyard':
-                    keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
-                elif h_temp == 'copper':
-                    keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
-                elif h_temp == 'silver':
-                    keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
-                elif h_temp == 'gold':
-                    keyboard.append([InlineKeyboardButton("Gold", callback_data="h_gold")])
-                elif h_temp == 'estates':
-                    keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
-                elif h_temp == 'Harbinger':
-                    keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
-            grave.append('Harbinger')
-            query.message.reply_text('Cards available:',reply_markup=reply_markup)
-
-        elif turn_count ==2 :
-            hand2.remove(Harbinger)
-            query.edit_message_text('You have ' + str(grave2) + ' in your discarded pile')
-            for i in range(len(grave2)):
-                h_temp = grave[i]
-                if h_temp == 'Village':
-                    keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
-                elif h_temp == 'Witch':
-                    keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
-                elif h_temp == 'Courtyard':
-                    keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
-                elif h_temp == 'copper':
-                    keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
-                elif h_temp == 'silver':
-                    keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
-                elif h_temp == 'gold':
-                    keyboard.append([InlineKeyboardButton("Gold", callback_data="h_gold")])
-                elif h_temp == 'estates':
-                    keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
-                elif h_temp == 'Harbinger':
-                    keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
-            grave2.append('Harbinger')
-            query.message.reply_text('Cards available:', reply_markup=reply_markup)
-        elif turn_count == 3 :
-            query.edit_message_text('You have ' + str(grave3) + ' in your discarded pile')
-            for i in range(len(grave3)):
-                h_temp = grave[i]
-                if h_temp == 'Village':
-                    keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
-                elif h_temp == 'Witch':
-                    keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
-                elif h_temp == 'Courtyard':
-                    keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
-                elif h_temp == 'copper':
-                    keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
-                elif h_temp == 'silver':
-                    keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
-                elif h_temp == 'gold':
-                    keyboard.append([InlineKeyboardButton("Gold", callback_data="h_gold")])
-                elif h_temp == 'estates':
-                    keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
-                elif h_temp == 'Harbinger':
-                    keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
-            grave3.append('Harbinger')
-            query.message.reply_text('Cards available:', reply_markup=reply_markup)
+        if action >0 :
+            if turn_count == 1:
+                query.edit_message_text('You have ' + str(grave) +' in your discarded pile')
+                hand.remove('Harbinger')
+                for i in range(len(grave)):
+                    h_temp = grave[i]
+                    if h_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
+                    elif h_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
+                    elif h_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
+                    elif h_temp == 'copper':
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
+                    elif h_temp == 'silver':
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
+                    elif h_temp == 'gold':
+                        keyboard.append([InlineKeyboardButton("Gold", callback_data="h_gold")])
+                    elif h_temp == 'estates':
+                        keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
+                    elif h_temp == 'Harbinger':
+                        keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
+                grave.append('Harbinger')
+                query.message.reply_text('Cards available:',reply_markup=reply_markup)
+            elif turn_count ==2 :
+                hand2.remove('Harbinger')
+                query.edit_message_text('You have ' + str(grave2) + ' in your discarded pile')
+                for i in range(len(grave2)):
+                    h_temp = grave[i]
+                    if h_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
+                    elif h_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
+                    elif h_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
+                    elif h_temp == 'copper':
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
+                    elif h_temp == 'silver':
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
+                    elif h_temp == 'gold':
+                        keyboard.append([InlineKeyboardButton("Gold", callback_data="h_gold")])
+                    elif h_temp == 'estates':
+                        keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
+                    elif h_temp == 'Harbinger':
+                        keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
+                grave2.append('Harbinger')
+                query.message.reply_text('Cards available:', reply_markup=reply_markup)
+            elif turn_count == 3 :
+                hand.remove('Harbinger')
+                query.edit_message_text('You have ' + str(grave3) + ' in your discarded pile')
+                for i in range(len(grave3)):
+                    h_temp = grave[i]
+                    if h_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
+                    elif h_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
+                    elif h_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
+                    elif h_temp == 'copper':
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
+                    elif h_temp == 'silver':
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
+                    elif h_temp == 'gold':
+                        keyboard.append([InlineKeyboardButton("Gold", callback_data="h_gold")])
+                    elif h_temp == 'estates':
+                        keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
+                    elif h_temp == 'Harbinger':
+                        keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
+                grave3.append('Harbinger')
+                query.message.reply_text('Cards available:', reply_markup=reply_markup)
+        else:
+            query.message.reply_text('you dont have enough action')
     if query.data == 'c_witch':
         if turn_count == 1:
             temp_deck_top.append('Witch')
