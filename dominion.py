@@ -112,6 +112,14 @@ def button(bot,update):
             query.edit_message_text('You have bought Gold .\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
+    if query.data=="Harbinger":
+        if (buy_turn == True) and (gold - 3 >= 0):
+            buy_temp.append('Harbinger')
+            gold -= 3
+            buy_time -= 1
+            query.edit_message_text('You have bought Harbinger .\nType ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=='usevillage':
         if action>0:
             action-=1
@@ -394,6 +402,78 @@ def button(bot,update):
             query.message.reply_text('You can put one card on top of your deck\nCards availbale:',replymarkup=replymarkup)
         else:
             query.edit_message_text('You dont have enough Action.')
+    if query.data == 'use harbinger':
+        keyboard = [[]]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        if turn_count == 1:
+            query.edit_message_text('You have ' + str(grave) +' in your discarded pile')
+            hand.remove('Harbinger')
+            for i in range(len(grave)):
+                h_temp = grave[i]
+                if h_temp == 'Village':
+                    keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
+                elif h_temp == 'Witch':
+                    keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
+                elif h_temp == 'Courtyard':
+                    keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
+                elif h_temp == 'copper':
+                    keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
+                elif h_temp == 'silver':
+                    keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
+                elif h_temp == 'gold':
+                    keyboard.append([InlineKeyboardButton("Gold", callback_data="h_gold")])
+                elif h_temp == 'estates':
+                    keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
+                elif h_temp == 'Harbinger':
+                    keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
+            grave.append('Harbinger')
+            query.message.reply_text('Cards available:',reply_markup=reply_markup)
+
+        elif turn_count ==2 :
+            hand2.remove(Harbinger)
+            query.edit_message_text('You have ' + str(grave2) + ' in your discarded pile')
+            for i in range(len(grave2)):
+                h_temp = grave[i]
+                if h_temp == 'Village':
+                    keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
+                elif h_temp == 'Witch':
+                    keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
+                elif h_temp == 'Courtyard':
+                    keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
+                elif h_temp == 'copper':
+                    keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
+                elif h_temp == 'silver':
+                    keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
+                elif h_temp == 'gold':
+                    keyboard.append([InlineKeyboardButton("Gold", callback_data="h_gold")])
+                elif h_temp == 'estates':
+                    keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
+                elif h_temp == 'Harbinger':
+                    keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
+            grave2.append('Harbinger')
+            query.message.reply_text('Cards available:', reply_markup=reply_markup)
+        elif turn_count == 3 :
+            query.edit_message_text('You have ' + str(grave3) + ' in your discarded pile')
+            for i in range(len(grave3)):
+                h_temp = grave[i]
+                if h_temp == 'Village':
+                    keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
+                elif h_temp == 'Witch':
+                    keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
+                elif h_temp == 'Courtyard':
+                    keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
+                elif h_temp == 'copper':
+                    keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
+                elif h_temp == 'silver':
+                    keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
+                elif h_temp == 'gold':
+                    keyboard.append([InlineKeyboardButton("Gold", callback_data="h_gold")])
+                elif h_temp == 'estates':
+                    keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
+                elif h_temp == 'Harbinger':
+                    keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
+            grave3.append('Harbinger')
+            query.message.reply_text('Cards available:', reply_markup=reply_markup)
     if query.data == 'c_witch':
         global temp_deck_top
         if turn_count == 1:
@@ -472,6 +552,95 @@ def button(bot,update):
             temp_deck_top3.append('estates')
             hand3.remove('estates')
         query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'h_witch':
+        global temp_deck_top
+        if turn_count == 1:
+            temp_deck_top.append('Witch')
+            grave.remove('Witch')
+        elif turn_count ==2:
+            temp_deck_top2.append('Witch')
+            grave2.remove('Witch')
+        elif turn_count==3:
+            temp_deck_top3.append('Witch')
+            grave3.remove('Witch')
+        query.edit_message_text('Witch is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'h_village':
+        if turn_count == 1:
+            temp_deck_top.append('Village')
+            grave.remove('Village')
+        elif turn_count == 2:
+            temp_deck_top2.append('Village')
+            grave2.remove('Village')
+        elif turn_count == 3:
+            temp_deck_top3.append('Village')
+            grave3.remove('Village')
+        query.edit_message_text('Village is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'h_courtyard':
+        if turn_count == 1:
+            temp_deck_top.append('Courtyard')
+            grave.remove('Courtyard')
+        elif turn_count == 2:
+            temp_deck_top2.append('Courtyard')
+            grave2.remove('Courtyard')
+        elif turn_count == 3:
+            temp_deck_top3.append('Courtyard')
+            grave3.remove('Courtyard')
+        query.edit_message_text('Courtyard is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'h_copper':
+        if turn_count == 1:
+            temp_deck_top.append('copper')
+            grave.remove('copper')
+        elif turn_count == 2:
+            temp_deck_top2.append('copper')
+            grave2.remove('copper')
+        elif turn_count == 3:
+            temp_deck_top3.append('copper')
+            grave3.remove('copper')
+        query.edit_message_text('Copper is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'h_silver':
+        if turn_count == 1:
+            temp_deck_top.append('silver')
+            grave.remove('silver')
+        elif turn_count == 2:
+            temp_deck_top2.append('silver')
+            grave2.remove('silver')
+        elif turn_count == 3:
+            temp_deck_top3.append('silver')
+            grave3.remove('silver')
+        query.edit_message_text('Silver is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'h_gold':
+        if turn_count == 1:
+            temp_deck_top.append('gold')
+            grave.remove('gold')
+        elif turn_count == 2:
+            temp_deck_top2.append('gold')
+            grave2.remove('gold')
+        elif turn_count == 3:
+            temp_deck_top3.append('gold')
+            grave3.remove('gold')
+        query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'h_estates':
+        if turn_count == 1:
+            temp_deck_top.append('estates')
+            grave.remove('estates')
+        elif turn_count == 2:
+            temp_deck_top2.append('estates')
+            grave2.remove('estates')
+        elif turn_count == 3:
+            temp_deck_top3.append('estates')
+            grave3.remove('estates')
+        query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'h_harbinger':
+        if turn_count == 1:
+            temp_deck_top.append('Harbinger')
+            grave.remove('Harbinger')
+        elif turn_count == 2:
+            temp_deck_top2.append('Harbinger')
+            grave2.remove('Harbinger')
+        elif turn_count == 3:
+            temp_deck_top3.append('Harbinger')
+            grave3.remove('Harbinger')
+        query.edit_message_text('Harbinger is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
 
 
 
@@ -645,6 +814,8 @@ def use(bot,update):
                 keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
             elif tempp == 'Courtyard':
                 keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
+            elif tempp == 'Harbinger':
+                keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
         update.message.reply_text('Cards available : ', reply_markup=reply_markup)
     elif turn_count == 2:
         update.message.reply_text(str(user2_name) + ', you have : ' + str(hand2))
@@ -656,6 +827,8 @@ def use(bot,update):
                 keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
             elif tempp == 'Courtyard':
                 keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
+            elif tempp == 'Harbinger':
+                keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
         update.message.reply_text('Cards available : ', reply_markup=reply_markup)
     elif turn_count == 3:
         update.message.reply_text(str(user3_name) + ', you have : ' + str(hand))
@@ -667,6 +840,8 @@ def use(bot,update):
                 keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
             elif tempp == 'Courtyard':
                 keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
+            elif tempp == 'Harbinger':
+                keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
         update.message.reply_text('Cards available : ', reply_markup=reply_markup)
 
 
@@ -691,7 +866,8 @@ def buy(bot,update):
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
         update.message.reply_text('Buy Witch cost 5 dollars\nBuy Village cost 3 dollars\nBuy Silver cost 3 dollars\nBuy Courtyard costs 2 dollar')
     elif gold == 4 or gold == 3 :
-        update.message.reply_text('Buy Village cost 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
+        update.message.reply_text('Buy Harbinger for 3 dollars\nBuy Village cost 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
+        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="silver")])
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
@@ -813,8 +989,10 @@ def status(bot,update):
 
 
 def show (bot,update):
-    update.message.reply_text(str(action)+'\nTurn count is '+str(turn_count)+'\n'+str(hand)+'\n'+str(hand2)+'\n'+str(hand3))
+    update.message.reply_text('Action:'+str(action)+'\nTurn count is '+str(turn_count)+'\n'+str(hand)+'\n'+str(hand2)+'\n'+str(hand3))
     update.message.reply_text(user1_id+ '\n' +str(update.message.from_user.id))
+    update.message.reply_text('Grave\n'+str(grave)+'\n'+str(grave2)+'\n'+str(grave3))
+    update.message.reply_text('Deck\n'+str(deckplayer1)+'\n'+str(deckplayer2)+'\n'+str(deckplayer3))
 
 def admin(bot,update):
     update.message.reply_text('/join\n/start\n/draw')
