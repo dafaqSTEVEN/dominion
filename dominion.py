@@ -570,6 +570,7 @@ def button(bot,update):
             keyboard.append([InlineKeyboardButton("Village", callback_data="w_village")])
             keyboard.append([InlineKeyboardButton("Silver", callback_data="w_silver")])
             keyboard.append([InlineKeyboardButton("Courtyard", callback_data="w_courtyard")])
+            query.edit_message_text('Cards availble',reply_markup=reply_markup)
         else:
             query.edit_message_text('You dont have enough action')
     if query.data == 'c_witch':
