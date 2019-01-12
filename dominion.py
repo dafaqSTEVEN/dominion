@@ -560,8 +560,9 @@ def button(bot,update):
             else:
                 query.edit_message_text('You dont have enough Action.')
     if query.data == 'useworkshop':
-        global keyboard
+        global clickarray
         keyboard=[[]]
+        clickarray = [[]]
         reply_markup=InlineKeyboardMarkup(keyboard)
         if action>0:
             action -=1
@@ -574,6 +575,7 @@ def button(bot,update):
             keyboard.append([InlineKeyboardButton("Clickme", callback_data="clickme")])
             query.message.reply_text('Cards availbale:',reply_markup=reply_markup)
             keyboard.append([InlineKeyboardButton("Click me to end", callback_data="end")])
+            keyboard = clickarray
         else:
             query.edit_message_text('You dont have enough action')
     if query.data == 'c_witch':
@@ -784,7 +786,7 @@ def button(bot,update):
     if query.data == 'clickme':
         query.edit_message_text('END')
     if query.data == 'end':
-        reply_markup=InlineKeyboardMarkup(keyboard)
+        reply_markup=InlineKeyboardMarkup(clickarray)
         query.message.reply_text('end',reply_markup=reply_markup)
 
 def join(bot,update):
