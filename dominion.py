@@ -128,6 +128,14 @@ def button(bot,update):
             query.edit_message_text('You have bought Laboratory .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
+    if query.data=="Workshop":
+        if (buy_turn == True) and (gold - 3 >= 0):
+            buy_temp.append('Workshop')
+            gold -= 3
+            buy_time -= 1
+            query.edit_message_text('You have bought Workshop .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=='usevillage':
         if action>0:
             action-=1
@@ -551,6 +559,21 @@ def button(bot,update):
                 query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             else:
                 query.edit_message_text('You dont have enough Action.')
+    if query.data == 'useworkshop':
+        keyboard=[[]]
+        reply_markup=InlineKeyboardMarkup(keyboard)
+        if action<0:
+            action -=1
+            keyboard.append([InlineKeyboardButton("Workshop", callback_data="w_workshop")])
+            keyboard.append([InlineKeyboardButton("Laboratory", callback_data="w_laboratory")])
+            keyboard.append([InlineKeyboardButton("Harbinger", callback_data="w_harbinger")])
+            keyboard.append([InlineKeyboardButton("Village", callback_data="w_village")])
+            keyboard.append([InlineKeyboardButton("Silver", callback_data="w_silver")])
+            keyboard.append([InlineKeyboardButton("Courtyard", callback_data="w_courtyard")])
+            query.message.reply_text('Cards availbale:',reply_markup=reply_markup)
+            keyboard.append([InlineKeyboardButton("Click me to end", callback_data="clickme")])
+        else:
+            query.edit_message_text('You dont have enough action')
     if query.data == 'c_witch':
         if turn_count == 1:
             temp_deck_top.append('Witch')
@@ -716,7 +739,48 @@ def button(bot,update):
             temp_deck_top3.append('Harbinger')
             grave3.remove('Harbinger')
         query.edit_message_text('Harbinger is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
-
+    if query.data == 'w_village':
+        if turn_count == 1:
+            grave.append('Village')
+        elif turn_count == 2:
+            grave2.append('Village')
+        elif turn_count == 3:
+            grave3.append('Village')
+        query.edit_message_text('Village is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'w_courtyard':
+        if turn_count == 1:
+            grave.append('Courtyard')
+        elif turn_count == 2:
+            grave2.append('Courtyard')
+        elif turn_count == 3:
+            grave3.append('Courtyard')
+        query.edit_message_text('Courtyard is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'w_copper':
+        if turn_count == 1:
+            grave.append('copper')
+        elif turn_count == 2:
+            grave2.append('copper')
+        elif turn_count == 3:
+            grave3.append('copper')
+        query.edit_message_text('Copper is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'w_silver':
+        if turn_count == 1:
+            grave.append('silver')
+        elif turn_count == 2:
+            grave2.append('silver')
+        elif turn_count == 3:
+            grave3.append('silver')
+        query.edit_message_text('Silver is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'w_workshop':
+        if turn_count == 1:
+            grave.append('Workshop')
+        elif turn_count == 2:
+            grave2.append('Workshop')
+        elif turn_count == 3:
+            grave3.append('Workshop')
+        query.edit_message_text('Workshop is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'clickme':
+        query.edit_message_text('END')
 
 
 def join(bot,update):
@@ -893,6 +957,8 @@ def use(bot,update):
                 keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
             elif tempp == 'Laboratory':
                 keyboard.append([InlineKeyboardButton("Laboratory", callback_data="uselaboratory")])
+            elif tempp == 'Workshop':
+                keyboard.append([InlineKeyboardButton("Workshop", callback_data="useworkshop")])
         update.message.reply_text('Cards available : ', reply_markup=reply_markup)
     elif turn_count == 2:
         update.message.reply_text(str(user2_name) + ', you have : ' + str(hand2))
@@ -908,6 +974,8 @@ def use(bot,update):
                 keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
             elif tempp == 'Laboratory':
                 keyboard.append([InlineKeyboardButton("Laboratory", callback_data="uselaboratory")])
+            elif tempp == 'Workshop':
+                keyboard.append([InlineKeyboardButton("Workshop", callback_data="useworkshop")])
         update.message.reply_text('Cards available : ', reply_markup=reply_markup)
     elif turn_count == 3:
         update.message.reply_text(str(user3_name) + ', you have : ' + str(hand))
@@ -923,6 +991,8 @@ def use(bot,update):
                 keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
             elif tempp == 'Laboratory':
                 keyboard.append([InlineKeyboardButton("Laboratory", callback_data="uselaboratory")])
+            elif tempp == 'workshop':
+                keyboard.append([InlineKeyboardButton("Workshop", callback_data="useworkshop")])
         update.message.reply_text('Cards available : ', reply_markup=reply_markup)
 
 
@@ -949,9 +1019,17 @@ def buy(bot,update):
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="silver")])
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
-        update.message.reply_text('Buy Witch costs 5 dollars\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
-    elif gold == 4 or gold == 3 :
-        update.message.reply_text('Buy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
+        update.message.reply_text('Buy Witch costs 5 dollars\nBuy Laboratory costs 5 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
+    elif gold == 4:
+        update.message.reply_text('Buy Harbinger costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
+        keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
+        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
+        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
+        keyboard.append([InlineKeyboardButton("Silver", callback_data="silver")])
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
+    elif gold == 3 :
+        update.message.reply_text('Buy Harbinger costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
+        keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
         keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="silver")])
@@ -1070,7 +1148,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('normal\nver 1.2.3.1')
+    update.message.reply_text('normal\nv1.2.3.2_beta')
 
 
 def show (bot,update):
