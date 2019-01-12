@@ -575,7 +575,7 @@ def button(bot,update):
             keyboard.append([InlineKeyboardButton("Clickme", callback_data="end")])
             query.message.reply_text('Cards availbale:',reply_markup=reply_markup)
             keyboard.append([InlineKeyboardButton("Click me to end", callback_data="clickme")])
-            keyboard = clickarray
+            clickarray=keyboard
         else:
             query.edit_message_text('You dont have enough action')
     if query.data == 'c_witch':
