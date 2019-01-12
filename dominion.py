@@ -475,7 +475,6 @@ def button(bot,update):
             grave3.append('Harbinger')
             query.message.reply_text('Cards available:', reply_markup=reply_markup)
     if query.data == 'c_witch':
-        global temp_deck_top
         if turn_count == 1:
             temp_deck_top.append('Witch')
             hand.remove('Witch')
@@ -553,7 +552,6 @@ def button(bot,update):
             hand3.remove('estates')
         query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_witch':
-        global temp_deck_top
         if turn_count == 1:
             temp_deck_top.append('Witch')
             grave.remove('Witch')
