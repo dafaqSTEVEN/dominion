@@ -785,7 +785,7 @@ def button(bot,update):
         query.edit_message_text('END')
     if query.data == 'end':
         reply_markup=InlineKeyboardMarkup(keyboard)
-        query.edit_message_text('end',reply_markup=reply_markup)
+        query.message.reply_text('end',reply_markup=reply_markup)
 
 def join(bot,update):
     global user1_id
