@@ -127,7 +127,7 @@ def button(bot,update):
                     gold += 2
                 elif temp == 'gold':
                     gold += 3
-                query.edit_message_text('You have draw [ ' + str(temp) + ']  and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
+                query.edit_message_text('You have draw [' + str(temp) + ']  and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
             elif turn_count == 2:
                 hand2.remove('Village')
                 grave2.append('Village')
@@ -152,7 +152,7 @@ def button(bot,update):
                 elif temp == 'gold':
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
-            else:
+        else:
                 query.edit_message_text('You dont have enough Action.')
     if query.data == 'usewitch':
         if action >0:
