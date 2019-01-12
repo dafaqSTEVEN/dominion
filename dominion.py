@@ -1012,7 +1012,7 @@ def end(bot,update):
         update.message.reply_text("Its now your turn , " + str(user3_name) + ' @' + user3_tag +'\nType /draw')
 
 def playerlist(bot,update):
-    update.message.reply_text('Current player list :\n [' + str(user1_name) + ' / ' + str(user2_name) + ' / ' + str(user3_name) + '\nSupport Max to 3 player')
+    update.message.reply_text('Current player list :\n [' + str(user1_name) + ' / ' + str(user2_name) + ' / ' + str(user3_name) + ']\nSupport Max to 3 player')
 
 def money(bot,update):
     update.message.reply_text('You have <' + str(gold) + '> dollar')
