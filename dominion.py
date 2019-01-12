@@ -562,7 +562,7 @@ def button(bot,update):
     if query.data == 'useworkshop':
         keyboard=[[]]
         reply_markup=InlineKeyboardMarkup(keyboard)
-        if action<0:
+        if action>0:
             action -=1
             keyboard.append([InlineKeyboardButton("Workshop", callback_data="w_workshop")])
             keyboard.append([InlineKeyboardButton("Laboratory", callback_data="w_laboratory")])
