@@ -573,7 +573,7 @@ def button(bot,update):
             keyboard.append([InlineKeyboardButton("Silver", callback_data="w_silver")])
             keyboard.append([InlineKeyboardButton("Courtyard", callback_data="w_courtyard")])
             keyboard.append([InlineKeyboardButton("Clickme", callback_data="end")])
-            query.message.reply_text('Cards availbale:',reply_markup=reply_markup)
+            query.edit_message_text('Cards availbale:',reply_markup=reply_markup)
             keyboard.append([InlineKeyboardButton("Click me to end", callback_data="clickme")])
             clickarray=keyboard
         else:
@@ -787,7 +787,7 @@ def button(bot,update):
         query.edit_message_text('END')
     if query.data == 'end':
         reply_markup=InlineKeyboardMarkup(clickarray)
-        query.message.reply_text('end',reply_markup=reply_markup)
+        query.edit_message_text('end',reply_markup=reply_markup)
 
 def join(bot,update):
     global user1_id
