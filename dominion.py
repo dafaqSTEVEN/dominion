@@ -814,7 +814,7 @@ def status(bot,update):
 
 def show (bot,update):
     update.message.reply_text(str(action)+'\nTurn count is '+str(turn_count)+'\n'+str(hand)+'\n'+str(hand2)+'\n'+str(hand3))
-    update.message.reply_text(user1_id,str(update.message.from_user.id))
+    update.message.reply_text(user1_id+str(update.message.from_user.id))
 
 def admin(bot,update):
     update.message.reply_text('/join\n/start\n/draw')
