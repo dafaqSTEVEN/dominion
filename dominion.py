@@ -564,6 +564,16 @@ def button(bot,update):
         reply_markup=InlineKeyboardMarkup(keyboard)
         if action>0:
             action -=1
+            if turn_count == 1:
+                hand.remove('Workshop')
+                grave.append('Workshop')
+            elif turn_count == 2:
+                hand2.remove('Workshop')
+                grave2.append('Workshop')
+            elif turn_count == 3:
+                hand3.remove('Workshop')
+                grave3.append('Workshop')
+
             keyboard.append([InlineKeyboardButton("Workshop", callback_data="w_workshop")])
             keyboard.append([InlineKeyboardButton("Laboratory", callback_data="w_laboratory")])
             keyboard.append([InlineKeyboardButton("Harbinger", callback_data="w_harbinger")])
@@ -778,6 +788,22 @@ def button(bot,update):
         elif turn_count == 3:
             grave3.append('Workshop')
         query.edit_message_text('Workshop is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'w_harbinger':
+        if turn_count == 1:
+            grave.append('Harbinger')
+        elif turn_count == 2:
+            grave2.append('Harbinger')
+        elif turn_count == 3:
+            grave3.append('Harbinger')
+        query.edit_message_text('Harbinger is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+    if query.data == 'w_laboratory':
+        if turn_count == 1:
+            grave.append('Laboratory')
+        elif turn_count == 2:
+            grave2.append('Laboratory')
+        elif turn_count == 3:
+            grave3.append('Laboratory')
+        query.edit_message_text('Laboratory is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
 
 def join(bot,update):
     global user1_id
@@ -1153,7 +1179,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('normal\nv 1.3.1 (beta ready)')
+    update.message.reply_text('Normal\nv 1.4.0 (beta ready)')
 
 
 def show (bot,update):
