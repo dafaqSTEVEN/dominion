@@ -491,6 +491,7 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
                 grave3.append('Harbinger')
                 query.message.reply_text('Cards available:', reply_markup=reply_markup)
+            action-=1
         else:
             query.message.reply_text('you dont have enough action')
     if query.data == 'uselaboratory':
