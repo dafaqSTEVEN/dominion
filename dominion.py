@@ -1179,7 +1179,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 1.4.0 (beta ready)')
+    update.message.reply_text('Normal\nv 1.4.1 (beta ready)')
 
 
 def show (bot,update):
