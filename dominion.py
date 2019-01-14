@@ -3,7 +3,6 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater,MessageHandler,CommandHandler,RegexHandler,CallbackQueryHandler
 import random
 import logging
-import emoji
 from telegram.error import (TelegramError, Unauthorized, BadRequest,TimedOut, ChatMigrated, NetworkError)
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
