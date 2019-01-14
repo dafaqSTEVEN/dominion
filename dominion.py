@@ -12,9 +12,9 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-deckplayer1 = ['Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Estates\N{Japanese symbol for beginner}','Estates\N{Japanese symbol for beginner}','Estates\N{Japanese symbol for beginner}']
-deckplayer2 = ['Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Estates\N{Japanese symbol for beginner}','Estates\N{Japanese symbol for beginner}','Estates\N{Japanese symbol for beginner}']
-deckplayer3 =['Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Estates\N{Japanese symbol for beginner}','Estates\N{Japanese symbol for beginner}','Estates\N{Japanese symbol for beginner}']
+deckplayer1 = ['Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Estates','Estates','Estates']
+deckplayer2 = ['Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Estates','Estates','Estates']
+deckplayer3 =['Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Copper\N{keycap: 1}','Estates','Estates','Estates']
 grave = []
 grave2 = []
 grave3 = []
@@ -301,8 +301,8 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
                     elif c_temp == 'Gold':
                         keyboard.append([InlineKeyboardButton('Gold', callback_data="c_gold")])
-                    elif c_temp == 'Estates\N{Japanese symbol for beginner}':
-                        keyboard.append([InlineKeyboardButton('Estates\N{Japanese symbol for beginner}' , callback_data='c_estates')])
+                    elif c_temp == 'Estates':
+                        keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
                 query.message.reply_text('Cards available : ', reply_markup=reply_markup)
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' +str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 2:
@@ -355,8 +355,8 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
                     elif c_temp == 'Gold\N{keycap}3':
                         keyboard.append([InlineKeyboardButton('Gold', callback_data="c_gold")])
-                    elif c_temp == 'Estates\N{Japanese symbol for beginner}':
-                        keyboard.append([InlineKeyboardButton('Estates\N{Japanese symbol for beginner}' , callback_data='c_estates')])
+                    elif c_temp == 'Estates':
+                        keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
                 query.message.reply_text('Cards available : ', reply_markup=reply_markup)
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 3:
@@ -409,8 +409,8 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
                     elif c_temp == 'Gold':
                         keyboard.append([InlineKeyboardButton('Gold', callback_data="c_gold")])
-                    elif c_temp == 'Estates\N{Japanese symbol for beginner}':
-                        keyboard.append([InlineKeyboardButton('Estates\N{Japanese symbol for beginner}' , callback_data='c_estates')])
+                    elif c_temp == 'Estates':
+                        keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             query.message.reply_text('You can put :one: card on top of your deck\nCards availbale:',replymarkup=replymarkup)
         else:
@@ -436,8 +436,8 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
                     elif h_temp == 'Gold\N{keycap}3':
                         keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
-                    elif h_temp == 'Estates\N{Japanese symbol for beginner}':
-                        keyboard.append([InlineKeyboardButton('Estates\N{Japanese symbol for beginner}', callback_data='h_estates')])
+                    elif h_temp == 'Estates':
+                        keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
                     elif h_temp == 'Harbinger\N{horse racing}':
                         keyboard.append([InlineKeyboardButton('Harbinger\N{horse racing}', callback_data='h_harbinger')])
                 grave.append('Harbinger\N{horse racing}')
@@ -459,8 +459,8 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
                     elif h_temp == 'Gold':
                         keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
-                    elif h_temp == 'Estates\N{Japanese symbol for beginner}':
-                        keyboard.append([InlineKeyboardButton('Estates\N{Japanese symbol for beginner}', callback_data='h_estates')])
+                    elif h_temp == 'Estates':
+                        keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
                     elif h_temp == 'Harbinger\N{horse racing}':
                         keyboard.append([InlineKeyboardButton('Harbinger\N{horse racing}', callback_data='h_harbinger')])
                 grave2.append('Harbinger\N{horse racing}')
@@ -482,8 +482,8 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
                     elif h_temp == 'Gold\N{keycap}3':
                         keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
-                    elif h_temp == 'Estates\N{Japanese symbol for beginner}':
-                        keyboard.append([InlineKeyboardButton('Estates\N{Japanese symbol for beginner}', callback_data='h_estates')])
+                    elif h_temp == 'Estates':
+                        keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
                     elif h_temp == 'Harbinger\N{horse racing}':
                         keyboard.append([InlineKeyboardButton('Harbinger\N{horse racing}', callback_data='h_harbinger')])
                 grave3.append('Harbinger\N{horse racing}')
@@ -649,15 +649,15 @@ def button(bot,update):
         query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_estates':
         if turn_count == 1:
-            temp_deck_top.append('Estates\N{Japanese symbol for beginner}')
-            hand.remove('Estates\N{Japanese symbol for beginner}')
+            temp_deck_top.append('Estates')
+            hand.remove('Estates')
         elif turn_count == 2:
-            temp_deck_top2.append('Estates\N{Japanese symbol for beginner}')
-            hand2.remove('Estates\N{Japanese symbol for beginner}')
+            temp_deck_top2.append('Estates')
+            hand2.remove('Estates')
         elif turn_count == 3:
-            temp_deck_top3.append('Estates\N{Japanese symbol for beginner}')
-            hand3.remove('Estates\N{Japanese symbol for beginner}')
-        query.edit_message_text('Estates\N{Japanese symbol for beginner} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Estates')
+            hand3.remove('Estates')
+        query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_witch':
         if turn_count == 1:
             temp_deck_top.append('Witch\N{woman zombie}')
@@ -726,15 +726,15 @@ def button(bot,update):
         query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_estates':
         if turn_count == 1:
-            temp_deck_top.append('Estates\N{Japanese symbol for beginner}')
-            grave.remove('Estates\N{Japanese symbol for beginner}')
+            temp_deck_top.append('Estates')
+            grave.remove('Estates')
         elif turn_count == 2:
-            temp_deck_top2.append('Estates\N{Japanese symbol for beginner}')
-            grave2.remove('Estates\N{Japanese symbol for beginner}')
+            temp_deck_top2.append('Estates')
+            grave2.remove('Estates')
         elif turn_count == 3:
-            temp_deck_top3.append('Estates\N{Japanese symbol for beginner}')
-            grave3.remove('Estates\N{Japanese symbol for beginner}')
-        query.edit_message_text('Estates\N{Japanese symbol for beginner} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Estates')
+            grave3.remove('Estates')
+        query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_harbinger':
         if turn_count == 1:
             temp_deck_top.append('Harbinger\N{horse racing}')
@@ -1144,9 +1144,9 @@ def reset(bot,update):
     global gold2,gold3,points,points2,points3,buy_turn,buy_time,action,user1_id,user1_name,user2_id,user2_name,user3_id,user3_name,current_player,inlinehand,courtyard_temp,turn_count,turnnum,start_game
     global turn
     global hand
-    deckplayer1 = ['Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Estates\N{Japanese symbol for beginner}', 'Estates\N{Japanese symbol for beginner}','Estates\N{Japanese symbol for beginner}']
-    deckplayer2 = ['Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Estates\N{Japanese symbol for beginner}', 'Estates\N{Japanese symbol for beginner}','Estates\N{Japanese symbol for beginner}']
-    deckplayer3 = ['Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Estates\N{Japanese symbol for beginner}', 'Estates\N{Japanese symbol for beginner}','Estates\N{Japanese symbol for beginner}']
+    deckplayer1 = ['Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Estates', 'Estates','Estates']
+    deckplayer2 = ['Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Estates', 'Estates','Estates']
+    deckplayer3 = ['Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Copper\N{keycap: 1}', 'Estates', 'Estates','Estates']
     grave = []
     grave2 = []
     grave3 = []
