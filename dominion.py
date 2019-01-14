@@ -1188,6 +1188,7 @@ def show (bot,update):
     update.message.reply_text(user1_id+ '\n' +str(update.message.from_user.id))
     update.message.reply_text('Grave\n'+str(grave)+'\n'+str(grave2)+'\n'+str(grave3))
     update.message.reply_text('Deck\n'+str(deckplayer1)+'\n'+str(deckplayer2)+'\n'+str(deckplayer3))
+    update.message.reply_text('"\u0001F3C7"')
 
 def admin(bot,update):
     update.message.reply_text('/join\n/start\n/draw')
