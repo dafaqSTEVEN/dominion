@@ -77,28 +77,28 @@ def button(bot,update):
             query.edit_message_text('You have bought Silver.\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
-    if query.data=='Witch\N{woman zombie}':
+    if query.data=='Witch':
         if (buy_turn == True) and (gold - 5 >= 0):
-            buy_temp.append('Witch\N{woman zombie}')
+            buy_temp.append('Witch')
             gold -= 3
             buy_time -= 1
-            query.edit_message_text('You have bought Witch\N{woman zombie} .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Witch .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
-    if query.data=="Village\N{house buildings}":
+    if query.data=="Village":
         if (buy_turn == True) and (gold - 3 >= 0):
-            buy_temp.append('Village\N{house buildings}')
+            buy_temp.append('Village')
             gold -= 3
             buy_time -= 1
-            query.edit_message_text('You have bought Village\N{house buildings} .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Village .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
-    if query.data=="Courtyard\N{house with garden}":
+    if query.data=="Courtyard":
         if (buy_turn == True) and (gold - 2 >= 0):
-            buy_temp.append('Courtyard\N{house with garden}')
+            buy_temp.append('Courtyard')
             gold -= 2
             buy_time -= 1
-            query.edit_message_text('You have bought Courtyard\N{house with garden} .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Courtyard .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=='Gold':
@@ -109,12 +109,12 @@ def button(bot,update):
             query.edit_message_text('You have bought Gold .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
-    if query.data=="Harbinger\N{horse racing}":
+    if query.data=="Harbinger":
         if (buy_turn == True) and (gold - 3 >= 0):
-            buy_temp.append('Harbinger\N{horse racing}')
+            buy_temp.append('Harbinger')
             gold -= 3
             buy_time -= 1
-            query.edit_message_text('You have bought Harbinger\N{horse racing} .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Harbinger .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=="Laboratory":
@@ -138,8 +138,8 @@ def button(bot,update):
             action-=1
             action +=2
             if turn_count == 1:
-                hand.remove('Village\N{house buildings}')
-                grave.append('Village\N{house buildings}')
+                hand.remove('Village')
+                grave.append('Village')
                 temp = random.choice(deckplayer1)
                 hand.append(temp)
                 if temp == 'Copper':
@@ -150,8 +150,8 @@ def button(bot,update):
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + ']  and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
             elif turn_count == 2:
-                hand2.remove('Village\N{house buildings}')
-                grave2.append('Village\N{house buildings}')
+                hand2.remove('Village')
+                grave2.append('Village')
                 temp = random.choice(deckplayer2)
                 hand2.append(temp)
                 if temp == 'Copper':
@@ -162,8 +162,8 @@ def button(bot,update):
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
             elif turn_count == 3:
-                hand3.remove('Village\N{house buildings}')
-                grave3.append('Village\N{house buildings}')
+                hand3.remove('Village')
+                grave3.append('Village')
                 temp = random.choice(deckplayer3)
                 hand3.append(temp)
                 if temp == 'Copper':
@@ -179,8 +179,8 @@ def button(bot,update):
         if action >0:
             action -= 1
             if turn_count == 1:
-                hand.remove('Witch\N{woman zombie}')
-                grave.append('Witch\N{woman zombie}')
+                hand.remove('Witch')
+                grave.append('Witch')
                 grave2.append('Curse')
                 grave3.append('Curse')
                 temp = random.choice(deckplayer1)
@@ -201,8 +201,8 @@ def button(bot,update):
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 2:
-                hand2.remove('Witch\N{woman zombie}')
-                grave2.append('Witch\N{woman zombie}')
+                hand2.remove('Witch')
+                grave2.append('Witch')
                 grave.append('Curse')
                 grave3.append('Curse')
                 temp = random.choice(deckplayer2)
@@ -223,8 +223,8 @@ def button(bot,update):
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 3:
-                hand3.remove('Witch\N{woman zombie}')
-                grave3.append('Witch\N{woman zombie}')
+                hand3.remove('Witch')
+                grave3.append('Witch')
                 grave.append('Curse')
                 grave2.append('Curse')
                 temp = random.choice(deckplayer3)
@@ -252,8 +252,8 @@ def button(bot,update):
         if action >0:
             action -= 1
             if turn_count == 1:
-                hand.remove('Courtyard\N{house with garden}')
-                grave.append('Courtyard\N{house with garden}')
+                hand.remove('Courtyard')
+                grave.append('Courtyard')
                 temp = random.choice(deckplayer1)
                 hand.append(temp)
                 if deckplayer1 == []:
@@ -289,12 +289,12 @@ def button(bot,update):
                     gold += 3
                 for i in range(len(hand)):
                     c_temp = hand[i]
-                    if c_temp == 'Village\N{house buildings}':
-                        keyboard.append([InlineKeyboardButton('Village\N{house buildings}', callback_data="c_village")])
-                    elif c_temp == 'Witch\N{woman zombie}':
-                        keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="c_witch")])
-                    elif c_temp == 'Courtyard\N{house with garden}':
-                        keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="c_courtyard")])
+                    if c_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="c_village")])
+                    elif c_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_witch")])
+                    elif c_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="c_courtyard")])
                     elif c_temp == 'Copper':
                         keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
                     elif c_temp == 'Silver':
@@ -306,8 +306,8 @@ def button(bot,update):
                 query.message.reply_text('Cards available : ', reply_markup=reply_markup)
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' +str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 2:
-                hand2.remove('Courtyard\N{house with garden}')
-                grave2.append('Courtyard\N{house with garden}')
+                hand2.remove('Courtyard')
+                grave2.append('Courtyard')
                 temp = random.choice(deckplayer2)
                 hand2.append(temp)
                 if deckplayer2 == []:
@@ -343,12 +343,12 @@ def button(bot,update):
                     gold += 3
                 for i in range(len(hand2)):
                     c_temp = hand2[i]
-                    if c_temp == 'Village\N{house buildings}':
-                        keyboard.append([InlineKeyboardButton('Village\N{house buildings}', callback_data="c_village")])
-                    elif c_temp == 'Witch\N{woman zombie}':
-                        keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="c_witch")])
-                    elif c_temp == 'Courtyard\N{house with garden}':
-                        keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="c_courtyard")])
+                    if c_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="c_village")])
+                    elif c_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_witch")])
+                    elif c_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="c_courtyard")])
                     elif c_temp == 'Copper':
                         keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
                     elif c_temp == 'Silver':
@@ -360,8 +360,8 @@ def button(bot,update):
                 query.message.reply_text('Cards available : ', reply_markup=reply_markup)
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 3:
-                hand3.remove('Courtyard\N{house with garden}')
-                grave3.append('Courtyard\N{house with garden}')
+                hand3.remove('Courtyard')
+                grave3.append('Courtyard')
                 temp = random.choice(deckplayer3)
                 hand3.append(temp)
                 if deckplayer3 == []:
@@ -397,12 +397,12 @@ def button(bot,update):
                     gold += 3
                 for i in range(len(hand3)):
                     c_temp = hand3[i]
-                    if c_temp == 'Village\N{house buildings}':
-                        keyboard.append([InlineKeyboardButton('Village\N{house buildings}', callback_data="c_village")])
-                    elif c_temp == 'Witch\N{woman zombie}':
-                        keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="c_witch")])
-                    elif c_temp == 'Courtyard\N{house with garden}':
-                        keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="c_courtyard")])
+                    if c_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="c_village")])
+                    elif c_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_witch")])
+                    elif c_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="c_courtyard")])
                     elif c_temp == 'Copper':
                         keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
                     elif c_temp == 'Silver':
@@ -421,15 +421,15 @@ def button(bot,update):
         if action >0 :
             if turn_count == 1:
                 query.edit_message_text('You have ' + str(grave) +' in your discarded pile')
-                hand.remove('Harbinger\N{horse racing}')
+                hand.remove('Harbinger')
                 for i in range(len(grave)):
                     h_temp = grave[i]
-                    if h_temp == 'Village\N{house buildings}':
-                        keyboard.append([InlineKeyboardButton('Village\N{house buildings}', callback_data="h_village")])
-                    elif h_temp == 'Witch\N{woman zombie}':
-                        keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="h_witch")])
-                    elif h_temp == 'Courtyard\N{house with garden}':
-                        keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="h_courtyard")])
+                    if h_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
+                    elif h_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
+                    elif h_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
                     elif h_temp == 'Copper':
                         keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
                     elif h_temp == 'Silver':
@@ -438,21 +438,21 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
                     elif h_temp == 'Estates':
                         keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
-                    elif h_temp == 'Harbinger\N{horse racing}':
-                        keyboard.append([InlineKeyboardButton('Harbinger\N{horse racing}', callback_data='h_harbinger')])
-                grave.append('Harbinger\N{horse racing}')
+                    elif h_temp == 'Harbinger':
+                        keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
+                grave.append('Harbinger')
                 query.message.reply_text('Cards available:',reply_markup=reply_markup)
             elif turn_count ==2 :
-                hand2.remove('Harbinger\N{horse racing}')
+                hand2.remove('Harbinger')
                 query.edit_message_text('You have ' + str(grave2) + ' in your discarded pile')
                 for i in range(len(grave2)):
                     h_temp = grave[i]
-                    if h_temp == 'Village\N{house buildings}':
-                        keyboard.append([InlineKeyboardButton('Village\N{house buildings}', callback_data="h_village")])
-                    elif h_temp == 'Witch\N{woman zombie}':
-                        keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="h_witch")])
-                    elif h_temp == 'Courtyard\N{house with garden}':
-                        keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="h_courtyard")])
+                    if h_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
+                    elif h_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
+                    elif h_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
                     elif h_temp == 'Copper':
                         keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
                     elif h_temp == 'Silver':
@@ -461,21 +461,21 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
                     elif h_temp == 'Estates':
                         keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
-                    elif h_temp == 'Harbinger\N{horse racing}':
-                        keyboard.append([InlineKeyboardButton('Harbinger\N{horse racing}', callback_data='h_harbinger')])
-                grave2.append('Harbinger\N{horse racing}')
+                    elif h_temp == 'Harbinger':
+                        keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
+                grave2.append('Harbinger')
                 query.message.reply_text('Cards available:', reply_markup=reply_markup)
             elif turn_count == 3 :
-                hand.remove('Harbinger\N{horse racing}')
+                hand.remove('Harbinger')
                 query.edit_message_text('You have ' + str(grave3) + ' in your discarded pile')
                 for i in range(len(grave3)):
                     h_temp = grave[i]
-                    if h_temp == 'Village\N{house buildings}':
-                        keyboard.append([InlineKeyboardButton('Village\N{house buildings}', callback_data="h_village")])
-                    elif h_temp == 'Witch\N{woman zombie}':
-                        keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="h_witch")])
-                    elif h_temp == 'Courtyard\N{house with garden}':
-                        keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="h_courtyard")])
+                    if h_temp == 'Village':
+                        keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
+                    elif h_temp == 'Witch':
+                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
+                    elif h_temp == 'Courtyard':
+                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
                     elif h_temp == 'Copper':
                         keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
                     elif h_temp == 'Silver':
@@ -484,9 +484,9 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
                     elif h_temp == 'Estates':
                         keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
-                    elif h_temp == 'Harbinger\N{horse racing}':
-                        keyboard.append([InlineKeyboardButton('Harbinger\N{horse racing}', callback_data='h_harbinger')])
-                grave3.append('Harbinger\N{horse racing}')
+                    elif h_temp == 'Harbinger':
+                        keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
+                grave3.append('Harbinger')
                 query.message.reply_text('Cards available:', reply_markup=reply_markup)
             action-=1
         else:
@@ -574,46 +574,46 @@ def button(bot,update):
 
             keyboard.append([InlineKeyboardButton("Workshop", callback_data="w_workshop")])
             keyboard.append([InlineKeyboardButton("Laboratory", callback_data="w_laboratory")])
-            keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="w_harbinger")])
-            keyboard.append([InlineKeyboardButton("Village\N{house buildings}", callback_data="w_village")])
+            keyboard.append([InlineKeyboardButton("Harbinger", callback_data="w_harbinger")])
+            keyboard.append([InlineKeyboardButton("Village", callback_data="w_village")])
             keyboard.append([InlineKeyboardButton("Silver", callback_data="w_silver")])
-            keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="w_courtyard")])
+            keyboard.append([InlineKeyboardButton("Courtyard", callback_data="w_courtyard")])
             query.edit_message_text('Cards availble',reply_markup=reply_markup)
         else:
             query.edit_message_text('You dont have enough action')
     if query.data == 'c_witch':
         if turn_count == 1:
-            temp_deck_top.append('Witch\N{woman zombie}')
-            hand.remove('Witch\N{woman zombie}')
+            temp_deck_top.append('Witch')
+            hand.remove('Witch')
         elif turn_count ==2:
-            temp_deck_top2.append('Witch\N{woman zombie}')
-            hand2.remove('Witch\N{woman zombie}')
+            temp_deck_top2.append('Witch')
+            hand2.remove('Witch')
         elif turn_count==3:
-            temp_deck_top3.append('Witch\N{woman zombie}')
-            hand3.remove('Witch\N{woman zombie}')
-        query.edit_message_text('Witch\N{woman zombie} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Witch')
+            hand3.remove('Witch')
+        query.edit_message_text('Witch is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_village':
         if turn_count == 1:
-            temp_deck_top.append('Village\N{house buildings}')
-            hand.remove('Village\N{house buildings}')
+            temp_deck_top.append('Village')
+            hand.remove('Village')
         elif turn_count == 2:
-            temp_deck_top2.append('Village\N{house buildings}')
-            hand2.remove('Village\N{house buildings}')
+            temp_deck_top2.append('Village')
+            hand2.remove('Village')
         elif turn_count == 3:
-            temp_deck_top3.append('Village\N{house buildings}')
-            hand3.remove('Village\N{house buildings}')
-        query.edit_message_text('Village\N{house buildings} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Village')
+            hand3.remove('Village')
+        query.edit_message_text('Village is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_courtyard':
         if turn_count == 1:
-            temp_deck_top.append('Courtyard\N{house with garden}')
-            hand.remove('Courtyard\N{house with garden}')
+            temp_deck_top.append('Courtyard')
+            hand.remove('Courtyard')
         elif turn_count == 2:
-            temp_deck_top2.append('Courtyard\N{house with garden}')
-            hand2.remove('Courtyard\N{house with garden}')
+            temp_deck_top2.append('Courtyard')
+            hand2.remove('Courtyard')
         elif turn_count == 3:
-            temp_deck_top3.append('Courtyard\N{house with garden}')
-            hand3.remove('Courtyard\N{house with garden}')
-        query.edit_message_text('Courtyard\N{house with garden} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Courtyard')
+            hand3.remove('Courtyard')
+        query.edit_message_text('Courtyard is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_copper':
         if turn_count == 1:
             temp_deck_top.append('Copper')
@@ -660,37 +660,37 @@ def button(bot,update):
         query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_witch':
         if turn_count == 1:
-            temp_deck_top.append('Witch\N{woman zombie}')
-            grave.remove('Witch\N{woman zombie}')
+            temp_deck_top.append('Witch')
+            grave.remove('Witch')
         elif turn_count ==2:
-            temp_deck_top2.append('Witch\N{woman zombie}')
-            grave2.remove('Witch\N{woman zombie}')
+            temp_deck_top2.append('Witch')
+            grave2.remove('Witch')
         elif turn_count==3:
-            temp_deck_top3.append('Witch\N{woman zombie}')
-            grave3.remove('Witch\N{woman zombie}')
-        query.edit_message_text('Witch\N{woman zombie} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Witch')
+            grave3.remove('Witch')
+        query.edit_message_text('Witch is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_village':
         if turn_count == 1:
-            temp_deck_top.append('Village\N{house buildings}')
-            grave.remove('Village\N{house buildings}')
+            temp_deck_top.append('Village')
+            grave.remove('Village')
         elif turn_count == 2:
-            temp_deck_top2.append('Village\N{house buildings}')
-            grave2.remove('Village\N{house buildings}')
+            temp_deck_top2.append('Village')
+            grave2.remove('Village')
         elif turn_count == 3:
-            temp_deck_top3.append('Village\N{house buildings}')
-            grave3.remove('Village\N{house buildings}')
-        query.edit_message_text('Village\N{house buildings} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Village')
+            grave3.remove('Village')
+        query.edit_message_text('Village is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_courtyard':
         if turn_count == 1:
-            temp_deck_top.append('Courtyard\N{house with garden}')
-            grave.remove('Courtyard\N{house with garden}')
+            temp_deck_top.append('Courtyard')
+            grave.remove('Courtyard')
         elif turn_count == 2:
-            temp_deck_top2.append('Courtyard\N{house with garden}')
-            grave2.remove('Courtyard\N{house with garden}')
+            temp_deck_top2.append('Courtyard')
+            grave2.remove('Courtyard')
         elif turn_count == 3:
-            temp_deck_top3.append('Courtyard\N{house with garden}')
-            grave3.remove('Courtyard\N{house with garden}')
-        query.edit_message_text('Courtyard\N{house with garden} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Courtyard')
+            grave3.remove('Courtyard')
+        query.edit_message_text('Courtyard is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_copper':
         if turn_count == 1:
             temp_deck_top.append('Copper')
@@ -737,31 +737,31 @@ def button(bot,update):
         query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_harbinger':
         if turn_count == 1:
-            temp_deck_top.append('Harbinger\N{horse racing}')
-            grave.remove('Harbinger\N{horse racing}')
+            temp_deck_top.append('Harbinger')
+            grave.remove('Harbinger')
         elif turn_count == 2:
-            temp_deck_top2.append('Harbinger\N{horse racing}')
-            grave2.remove('Harbinger\N{horse racing}')
+            temp_deck_top2.append('Harbinger')
+            grave2.remove('Harbinger')
         elif turn_count == 3:
-            temp_deck_top3.append('Harbinger\N{horse racing}')
-            grave3.remove('Harbinger\N{horse racing}')
-        query.edit_message_text('Harbinger\N{horse racing} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Harbinger')
+            grave3.remove('Harbinger')
+        query.edit_message_text('Harbinger is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'w_village':
         if turn_count == 1:
-            grave.append('Village\N{house buildings}')
+            grave.append('Village')
         elif turn_count == 2:
-            grave2.append('Village\N{house buildings}')
+            grave2.append('Village')
         elif turn_count == 3:
-            grave3.append('Village\N{house buildings}')
-        query.edit_message_text('Village\N{house buildings} is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            grave3.append('Village')
+        query.edit_message_text('Village is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'w_courtyard':
         if turn_count == 1:
-            grave.append('Courtyard\N{house with garden}')
+            grave.append('Courtyard')
         elif turn_count == 2:
-            grave2.append('Courtyard\N{house with garden}')
+            grave2.append('Courtyard')
         elif turn_count == 3:
-            grave3.append('Courtyard\N{house with garden}')
-        query.edit_message_text('Courtyard\N{house with garden} is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            grave3.append('Courtyard')
+        query.edit_message_text('Courtyard is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'w_copper':
         if turn_count == 1:
             grave.append('Copper')
@@ -788,12 +788,12 @@ def button(bot,update):
         query.edit_message_text('Workshop is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'w_harbinger':
         if turn_count == 1:
-            grave.append('Harbinger\N{horse racing}')
+            grave.append('Harbinger')
         elif turn_count == 2:
-            grave2.append('Harbinger\N{horse racing}')
+            grave2.append('Harbinger')
         elif turn_count == 3:
-            grave3.append('Harbinger\N{horse racing}')
-        query.edit_message_text('Harbinger\N{horse racing} is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            grave3.append('Harbinger')
+        query.edit_message_text('Harbinger is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'w_laboratory':
         if turn_count == 1:
             grave.append('Laboratory')
@@ -967,14 +967,14 @@ def use(bot,update):
         update.message.reply_text(str(user1_name) + ', you have : ' + str(hand))
         for i in range(len(hand)):
             tempp = hand[i]
-            if tempp == 'Village\N{house buildings}':
-                keyboard.append([InlineKeyboardButton('Village\N{house buildings}', callback_data="usevillage")])
-            elif tempp == 'Witch\N{woman zombie}':
-                keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="usewitch")])
-            elif tempp == 'Courtyard\N{house with garden}':
-                keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="usecourtyard")])
-            elif tempp == 'Harbinger\N{horse racing}':
-                keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="useharbinger")])
+            if tempp == 'Village':
+                keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
+            elif tempp == 'Witch':
+                keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
+            elif tempp == 'Courtyard':
+                keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
+            elif tempp == 'Harbinger':
+                keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
             elif tempp == 'Laboratory':
                 keyboard.append([InlineKeyboardButton("Laboratory", callback_data="uselaboratory")])
             elif tempp == 'Workshop':
@@ -984,14 +984,14 @@ def use(bot,update):
         update.message.reply_text(str(user2_name) + ', you have : ' + str(hand2))
         for i in range(len(hand2)):
             tempp = hand2[i]
-            if tempp == 'Village\N{house buildings}':
-                keyboard.append([InlineKeyboardButton('Village\N{house buildings}', callback_data="usevillage")])
-            elif tempp == 'Witch\N{woman zombie}':
-                keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="usewitch")])
-            elif tempp == 'Courtyard\N{house with garden}':
-                keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="usecourtyard")])
-            elif tempp == 'Harbinger\N{horse racing}':
-                keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="useharbinger")])
+            if tempp == 'Village':
+                keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
+            elif tempp == 'Witch':
+                keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
+            elif tempp == 'Courtyard':
+                keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
+            elif tempp == 'Harbinger':
+                keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
             elif tempp == 'Laboratory':
                 keyboard.append([InlineKeyboardButton("Laboratory", callback_data="uselaboratory")])
             elif tempp == 'Workshop':
@@ -1001,14 +1001,14 @@ def use(bot,update):
         update.message.reply_text(str(user3_name) + ', you have : ' + str(hand))
         for i in range(len(hand3)):
             tempp = hand3[i]
-            if tempp == 'Village\N{house buildings}':
-                keyboard.append([InlineKeyboardButton('Village\N{house buildings}', callback_data="usevillage")])
-            elif tempp == 'Witch\N{woman zombie}':
-                keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="usewitch")])
-            elif tempp == 'Courtyard\N{house with garden}':
-                keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="usecourtyard")])
-            elif tempp == 'Harbinger\N{horse racing}':
-                keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="useharbinger")])
+            if tempp == 'Village':
+                keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
+            elif tempp == 'Witch':
+                keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
+            elif tempp == 'Courtyard':
+                keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
+            elif tempp == 'Harbinger':
+                keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
             elif tempp == 'Laboratory':
                 keyboard.append([InlineKeyboardButton("Laboratory", callback_data="uselaboratory")])
             elif tempp == 'workshop':
@@ -1026,39 +1026,39 @@ def buy(bot,update):
     if gold >=6 :
         keyboard.append([InlineKeyboardButton('Gold', callback_data='Gold')])
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
-        keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="Witch\N{woman zombie}")])
+        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-        keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="Harbinger\N{horse racing}")])
-        keyboard.append([InlineKeyboardButton("Village\N{house buildings}", callback_data="Village\N{house buildings}")])
+        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
+        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
-        keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="Courtyard\N{house with garden}")])
-        update.message.reply_text('Buy Gold costs 6 dollars\nBuy Laboratory costs 5 dollars\nBuy Witch\N{woman zombie} costs 5 dollars\nBuy Workshop costs 3 dollar\nBuy Harbinger\N{horse racing} costs 3 dollars\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
+        update.message.reply_text('Buy Gold costs 6 dollars\nBuy Laboratory costs 5 dollars\nBuy Witch costs 5 dollars\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
     elif gold == 5:
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
-        keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="Witch\N{woman zombie}")])
+        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-        keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="Harbinger\N{horse racing}")])
-        keyboard.append([InlineKeyboardButton("Village\N{house buildings}", callback_data="Village\N{house buildings}")])
+        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
+        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
-        keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="Courtyard\N{house with garden}")])
-        update.message.reply_text('Buy Witch\N{woman zombie} costs 5 dollars\nBuy Laboratory costs 5 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger\N{horse racing} costs 3 dollars\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
+        update.message.reply_text('Buy Witch costs 5 dollars\nBuy Laboratory costs 5 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
     elif gold == 4:
-        update.message.reply_text('Buy Harbinger\N{horse racing} costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
+        update.message.reply_text('Buy Harbinger costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-        keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="Harbinger\N{horse racing}")])
-        keyboard.append([InlineKeyboardButton("Village\N{house buildings}", callback_data="Village\N{house buildings}")])
+        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
+        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
-        keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="Courtyard\N{house with garden}")])
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
     elif gold == 3 :
-        update.message.reply_text('Buy Harbinger\N{horse racing} costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
+        update.message.reply_text('Buy Harbinger costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-        keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="Harbinger\N{horse racing}")])
-        keyboard.append([InlineKeyboardButton("Village\N{house buildings}", callback_data="Village\N{house buildings}")])
+        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
+        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
-        keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="Courtyard\N{house with garden}")])
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
     elif gold == 2:
-        update.message.reply_text('Buy Courtyard\N{house with garden} costs 2 dollar')
-        keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="Courtyard\N{house with garden}")])
+        update.message.reply_text('Buy Courtyard costs 2 dollar')
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
     update.message.reply_text('Cards available : ',reply_markup=InlineKeyboardMarkup(keyboard))
 
 def end(bot,update):
@@ -1187,7 +1187,6 @@ def show (bot,update):
     update.message.reply_text(user1_id+ '\n' +str(update.message.from_user.id))
     update.message.reply_text('Grave\n'+str(grave)+'\n'+str(grave2)+'\n'+str(grave3))
     update.message.reply_text('Deck\n'+str(deckplayer1)+'\n'+str(deckplayer2)+'\n'+str(deckplayer3))
-    update.message.reply_text('Harbinger\N{horse racing}')
 
 def admin(bot,update):
     update.message.reply_text('/join\n/start\n/draw')
