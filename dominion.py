@@ -13,11 +13,11 @@ logger = logging.getLogger(__name__)
 
 
 
-card_market = ['Village\N{house buildings}','Witch\N{woman zombie}','Silver\N{:two:}','Gold\N{:three:}']
-card = ["Copper\N{:one:}","Silver\N{:two:}",'Gold\N{:three:}']
-deckplayer1 = ['Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Estates\N{beginner}','Estates\N{beginner}','Estates\N{beginner}']
-deckplayer2 = ['Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Estates\N{beginner}','Estates\N{beginner}','Estates\N{beginner}']
-deckplayer3 =['Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Copper\N{:one:}','Estates\N{beginner}','Estates\N{beginner}','Estates\N{beginner}']
+card_market = ['Village\N{house buildings}','Witch\N{woman zombie}','Silver','Gold']
+card = ["Copper","Silver",'Gold']
+deckplayer1 = ['Copper','Copper','Copper','Copper','Copper','Copper','Copper','Estates\N{beginner}','Estates\N{beginner}','Estates\N{beginner}']
+deckplayer2 = ['Copper','Copper','Copper','Copper','Copper','Copper','Copper','Estates\N{beginner}','Estates\N{beginner}','Estates\N{beginner}']
+deckplayer3 =['Copper','Copper','Copper','Copper','Copper','Copper','Copper','Estates\N{beginner}','Estates\N{beginner}','Estates\N{beginner}']
 grave = []
 grave2 = []
 grave3 = []
@@ -74,10 +74,10 @@ def button(bot,update):
     query = update.callback_query
     if query.data == 'Silver\N{keycap}2':
         if (buy_turn == True) and (gold - 3 >= 0):
-            buy_temp.append('Silver\N{:two:}')
+            buy_temp.append('Silver')
             gold -= 3
             buy_time -= 1
-            query.edit_message_text('You have bought Silver\N{:two:}.\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Silver.\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=='Witch\N{woman zombie}':
@@ -106,7 +106,7 @@ def button(bot,update):
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=='Gold\N{keycap}3':
         if (buy_turn == True) and (gold - 6 >= 0):
-            buy_temp.append('Gold\N{:three:}')
+            buy_temp.append('Gold')
             gold -= 6
             buy_time -= 1
             query.edit_message_text('You have bought Gold .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
@@ -145,11 +145,11 @@ def button(bot,update):
                 grave.append('Village\N{house buildings}')
                 temp = random.choice(deckplayer1)
                 hand.append(temp)
-                if temp == 'Copper\N{:one:}':
+                if temp == 'Copper':
                     gold += 1
-                elif temp == 'Silver\N{:two:}':
+                elif temp == 'Silver':
                     gold += 2
-                elif temp == 'Gold\N{:three:}':
+                elif temp == 'Gold':
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + ']  and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
             elif turn_count == 2:
@@ -157,11 +157,11 @@ def button(bot,update):
                 grave2.append('Village\N{house buildings}')
                 temp = random.choice(deckplayer2)
                 hand2.append(temp)
-                if temp == 'Copper\N{:one:}':
+                if temp == 'Copper':
                     gold += 1
-                elif temp == 'Silver\N{:two:}':
+                elif temp == 'Silver':
                     gold += 2
-                elif temp == 'Gold\N{:three:}':
+                elif temp == 'Gold':
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
             elif turn_count == 3:
@@ -169,11 +169,11 @@ def button(bot,update):
                 grave3.append('Village\N{house buildings}')
                 temp = random.choice(deckplayer3)
                 hand3.append(temp)
-                if temp == 'Copper\N{:one:}':
+                if temp == 'Copper':
                     gold += 1
-                elif temp == 'Silver\N{:two:}':
+                elif temp == 'Silver':
                     gold += 2
-                elif temp == 'Gold\N{:three:}':
+                elif temp == 'Gold':
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
         else:
@@ -190,17 +190,17 @@ def button(bot,update):
                 hand.append(temp)
                 tempp =random.choice(deckplayer1)
                 hand.append(tempp)
-                if temp == 'Copper\N{:one:}':
+                if temp == 'Copper':
                     gold += 1
-                elif temp == 'Silver\N{:two:}':
+                elif temp == 'Silver':
                     gold += 2
-                elif temp == 'Gold\N{:three:}':
+                elif temp == 'Gold':
                     gold += 3
-                if tempp == 'Copper\N{:one:}':
+                if tempp == 'Copper':
                     gold += 1
-                elif tempp == 'Silver\N{:two:}':
+                elif tempp == 'Silver':
                     gold += 2
-                elif tempp == 'Gold\N{:three:}':
+                elif tempp == 'Gold':
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 2:
@@ -212,17 +212,17 @@ def button(bot,update):
                 hand2.append(temp)
                 tempp = random.choice(deckplayer2)
                 hand2.append(tempp)
-                if temp == 'Copper\N{:one:}':
+                if temp == 'Copper':
                     gold += 1
-                elif temp == 'Silver\N{:two:}':
+                elif temp == 'Silver':
                     gold += 2
-                elif temp == 'Gold\N{:three:}':
+                elif temp == 'Gold':
                     gold += 3
-                if tempp == 'Copper\N{:one:}':
+                if tempp == 'Copper':
                     gold += 1
-                elif tempp == 'Silver\N{:two:}':
+                elif tempp == 'Silver':
                     gold += 2
-                elif tempp == 'Gold\N{:three:}':
+                elif tempp == 'Gold':
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 3:
@@ -234,17 +234,17 @@ def button(bot,update):
                 hand3.append(temp)
                 tempp = random.choice(deckplayer3)
                 hand3.append(tempp)
-                if temp == 'Copper\N{:one:}':
+                if temp == 'Copper':
                     gold += 1
-                elif temp == 'Silver\N{:two:}':
+                elif temp == 'Silver':
                     gold += 2
-                elif temp == 'Gold\N{:three:}':
+                elif temp == 'Gold':
                     gold += 3
-                if tempp == 'Copper\N{:one:}':
+                if tempp == 'Copper':
                     gold += 1
-                elif tempp == 'Silver\N{:two:}':
+                elif tempp == 'Silver':
                     gold += 2
-                elif tempp == 'Gold\N{:three:}':
+                elif tempp == 'Gold':
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             else:
@@ -272,23 +272,23 @@ def button(bot,update):
                 if deckplayer1 == []:
                     deckplayer1 = grave
                     grave = []
-                if temp == 'Copper\N{:one:}':
+                if temp == 'Copper':
                     gold += 1
-                elif temp == 'Silver\N{:two:}':
+                elif temp == 'Silver':
                     gold += 2
-                elif temp == 'Gold\N{:three:}':
+                elif temp == 'Gold':
                     gold += 3
-                if tempp == 'Copper\N{:one:}':
+                if tempp == 'Copper':
                     gold += 1
-                elif tempp == 'Silver\N{:two:}':
+                elif tempp == 'Silver':
                     gold += 2
-                elif tempp == 'Gold\N{:three:}':
+                elif tempp == 'Gold':
                     gold += 3
-                if temppp == 'Copper\N{:one:}':
+                if temppp == 'Copper':
                     gold += 1
-                elif temppp == 'Silver\N{:two:}':
+                elif temppp == 'Silver':
                     gold += 2
-                elif temppp == 'Gold\N{:three:}':
+                elif temppp == 'Gold':
                     gold += 3
                 for i in range(len(hand)):
                     c_temp = hand[i]
@@ -298,12 +298,12 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="c_witch")])
                     elif c_temp == 'Courtyard\N{house with garden}':
                         keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="c_courtyard")])
-                    elif c_temp == 'Copper\N{:one:}':
-                        keyboard.append([InlineKeyboardButton("Copper\N{:one:}", callback_data="c_copper")])
-                    elif c_temp == 'Silver\N{:two:}':
-                        keyboard.append([InlineKeyboardButton("Silver\N{:two:}", callback_data="c_silver")])
-                    elif c_temp == 'Gold\N{:three:}':
-                        keyboard.append([InlineKeyboardButton('Gold\N{:three:}', callback_data="c_gold")])
+                    elif c_temp == 'Copper':
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
+                    elif c_temp == 'Silver':
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
+                    elif c_temp == 'Gold':
+                        keyboard.append([InlineKeyboardButton('Gold', callback_data="c_gold")])
                     elif c_temp == 'Estates\N{beginner}':
                         keyboard.append([InlineKeyboardButton('Estates\N{beginner}' , callback_data='c_estates')])
                 query.message.reply_text('Cards available : ', reply_markup=reply_markup)
@@ -353,11 +353,11 @@ def button(bot,update):
                     elif c_temp == 'Courtyard\N{house with garden}':
                         keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="c_courtyard")])
                     elif c_temp == 'Copper\N{keycap}1':
-                        keyboard.append([InlineKeyboardButton("Copper\N{:one:}", callback_data="c_copper")])
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
                     elif c_temp == 'Silver\N{keycap}2':
-                        keyboard.append([InlineKeyboardButton("Silver\N{:two:}", callback_data="c_silver")])
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
                     elif c_temp == 'Gold\N{keycap}3':
-                        keyboard.append([InlineKeyboardButton('Gold\N{:three:}', callback_data="c_gold")])
+                        keyboard.append([InlineKeyboardButton('Gold', callback_data="c_gold")])
                     elif c_temp == 'Estates\N{beginner}':
                         keyboard.append([InlineKeyboardButton('Estates\N{beginner}' , callback_data='c_estates')])
                 query.message.reply_text('Cards available : ', reply_markup=reply_markup)
@@ -380,23 +380,23 @@ def button(bot,update):
                 if deckplayer3 == []:
                     deckplayer3 = grave3
                     grave = []
-                if temp == 'Copper\N{:one:}':
+                if temp == 'Copper':
                     gold += 1
-                elif temp == 'Silver\N{:two:}':
+                elif temp == 'Silver':
                     gold += 2
-                elif temp == 'Gold\N{:three:}':
+                elif temp == 'Gold':
                     gold += 3
-                if tempp == 'Copper\N{:one:}':
+                if tempp == 'Copper':
                     gold += 1
-                elif tempp == 'Silver\N{:two:}':
+                elif tempp == 'Silver':
                     gold += 2
-                elif tempp == 'Gold\N{:three:}':
+                elif tempp == 'Gold':
                     gold += 3
-                if temppp == 'Copper\N{:one:}':
+                if temppp == 'Copper':
                     gold += 1
-                elif temppp == 'Silver\N{:two:}':
+                elif temppp == 'Silver':
                     gold += 2
-                elif temppp == 'Gold\N{:three:}':
+                elif temppp == 'Gold':
                     gold += 3
                 for i in range(len(hand3)):
                     c_temp = hand3[i]
@@ -406,12 +406,12 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="c_witch")])
                     elif c_temp == 'Courtyard\N{house with garden}':
                         keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="c_courtyard")])
-                    elif c_temp == 'Copper\N{:one:}':
-                        keyboard.append([InlineKeyboardButton("Copper\N{:one:}", callback_data="c_copper")])
-                    elif c_temp == 'Silver\N{:two:}':
-                        keyboard.append([InlineKeyboardButton("Silver\N{:two:}", callback_data="c_silver")])
-                    elif c_temp == 'Gold\N{:three:}':
-                        keyboard.append([InlineKeyboardButton('Gold\N{:three:}', callback_data="c_gold")])
+                    elif c_temp == 'Copper':
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
+                    elif c_temp == 'Silver':
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
+                    elif c_temp == 'Gold':
+                        keyboard.append([InlineKeyboardButton('Gold', callback_data="c_gold")])
                     elif c_temp == 'Estates\N{beginner}':
                         keyboard.append([InlineKeyboardButton('Estates\N{beginner}' , callback_data='c_estates')])
                 query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
@@ -434,11 +434,11 @@ def button(bot,update):
                     elif h_temp == 'Courtyard\N{house with garden}':
                         keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="h_courtyard")])
                     elif h_temp == 'Copper\N{keycap}1':
-                        keyboard.append([InlineKeyboardButton("Copper\N{:one:}", callback_data="h_copper")])
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
                     elif h_temp == 'Silver\N{keycap}2':
-                        keyboard.append([InlineKeyboardButton("Silver\N{:two:}", callback_data="h_silver")])
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
                     elif h_temp == 'Gold\N{keycap}3':
-                        keyboard.append([InlineKeyboardButton('Gold\N{:three:}', callback_data="h_gold")])
+                        keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
                     elif h_temp == 'Estates\N{beginner}':
                         keyboard.append([InlineKeyboardButton('Estates\N{beginner}', callback_data='h_estates')])
                     elif h_temp == 'Harbinger\N{horse racing}':
@@ -456,12 +456,12 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="h_witch")])
                     elif h_temp == 'Courtyard\N{house with garden}':
                         keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="h_courtyard")])
-                    elif h_temp == 'Copper\N{:one:}':
-                        keyboard.append([InlineKeyboardButton("Copper\N{:one:}", callback_data="h_copper")])
-                    elif h_temp == 'Silver\N{:two:}':
-                        keyboard.append([InlineKeyboardButton("Silver\N{:two:}", callback_data="h_silver")])
-                    elif h_temp == 'Gold\N{:three:}':
-                        keyboard.append([InlineKeyboardButton('Gold\N{:three:}', callback_data="h_gold")])
+                    elif h_temp == 'Copper':
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
+                    elif h_temp == 'Silver':
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
+                    elif h_temp == 'Gold':
+                        keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
                     elif h_temp == 'Estates\N{beginner}':
                         keyboard.append([InlineKeyboardButton('Estates\N{beginner}', callback_data='h_estates')])
                     elif h_temp == 'Harbinger\N{horse racing}':
@@ -480,11 +480,11 @@ def button(bot,update):
                     elif h_temp == 'Courtyard\N{house with garden}':
                         keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="h_courtyard")])
                     elif h_temp == 'Copper\N{keycap}1':
-                        keyboard.append([InlineKeyboardButton("Copper\N{:one:}", callback_data="h_copper")])
+                        keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
                     elif h_temp == 'Silver\N{keycap}2':
-                        keyboard.append([InlineKeyboardButton("Silver\N{:two:}", callback_data="h_silver")])
+                        keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
                     elif h_temp == 'Gold\N{keycap}3':
-                        keyboard.append([InlineKeyboardButton('Gold\N{:three:}', callback_data="h_gold")])
+                        keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
                     elif h_temp == 'Estates\N{beginner}':
                         keyboard.append([InlineKeyboardButton('Estates\N{beginner}', callback_data='h_estates')])
                     elif h_temp == 'Harbinger\N{horse racing}':
@@ -505,17 +505,17 @@ def button(bot,update):
                 hand.append(temp)
                 tempp =random.choice(deckplayer1)
                 hand.append(tempp)
-                if temp == 'Copper\N{:one:}':
+                if temp == 'Copper':
                     gold += 1
-                elif temp == 'Silver\N{:two:}':
+                elif temp == 'Silver':
                     gold += 2
-                elif temp == 'Gold\N{:three:}':
+                elif temp == 'Gold':
                     gold += 3
-                if tempp == 'Copper\N{:one:}':
+                if tempp == 'Copper':
                     gold += 1
-                elif tempp == 'Silver\N{:two:}':
+                elif tempp == 'Silver':
                     gold += 2
-                elif tempp == 'Gold\N{:three:}':
+                elif tempp == 'Gold':
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 2:
@@ -525,17 +525,17 @@ def button(bot,update):
                 hand2.append(temp)
                 tempp = random.choice(deckplayer2)
                 hand2.append(tempp)
-                if temp == 'Copper\N{:one:}':
+                if temp == 'Copper':
                     gold += 1
-                elif temp == 'Silver\N{:two:}':
+                elif temp == 'Silver':
                     gold += 2
-                elif temp == 'Gold\N{:three:}':
+                elif temp == 'Gold':
                     gold += 3
-                if tempp == 'Copper\N{:one:}':
+                if tempp == 'Copper':
                     gold += 1
-                elif tempp == 'Silver\N{:two:}':
+                elif tempp == 'Silver':
                     gold += 2
-                elif tempp == 'Gold\N{:three:}':
+                elif tempp == 'Gold':
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             elif turn_count == 3:
@@ -545,17 +545,17 @@ def button(bot,update):
                 hand3.append(temp)
                 tempp = random.choice(deckplayer3)
                 hand3.append(tempp)
-                if temp == 'Copper\N{:one:}':
+                if temp == 'Copper':
                     gold += 1
-                elif temp == 'Silver\N{:two:}':
+                elif temp == 'Silver':
                     gold += 2
-                elif temp == 'Gold\N{:three:}':
+                elif temp == 'Gold':
                     gold += 3
-                if tempp == 'Copper\N{:one:}':
+                if tempp == 'Copper':
                     gold += 1
-                elif tempp == 'Silver\N{:two:}':
+                elif tempp == 'Silver':
                     gold += 2
-                elif tempp == 'Gold\N{:three:}':
+                elif tempp == 'Gold':
                     gold += 3
                 query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
             else:
@@ -579,7 +579,7 @@ def button(bot,update):
             keyboard.append([InlineKeyboardButton("Laboratory", callback_data="w_laboratory")])
             keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="w_harbinger")])
             keyboard.append([InlineKeyboardButton("Village\N{house buildings}", callback_data="w_village")])
-            keyboard.append([InlineKeyboardButton("Silver\N{:two:}", callback_data="w_silver")])
+            keyboard.append([InlineKeyboardButton("Silver", callback_data="w_silver")])
             keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="w_courtyard")])
             query.edit_message_text('Cards availble',reply_markup=reply_markup)
         else:
@@ -619,36 +619,36 @@ def button(bot,update):
         query.edit_message_text('Courtyard\N{house with garden} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_copper':
         if turn_count == 1:
-            temp_deck_top.append('Copper\N{:one:}')
-            hand.remove('Copper\N{:one:}')
+            temp_deck_top.append('Copper')
+            hand.remove('Copper')
         elif turn_count == 2:
-            temp_deck_top2.append('Copper\N{:one:}')
-            hand2.remove('Copper\N{:one:}')
+            temp_deck_top2.append('Copper')
+            hand2.remove('Copper')
         elif turn_count == 3:
-            temp_deck_top3.append('Copper\N{:one:}')
-            hand3.remove('Copper\N{:one:}')
-        query.edit_message_text('Copper\N{:one:} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Copper')
+            hand3.remove('Copper')
+        query.edit_message_text('Copper is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_silver':
         if turn_count == 1:
-            temp_deck_top.append('Silver\N{:two:}')
-            hand.remove('Silver\N{:two:}')
+            temp_deck_top.append('Silver')
+            hand.remove('Silver')
         elif turn_count == 2:
-            temp_deck_top2.append('Silver\N{:two:}')
-            hand2.remove('Silver\N{:two:}')
+            temp_deck_top2.append('Silver')
+            hand2.remove('Silver')
         elif turn_count == 3:
-            temp_deck_top3.append('Silver\N{:two:}')
-            hand3.remove('Silver\N{:two:}')
-        query.edit_message_text('Silver\N{:two:} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Silver')
+            hand3.remove('Silver')
+        query.edit_message_text('Silver is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_gold':
         if turn_count == 1:
-            temp_deck_top.append('Gold\N{:three:}')
-            hand.remove('Gold\N{:three:}')
+            temp_deck_top.append('Gold')
+            hand.remove('Gold')
         elif turn_count == 2:
-            temp_deck_top2.append('Gold\N{:three:}')
-            hand2.remove('Gold\N{:three:}')
+            temp_deck_top2.append('Gold')
+            hand2.remove('Gold')
         elif turn_count == 3:
-            temp_deck_top3.append('Gold\N{:three:}')
-            hand3.remove('Gold\N{:three:}')
+            temp_deck_top3.append('Gold')
+            hand3.remove('Gold')
         query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'c_estates':
         if turn_count == 1:
@@ -696,36 +696,36 @@ def button(bot,update):
         query.edit_message_text('Courtyard\N{house with garden} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_copper':
         if turn_count == 1:
-            temp_deck_top.append('Copper\N{:one:}')
-            grave.remove('Copper\N{:one:}')
+            temp_deck_top.append('Copper')
+            grave.remove('Copper')
         elif turn_count == 2:
-            temp_deck_top2.append('Copper\N{:one:}')
-            grave2.remove('Copper\N{:one:}')
+            temp_deck_top2.append('Copper')
+            grave2.remove('Copper')
         elif turn_count == 3:
-            temp_deck_top3.append('Copper\N{:one:}')
-            grave3.remove('Copper\N{:one:}')
-        query.edit_message_text('Copper\N{:one:} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Copper')
+            grave3.remove('Copper')
+        query.edit_message_text('Copper is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_silver':
         if turn_count == 1:
-            temp_deck_top.append('Silver\N{:two:}')
-            grave.remove('Silver\N{:two:}')
+            temp_deck_top.append('Silver')
+            grave.remove('Silver')
         elif turn_count == 2:
-            temp_deck_top2.append('Silver\N{:two:}')
-            grave2.remove('Silver\N{:two:}')
+            temp_deck_top2.append('Silver')
+            grave2.remove('Silver')
         elif turn_count == 3:
-            temp_deck_top3.append('Silver\N{:two:}')
-            grave3.remove('Silver\N{:two:}')
-        query.edit_message_text('Silver\N{:two:} is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            temp_deck_top3.append('Silver')
+            grave3.remove('Silver')
+        query.edit_message_text('Silver is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_gold':
         if turn_count == 1:
-            temp_deck_top.append('Gold\N{:three:}')
-            grave.remove('Gold\N{:three:}')
+            temp_deck_top.append('Gold')
+            grave.remove('Gold')
         elif turn_count == 2:
-            temp_deck_top2.append('Gold\N{:three:}')
-            grave2.remove('Gold\N{:three:}')
+            temp_deck_top2.append('Gold')
+            grave2.remove('Gold')
         elif turn_count == 3:
-            temp_deck_top3.append('Gold\N{:three:}')
-            grave3.remove('Gold\N{:three:}')
+            temp_deck_top3.append('Gold')
+            grave3.remove('Gold')
         query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'h_estates':
         if turn_count == 1:
@@ -767,20 +767,20 @@ def button(bot,update):
         query.edit_message_text('Courtyard\N{house with garden} is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'w_copper':
         if turn_count == 1:
-            grave.append('Copper\N{:one:}')
+            grave.append('Copper')
         elif turn_count == 2:
-            grave2.append('Copper\N{:one:}')
+            grave2.append('Copper')
         elif turn_count == 3:
-            grave3.append('Copper\N{:one:}')
-        query.edit_message_text('Copper\N{:one:} is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            grave3.append('Copper')
+        query.edit_message_text('Copper is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'w_silver':
         if turn_count == 1:
-            grave.append('Silver\N{:two:}')
+            grave.append('Silver')
         elif turn_count == 2:
-            grave2.append('Silver\N{:two:}')
+            grave2.append('Silver')
         elif turn_count == 3:
-            grave3.append('Silver\N{:two:}')
-        query.edit_message_text('Silver\N{:two:} is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+            grave3.append('Silver')
+        query.edit_message_text('Silver is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
     if query.data == 'w_workshop':
         if turn_count == 1:
             grave.append('Workshop')
@@ -864,11 +864,11 @@ def draw(bot,update):
                             temp = (random.choice(deckplayer1))
                             hand.append(temp)
                             deckplayer1.remove(temp)
-                            if temp == 'Copper\N{:one:}':
+                            if temp == 'Copper':
                                 gold += 1
-                            elif temp == 'Silver\N{:two:}':
+                            elif temp == 'Silver':
                                 gold += 2
-                            elif temp == 'Gold\N{:three:}':
+                            elif temp == 'Gold':
                                 gold += 3
                             if deckplayer1 == []:
                                 deckplayer1 = grave
@@ -879,11 +879,11 @@ def draw(bot,update):
                             temp = (random.choice(deckplayer1))
                             hand.append(temp)
                             deckplayer1.remove(temp)
-                            if temp == 'Copper\N{:one:}':
+                            if temp == 'Copper':
                                 gold += 1
-                            elif temp == 'Silver\N{:two:}':
+                            elif temp == 'Silver':
                                 gold += 2
-                            elif temp == 'Gold\N{:three:}':
+                            elif temp == 'Gold':
                                 gold += 3
                             if deckplayer1 == []:
                                 deckplayer1 = grave
@@ -899,11 +899,11 @@ def draw(bot,update):
                         temp = (random.choice(deckplayer2))
                         hand2.append(temp)
                         deckplayer2.remove(temp)
-                        if temp == 'Copper\N{:one:}':
+                        if temp == 'Copper':
                             gold += 1
-                        elif temp == 'Silver\N{:two:}':
+                        elif temp == 'Silver':
                             gold += 2
-                        elif temp == 'Gold\N{:three:}':
+                        elif temp == 'Gold':
                             gold += 3
                         if deckplayer1 == []:
                             deckplayer2 = grave2
@@ -914,11 +914,11 @@ def draw(bot,update):
                             temp = (random.choice(deckplayer2))
                             hand2.append(temp)
                             deckplayer2.remove(temp)
-                            if temp == 'Copper\N{:one:}':
+                            if temp == 'Copper':
                                 gold += 1
-                            elif temp == 'Silver\N{:two:}':
+                            elif temp == 'Silver':
                                 gold += 2
-                            elif temp == 'Gold\N{:three:}':
+                            elif temp == 'Gold':
                                 gold += 3
                             if deckplayer2 == []:
                                 deckplayer2 = grave2
@@ -934,11 +934,11 @@ def draw(bot,update):
                         temp = (random.choice(deckplayer3))
                         hand3.append(temp)
                         deckplayer3.remove(temp)
-                        if temp == 'Copper\N{:one:}':
+                        if temp == 'Copper':
                             gold += 1
-                        elif temp == 'Silver\N{:two:}':
+                        elif temp == 'Silver':
                             gold += 2
-                        elif temp == 'Gold\N{:three:}':
+                        elif temp == 'Gold':
                             gold += 3
                         if deckplayer3 == []:
                             deckplayer3 = grave3
@@ -949,11 +949,11 @@ def draw(bot,update):
                             temp = (random.choice(deckplayer3))
                             hand3.append(temp)
                             deckplayer3.remove(temp)
-                            if temp == 'Copper\N{:one:}':
+                            if temp == 'Copper':
                                 gold += 1
-                            elif temp == 'Silver\N{:two:}':
+                            elif temp == 'Silver':
                                 gold += 2
-                            elif temp == 'Gold\N{:three:}':
+                            elif temp == 'Gold':
                                 gold += 3
                             if deckplayer3 == []:
                                 deckplayer3 = grave3
@@ -1027,37 +1027,37 @@ def buy(bot,update):
     buy_turn = True
     keyboard = [[]]
     if gold >=6 :
-        keyboard.append([InlineKeyboardButton('Gold\N{:three:}', callback_data='Gold\N{:three:}')])
+        keyboard.append([InlineKeyboardButton('Gold', callback_data='Gold')])
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
         keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="Witch\N{woman zombie}")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
         keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="Harbinger\N{horse racing}")])
         keyboard.append([InlineKeyboardButton("Village\N{house buildings}", callback_data="Village\N{house buildings}")])
-        keyboard.append([InlineKeyboardButton("Silver\N{:two:}", callback_data="Silver\N{:two:}")])
+        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
         keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="Courtyard\N{house with garden}")])
-        update.message.reply_text('Buy Gold costs 6 dollars\nBuy Laboratory costs 5 dollars\nBuy Witch\N{woman zombie} costs 5 dollars\nBuy Workshop costs 3 dollar\nBuy Harbinger\N{horse racing} costs 3 dollars\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver\N{:two:} costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
+        update.message.reply_text('Buy Gold costs 6 dollars\nBuy Laboratory costs 5 dollars\nBuy Witch\N{woman zombie} costs 5 dollars\nBuy Workshop costs 3 dollar\nBuy Harbinger\N{horse racing} costs 3 dollars\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
     elif gold == 5:
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
         keyboard.append([InlineKeyboardButton("Witch\N{woman zombie}", callback_data="Witch\N{woman zombie}")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
         keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="Harbinger\N{horse racing}")])
         keyboard.append([InlineKeyboardButton("Village\N{house buildings}", callback_data="Village\N{house buildings}")])
-        keyboard.append([InlineKeyboardButton("Silver\N{:two:}", callback_data="Silver\N{:two:}")])
+        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
         keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="Courtyard\N{house with garden}")])
-        update.message.reply_text('Buy Witch\N{woman zombie} costs 5 dollars\nBuy Laboratory costs 5 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger\N{horse racing} costs 3 dollars\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver\N{:two:} costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
+        update.message.reply_text('Buy Witch\N{woman zombie} costs 5 dollars\nBuy Laboratory costs 5 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger\N{horse racing} costs 3 dollars\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
     elif gold == 4:
-        update.message.reply_text('Buy Harbinger\N{horse racing} costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver\N{:two:} costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
+        update.message.reply_text('Buy Harbinger\N{horse racing} costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
         keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="Harbinger\N{horse racing}")])
         keyboard.append([InlineKeyboardButton("Village\N{house buildings}", callback_data="Village\N{house buildings}")])
-        keyboard.append([InlineKeyboardButton("Silver\N{:two:}", callback_data="Silver\N{:two:}")])
+        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
         keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="Courtyard\N{house with garden}")])
     elif gold == 3 :
-        update.message.reply_text('Buy Harbinger\N{horse racing} costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver\N{:two:} costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
+        update.message.reply_text('Buy Harbinger\N{horse racing} costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village\N{house buildings} costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard\N{house with garden} costs 2 dollar')
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
         keyboard.append([InlineKeyboardButton("Harbinger\N{horse racing}", callback_data="Harbinger\N{horse racing}")])
         keyboard.append([InlineKeyboardButton("Village\N{house buildings}", callback_data="Village\N{house buildings}")])
-        keyboard.append([InlineKeyboardButton("Silver\N{:two:}", callback_data="Silver\N{:two:}")])
+        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
         keyboard.append([InlineKeyboardButton("Courtyard\N{house with garden}", callback_data="Courtyard\N{house with garden}")])
     elif gold == 2:
         update.message.reply_text('Buy Courtyard\N{house with garden} costs 2 dollar')
@@ -1147,9 +1147,9 @@ def reset(bot,update):
     global gold2,gold3,points,points2,points3,buy_turn,buy_time,action,user1_id,user1_name,user2_id,user2_name,user3_id,user3_name,current_player,inlinehand,courtyard_temp,turn_count,turnnum,start_game
     global turn
     global hand
-    deckplayer1 = ['Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Estates\N{beginner}', 'Estates\N{beginner}','Estates\N{beginner}']
-    deckplayer2 = ['Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Estates\N{beginner}', 'Estates\N{beginner}','Estates\N{beginner}']
-    deckplayer3 = ['Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Copper\N{:one:}', 'Estates\N{beginner}', 'Estates\N{beginner}','Estates\N{beginner}']
+    deckplayer1 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates\N{beginner}', 'Estates\N{beginner}','Estates\N{beginner}']
+    deckplayer2 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates\N{beginner}', 'Estates\N{beginner}','Estates\N{beginner}']
+    deckplayer3 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates\N{beginner}', 'Estates\N{beginner}','Estates\N{beginner}']
     grave = []
     grave2 = []
     grave3 = []
