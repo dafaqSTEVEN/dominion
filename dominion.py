@@ -12,9 +12,6 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-
-card_market = ['Village\N{house buildings}','Witch\N{woman zombie}','Silver','Gold']
-card = ["Copper","Silver",'Gold']
 deckplayer1 = ['Copper','Copper','Copper','Copper','Copper','Copper','Copper','Estates\N{beginner}','Estates\N{beginner}','Estates\N{beginner}']
 deckplayer2 = ['Copper','Copper','Copper','Copper','Copper','Copper','Copper','Estates\N{beginner}','Estates\N{beginner}','Estates\N{beginner}']
 deckplayer3 =['Copper','Copper','Copper','Copper','Copper','Copper','Copper','Estates\N{beginner}','Estates\N{beginner}','Estates\N{beginner}']
