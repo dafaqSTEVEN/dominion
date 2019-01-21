@@ -69,7 +69,7 @@ def start(bot,update):
     global turnnum
     turn_count = 1
     turnnum = 1
-    if turn_count >= 1:
+    if turn_count > 1:
         update.message.reply_text('The game is started.')
     else:
         for i in range(5):
