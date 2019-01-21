@@ -83,7 +83,7 @@ def start(bot,update):
             elif temp == 'Gold':
                 gold += 3
             turn = True
-            update.message.reply_text(chat_id = user1_id,text = 'You got ' + str(hand) + ' .\nType ( /buy ) or ( /use ) to proceed')
+            update.message.reply_text(chat_id = str(user1_id),text = 'You got ' + str(hand) + ' .\nType ( /buy ) or ( /use ) to proceed')
             for i in range(5):
                 temp = (random.choice(deckplayer2))
                 hand2.append(temp)
@@ -95,7 +95,7 @@ def start(bot,update):
                 elif temp == 'Gold':
                     gold += 3
                 turn = True
-                update.message.reply_text(chat_id = user2_id,text = 'You got ' + str(hand2) + ' .\nType ( /buy ) or ( /use ) to proceed')
+                update.message.reply_text(chat_id = str(user2_id),text = 'You got ' + str(hand2) + ' .\nType ( /buy ) or ( /use ) to proceed')
                 if user3_id !='null':
                     for i in range(5):
                         temp = (random.choice(deckplayer3))
@@ -108,7 +108,7 @@ def start(bot,update):
                         elif temp == 'Gold':
                             gold += 3
                         turn = True
-            update.message.reply_text(chat_id = user3_id,text = 'You got ' + str(hand3) + ' .\nType ( /buy ) or ( /use ) to proceed')
+            update.message.reply_text(chat_id = str(user3_id),text = 'You got ' + str(hand3) + ' .\nType ( /buy ) or ( /use ) to proceed')
         else:
             update.message.reply_text('Its not your turn or you havent joined the game yet.')
 
