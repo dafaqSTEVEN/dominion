@@ -1007,11 +1007,6 @@ def end(bot,update):
     global turn_count
     global turnnum
     global action
-    turn = False
-    turnnum += 1
-    turn=False
-    action = 1
-    gold = 0
     global temp_deck_top, temp_deck_top2, temp_deck_top3
     global gold
     global points
@@ -1024,6 +1019,12 @@ def end(bot,update):
     global turn
     global hand
     global turnnum
+    turn = False
+    turnnum += 1
+    turn=False
+    action = 1
+    gold = 0
+
     if  turn_count == 1 :
         if str(update.message.from_user.id) != user1_id:
             update.message.reply_text('It is not your turn.')
