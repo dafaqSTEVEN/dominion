@@ -60,7 +60,7 @@ def start(bot,update):
     global turnnum
     global start_game
     start_game = True
-    update.message.reply_text("Loby is closed\n" + str(user1_name) + ' is drawing.\nType /draw.')
+    update.message.reply_text("Loby is closed\n" + str(user1_name) + ' is drawing.\nType /action.')
     global temp_deck_top, temp_deck_top2, temp_deck_top3
     global gold
     global points
