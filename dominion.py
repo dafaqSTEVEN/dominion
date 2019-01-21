@@ -73,21 +73,9 @@ def start(bot,update):
         update.message.reply_text('The game is started.')
     else:
         for i in range(5):
-            temp = (random.choice(deckplayer1))
-            hand.append(temp)
-            deckplayer1.remove(temp)
-            if temp == 'Copper':
-                gold += 1
-            elif temp == 'Silver':
-                gold += 2
-            elif temp == 'Gold':
-                gold += 3
-            turn = True
-            bot.sendMessage(chat_id = str(user1_id),text = 'You got ' + str(hand) + ' .\nType ( /buy ) or ( /use ) to proceed')
-            for i in range(5):
-                temp = (random.choice(deckplayer2))
-                hand2.append(temp)
-                deckplayer2.remove(temp)
+                temp = (random.choice(deckplayer1))
+                hand.append(temp)
+                deckplayer1.remove(temp)
                 if temp == 'Copper':
                     gold += 1
                 elif temp == 'Silver':
@@ -95,19 +83,31 @@ def start(bot,update):
                 elif temp == 'Gold':
                     gold += 3
                 turn = True
-                bot.sendMessage(chat_id = str(user2_id),text = 'You got ' + str(hand2) + ' .\nType ( /buy ) or ( /use ) to proceed')
-                if user3_id !='null':
-                    for i in range(5):
-                        temp = (random.choice(deckplayer3))
-                        hand3.append(temp)
-                        deckplayer3.remove(temp)
-                        if temp == 'Copper':
-                            gold += 1
-                        elif temp == 'Silver':
-                            gold += 2
-                        elif temp == 'Gold':
-                            gold += 3
-                        turn = True
+        bot.sendMessage(chat_id = str(user1_id),text = 'You got ' + str(hand) + ' .\nType ( /buy ) or ( /use ) to proceed')
+        for i in range(5):
+            temp = (random.choice(deckplayer2))
+            hand2.append(temp)
+            deckplayer2.remove(temp)
+            if temp == 'Copper':
+                gold += 1
+            elif temp == 'Silver':
+                gold += 2
+            elif temp == 'Gold':
+                gold += 3
+            turn = True
+        bot.sendMessage(chat_id = str(user2_id),text = 'You got ' + str(hand2) + ' .\nType ( /buy ) or ( /use ) to proceed')
+        if user3_id !='null':
+            for i in range(5):
+                temp = (random.choice(deckplayer3))
+                hand3.append(temp)
+                deckplayer3.remove(temp)
+                if temp == 'Copper':
+                    gold += 1
+                elif temp == 'Silver':
+                    gold += 2
+                elif temp == 'Gold':
+                    gold += 3
+                turn = True
             bot.sendMessage(chat_id = str(user3_id),text = 'You got ' + str(hand3) + ' .\nType ( /buy ) or ( /use ) to proceed')
         else:
             update.message.reply_text('Its not your turn or you havent joined the game yet.')
