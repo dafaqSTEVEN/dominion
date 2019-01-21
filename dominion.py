@@ -49,6 +49,12 @@ turn_count=0
 turnnum = 0
 start_game=False
 
+
+
+
+
+
+
 def start(bot,update):
     global turn_count
     global turnnum
@@ -83,7 +89,7 @@ def start(bot,update):
                 elif temp == 'Gold':
                     gold += 3
                 turn = True
-        bot.sendMessage(chat_id = str(user1_id),text = 'You got ' + str(hand) + ' .\nType ( /buy ) or ( /use ) to proceed')
+        bot.sendMessage(chat_id = str(user1_id),text = 'You got ' + str(hand) + ' .\nType ( /action ) or ( /buy ) to proceed')
         for i in range(5):
             temp = (random.choice(deckplayer2))
             hand2.append(temp)
@@ -95,7 +101,7 @@ def start(bot,update):
             elif temp == 'Gold':
                 gold += 3
             turn = True
-        bot.sendMessage(chat_id = str(user2_id),text = 'You got ' + str(hand2) + ' .\nType ( /buy ) or ( /use ) to proceed')
+        bot.sendMessage(chat_id = str(user2_id),text = 'You got ' + str(hand2) + ' .\nType ( /action ) or ( /buy ) to proceed')
         if user3_id !='null':
             for i in range(5):
                 temp = (random.choice(deckplayer3))
@@ -108,10 +114,7 @@ def start(bot,update):
                 elif temp == 'Gold':
                     gold += 3
                 turn = True
-            bot.sendMessage(chat_id = str(user3_id),text = 'You got ' + str(hand3) + ' .\nType ( /buy ) or ( /use ) to proceed')
-        else:
-            update.message.reply_text('Its not your turn or you havent joined the game yet.')
-
+            bot.sendMessage(chat_id = str(user3_id),text = 'You got ' + str(hand3) + ' .\nType ( /action ) or ( /buy ) to proceed')
 
 
 def button(bot,update):
@@ -129,7 +132,7 @@ def button(bot,update):
             buy_temp.append('Silver')
             gold -= 3
             buy_time -= 1
-            query.edit_message_text('You have bought Silver.\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Silver.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=='Witch':
@@ -137,7 +140,7 @@ def button(bot,update):
             buy_temp.append('Witch')
             gold -= 3
             buy_time -= 1
-            query.edit_message_text('You have bought Witch .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Witch .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=="Village":
@@ -145,7 +148,7 @@ def button(bot,update):
             buy_temp.append('Village')
             gold -= 3
             buy_time -= 1
-            query.edit_message_text('You have bought Village .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Village .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=="Courtyard":
@@ -153,7 +156,7 @@ def button(bot,update):
             buy_temp.append('Courtyard')
             gold -= 2
             buy_time -= 1
-            query.edit_message_text('You have bought Courtyard .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Courtyard .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=='Gold':
@@ -161,7 +164,7 @@ def button(bot,update):
             buy_temp.append('Gold')
             gold -= 6
             buy_time -= 1
-            query.edit_message_text('You have bought Gold .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Gold .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=="Harbinger":
@@ -169,7 +172,7 @@ def button(bot,update):
             buy_temp.append('Harbinger')
             gold -= 3
             buy_time -= 1
-            query.edit_message_text('You have bought Harbinger .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Harbinger .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=="Laboratory":
@@ -177,7 +180,7 @@ def button(bot,update):
             buy_temp.append('Laboratory')
             gold -= 5
             buy_time -= 1
-            query.edit_message_text('You have bought Laboratory .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Laboratory .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=="Workshop":
@@ -185,7 +188,7 @@ def button(bot,update):
             buy_temp.append('Workshop')
             gold -= 3
             buy_time -= 1
-            query.edit_message_text('You have bought Workshop .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
+            query.edit_message_text('You have bought Workshop .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     #end of buy section
@@ -204,7 +207,7 @@ def button(bot,update):
                     gold += 2
                 elif temp == 'Gold':
                     gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + ']  and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
+                query.edit_message_text('You have draw [' + str(temp) + ']  and you now have ' + str(action) + ' action.\nType /action to continue using cards.\nType /buy to buy cards\nType /end to end.')
             elif turn_count == 2:
                 hand2.remove('Village')
                 grave2.append('Village')
@@ -216,7 +219,7 @@ def button(bot,update):
                     gold += 2
                 elif temp == 'Gold':
                     gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
+                query.edit_message_text('You have draw [' + str(temp) + '] and you now have ' + str(action) + ' action.\nType /action to continue using cards.\nType /buy to buy cards\nType /end to end.')
             elif turn_count == 3:
                 hand3.remove('Village')
                 grave3.append('Village')
@@ -228,7 +231,7 @@ def button(bot,update):
                     gold += 2
                 elif temp == 'Gold':
                     gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and you now have ' + str(action) + ' action.\nType /use to continue using cards.\nType /buy to buy cards\nType /end to end.')
+                query.edit_message_text('You have draw [' + str(temp) + '] and you now have ' + str(action) + ' action.\nType /action to continue using cards.\nType /buy to buy cards\nType /end to end.')
         else:
                 query.edit_message_text('You dont have enough Action.')
     if query.data == 'usewitch':
@@ -255,7 +258,7 @@ def button(bot,update):
                     gold += 2
                 elif tempp == 'Gold':
                     gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
             elif turn_count == 2:
                 hand2.remove('Witch')
                 grave2.append('Witch')
@@ -277,7 +280,7 @@ def button(bot,update):
                     gold += 2
                 elif tempp == 'Gold':
                     gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
             elif turn_count == 3:
                 hand3.remove('Witch')
                 grave3.append('Witch')
@@ -299,7 +302,7 @@ def button(bot,update):
                     gold += 2
                 elif tempp == 'Gold':
                     gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
             else:
                 query.edit_message_text('You dont have enough Action.')
     if query.data == 'usecourtyard':
@@ -360,7 +363,7 @@ def button(bot,update):
                     elif c_temp == 'Estates':
                         keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
                 query.message.reply_text('Cards available : ', reply_markup=reply_markup)
-                query.edit_message_text('You have draw ' + str(temp) + ' , ' +str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                query.edit_message_text('You have draw ' + str(temp) + ' , ' +str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
             elif turn_count == 2:
                 hand2.remove('Courtyard')
                 grave2.append('Courtyard')
@@ -414,7 +417,7 @@ def button(bot,update):
                     elif c_temp == 'Estates':
                         keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
                 query.message.reply_text('Cards available : ', reply_markup=reply_markup)
-                query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
             elif turn_count == 3:
                 hand3.remove('Courtyard')
                 grave3.append('Courtyard')
@@ -467,7 +470,7 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton('Gold', callback_data="c_gold")])
                     elif c_temp == 'Estates':
                         keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
-                query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
             query.message.reply_text('You can put :one: card on top of your deck\nCards availbale:',replymarkup=replymarkup)
         else:
             query.edit_message_text('You dont have enough Action.')
@@ -570,7 +573,7 @@ def button(bot,update):
                     gold += 2
                 elif tempp == 'Gold':
                     gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
             elif turn_count == 2:
                 hand2.remove('Laboratory')
                 grave2.append('Laboratory')
@@ -590,7 +593,7 @@ def button(bot,update):
                     gold += 2
                 elif tempp == 'Gold':
                     gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
             elif turn_count == 3:
                 hand3.remove('Laboratory')
                 grave3.append('Laboratory')
@@ -610,7 +613,7 @@ def button(bot,update):
                     gold += 2
                 elif tempp == 'Gold':
                     gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
             else:
                 query.edit_message_text('You dont have enough Action.')
     if query.data == 'useworkshop':
@@ -647,7 +650,7 @@ def button(bot,update):
         elif turn_count==3:
             temp_deck_top3.append('Witch')
             hand3.remove('Witch')
-        query.edit_message_text('Witch is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Witch is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'c_village':
         if turn_count == 1:
             temp_deck_top.append('Village')
@@ -658,7 +661,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Village')
             hand3.remove('Village')
-        query.edit_message_text('Village is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Village is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'c_courtyard':
         if turn_count == 1:
             temp_deck_top.append('Courtyard')
@@ -669,7 +672,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Courtyard')
             hand3.remove('Courtyard')
-        query.edit_message_text('Courtyard is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Courtyard is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'c_copper':
         if turn_count == 1:
             temp_deck_top.append('Copper')
@@ -680,7 +683,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Copper')
             hand3.remove('Copper')
-        query.edit_message_text('Copper is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Copper is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'c_silver':
         if turn_count == 1:
             temp_deck_top.append('Silver')
@@ -691,7 +694,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Silver')
             hand3.remove('Silver')
-        query.edit_message_text('Silver is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Silver is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'c_gold':
         if turn_count == 1:
             temp_deck_top.append('Gold')
@@ -702,7 +705,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Gold')
             hand3.remove('Gold')
-        query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'c_estates':
         if turn_count == 1:
             temp_deck_top.append('Estates')
@@ -713,7 +716,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Estates')
             hand3.remove('Estates')
-        query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'h_witch':
         if turn_count == 1:
             temp_deck_top.append('Witch')
@@ -724,7 +727,7 @@ def button(bot,update):
         elif turn_count==3:
             temp_deck_top3.append('Witch')
             grave3.remove('Witch')
-        query.edit_message_text('Witch is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Witch is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'h_village':
         if turn_count == 1:
             temp_deck_top.append('Village')
@@ -735,7 +738,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Village')
             grave3.remove('Village')
-        query.edit_message_text('Village is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Village is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'h_courtyard':
         if turn_count == 1:
             temp_deck_top.append('Courtyard')
@@ -746,7 +749,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Courtyard')
             grave3.remove('Courtyard')
-        query.edit_message_text('Courtyard is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Courtyard is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'h_copper':
         if turn_count == 1:
             temp_deck_top.append('Copper')
@@ -757,7 +760,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Copper')
             grave3.remove('Copper')
-        query.edit_message_text('Copper is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Copper is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'h_silver':
         if turn_count == 1:
             temp_deck_top.append('Silver')
@@ -768,7 +771,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Silver')
             grave3.remove('Silver')
-        query.edit_message_text('Silver is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Silver is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'h_gold':
         if turn_count == 1:
             temp_deck_top.append('Gold')
@@ -779,7 +782,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Gold')
             grave3.remove('Gold')
-        query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'h_estates':
         if turn_count == 1:
             temp_deck_top.append('Estates')
@@ -790,7 +793,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Estates')
             grave3.remove('Estates')
-        query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'h_harbinger':
         if turn_count == 1:
             temp_deck_top.append('Harbinger')
@@ -801,7 +804,7 @@ def button(bot,update):
         elif turn_count == 3:
             temp_deck_top3.append('Harbinger')
             grave3.remove('Harbinger')
-        query.edit_message_text('Harbinger is placed on top of your deck.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Harbinger is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'w_village':
         if turn_count == 1:
             grave.append('Village')
@@ -809,7 +812,7 @@ def button(bot,update):
             grave2.append('Village')
         elif turn_count == 3:
             grave3.append('Village')
-        query.edit_message_text('Village is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Village is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'w_courtyard':
         if turn_count == 1:
             grave.append('Courtyard')
@@ -817,7 +820,7 @@ def button(bot,update):
             grave2.append('Courtyard')
         elif turn_count == 3:
             grave3.append('Courtyard')
-        query.edit_message_text('Courtyard is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Courtyard is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'w_copper':
         if turn_count == 1:
             grave.append('Copper')
@@ -825,7 +828,7 @@ def button(bot,update):
             grave2.append('Copper')
         elif turn_count == 3:
             grave3.append('Copper')
-        query.edit_message_text('Copper is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Copper is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'w_silver':
         if turn_count == 1:
             grave.append('Silver')
@@ -833,7 +836,7 @@ def button(bot,update):
             grave2.append('Silver')
         elif turn_count == 3:
             grave3.append('Silver')
-        query.edit_message_text('Silver is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Silver is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'w_workshop':
         if turn_count == 1:
             grave.append('Workshop')
@@ -841,7 +844,7 @@ def button(bot,update):
             grave2.append('Workshop')
         elif turn_count == 3:
             grave3.append('Workshop')
-        query.edit_message_text('Workshop is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Workshop is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'w_harbinger':
         if turn_count == 1:
             grave.append('Harbinger')
@@ -849,7 +852,7 @@ def button(bot,update):
             grave2.append('Harbinger')
         elif turn_count == 3:
             grave3.append('Harbinger')
-        query.edit_message_text('Harbinger is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Harbinger is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
     if query.data == 'w_laboratory':
         if turn_count == 1:
             grave.append('Laboratory')
@@ -857,7 +860,7 @@ def button(bot,update):
             grave2.append('Laboratory')
         elif turn_count == 3:
             grave3.append('Laboratory')
-        query.edit_message_text('Laboratory is gained into your discarded pile.\nType /buy to buy cards\nType /use to continue using cards.\nType /end to end.')
+        query.edit_message_text('Laboratory is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
 
 def join(bot,update):
     global user1_id
@@ -888,135 +891,9 @@ def join(bot,update):
                 user3_tag = str(update.message.from_user.username)
             update.message.reply_text('Current player list :\n [' + str(user1_name) + ' / ' + str(user2_name) + ' / ' + str(user3_name) + ']\nType /join to join the game.\nType /start to start the game.')
 
-def draw(bot,update):
-    global temp_deck_top,temp_deck_top2,temp_deck_top3
-    global gold
-    global points
-    global deckplayer1
-    global deckplayer2
-    global deckplayer3
-    global grave
-    global grave2
-    global grave3
-    global turn
-    global hand
-    global turnnum
-    if turn_count == 0:
-        update.message.reply_text('Type /join to join the game\nType /start to start the game.')
-    else:
-        if turn == True:
-            update.message.reply_text('Your turn of drawing has ended')
-        else:
-            update.message.reply_text('Turn ' + str(turnnum))
-            if str(update.message.from_user.id) == user1_id and turn_count == 1:
-                if temp_deck_top != []:
-                    c = temp_deck_top[0]
-                    hand.append(c)
-                    temp_deck_top = []
-                    for i in range(4):
-                            temp = (random.choice(deckplayer1))
-                            hand.append(temp)
-                            deckplayer1.remove(temp)
-                            if temp == 'Copper':
-                                gold += 1
-                            elif temp == 'Silver':
-                                gold += 2
-                            elif temp == 'Gold':
-                                gold += 3
-                            if deckplayer1 == []:
-                                deckplayer1 = grave
-                                grave = []
-                            turn = True
-                else:
-                    for i in range(5):
-                            temp = (random.choice(deckplayer1))
-                            hand.append(temp)
-                            deckplayer1.remove(temp)
-                            if temp == 'Copper':
-                                gold += 1
-                            elif temp == 'Silver':
-                                gold += 2
-                            elif temp == 'Gold':
-                                gold += 3
-                            if deckplayer1 == []:
-                                deckplayer1 = grave
-                                grave = []
-                            turn = True
-                update.message.reply_text('You got ' + str(hand) + ' .\nType ( /buy ) or ( /use ) to proceed')
-            elif str(update.message.from_user.id) == user2_id and turn_count == 2:
-                if temp_deck_top2 != []:
-                    c = temp_deck_top2[0]
-                    hand2.append(c)
-                    temp_deck_top2 = []
-                    for i in range(4):
-                        temp = (random.choice(deckplayer2))
-                        hand2.append(temp)
-                        deckplayer2.remove(temp)
-                        if temp == 'Copper':
-                            gold += 1
-                        elif temp == 'Silver':
-                            gold += 2
-                        elif temp == 'Gold':
-                            gold += 3
-                        if deckplayer1 == []:
-                            deckplayer2 = grave2
-                            grave2 = []
-                        turn = True
-                else:
-                    for i in range(5):
-                            temp = (random.choice(deckplayer2))
-                            hand2.append(temp)
-                            deckplayer2.remove(temp)
-                            if temp == 'Copper':
-                                gold += 1
-                            elif temp == 'Silver':
-                                gold += 2
-                            elif temp == 'Gold':
-                                gold += 3
-                            if deckplayer2 == []:
-                                deckplayer2 = grave2
-                                grave2 = []
-                            turn = True
-                update.message.reply_text('You got ' + str(hand2) + ' .\nType ( /buy ) or ( /use ) to proceed')
-            elif str(update.message.from_user.id) == user3_id and turn_count == 3:
-                if temp_deck_top != []:
-                    c = temp_deck_top3[0]
-                    hand3.append(c)
-                    temp_deck_top3 = []
-                    for i in range(4):
-                        temp = (random.choice(deckplayer3))
-                        hand3.append(temp)
-                        deckplayer3.remove(temp)
-                        if temp == 'Copper':
-                            gold += 1
-                        elif temp == 'Silver':
-                            gold += 2
-                        elif temp == 'Gold':
-                            gold += 3
-                        if deckplayer3 == []:
-                            deckplayer3 = grave3
-                            grave3 = []
-                        turn = True
-                else:
-                    for i in range(5):
-                            temp = (random.choice(deckplayer3))
-                            hand3.append(temp)
-                            deckplayer3.remove(temp)
-                            if temp == 'Copper':
-                                gold += 1
-                            elif temp == 'Silver':
-                                gold += 2
-                            elif temp == 'Gold':
-                                gold += 3
-                            if deckplayer3 == []:
-                                deckplayer3 = grave3
-                                grave3 = []
-                            turn = True
-                update.message.reply_text('You got ' + str(hand3) + ' .\nType ( /buy ) or ( /use ) to proceed')
-            else:
-                update.message.reply_text('Its not your turn or you havent joined the game yet.')
 
-def use(bot,update):
+
+def action(bot,update):
     keyboard = [[]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     if turn_count == 1:
@@ -1135,6 +1012,18 @@ def end(bot,update):
     turn=False
     action = 1
     gold = 0
+    global temp_deck_top, temp_deck_top2, temp_deck_top3
+    global gold
+    global points
+    global deckplayer1
+    global deckplayer2
+    global deckplayer3
+    global grave
+    global grave2
+    global grave3
+    global turn
+    global hand
+    global turnnum
     if  turn_count == 1 :
         if str(update.message.from_user.id) != user1_id:
             update.message.reply_text('It is not your turn.')
@@ -1143,6 +1032,41 @@ def end(bot,update):
             grave += buy_temp
             hand = []
             buy_temp = []
+            if str(update.message.from_user.id) == user1_id and turn_count == 1:
+                if temp_deck_top != []:
+                    c = temp_deck_top[0]
+                    hand.append(c)
+                    temp_deck_top = []
+                    for i in range(4):
+                        temp = (random.choice(deckplayer1))
+                        hand.append(temp)
+                        deckplayer1.remove(temp)
+                        if temp == 'Copper':
+                            gold += 1
+                        elif temp == 'Silver':
+                            gold += 2
+                        elif temp == 'Gold':
+                            gold += 3
+                        if deckplayer1 == []:
+                            deckplayer1 = grave
+                            grave = []
+                        turn = True
+                else:
+                    for i in range(5):
+                        temp = (random.choice(deckplayer1))
+                        hand.append(temp)
+                        deckplayer1.remove(temp)
+                        if temp == 'Copper':
+                            gold += 1
+                        elif temp == 'Silver':
+                            gold += 2
+                        elif temp == 'Gold':
+                            gold += 3
+                        if deckplayer1 == []:
+                            deckplayer1 = grave
+                            grave = []
+                        turn = True
+            bot.sendMessage(chat_id=str(user1_id), text='You got ' + str(hand) + 'after shufle.' )
             update.message.reply_text(str(user1_name) + ' is done!\nIts now your turn , ' + str(user2_name) + ' @' + user2_tag +'\nType /draw')
             turn_count += 1
     elif turn_count == 2 :
@@ -1153,7 +1077,41 @@ def end(bot,update):
             grave2 += buy_temp
             hand2 = []
             buy_temp = []
+            if temp_deck_top2 != []:
+                c = temp_deck_top2[0]
+                hand2.append(c)
+                temp_deck_top2 = []
+                for i in range(4):
+                    temp = (random.choice(deckplayer2))
+                    hand2.append(temp)
+                    deckplayer2.remove(temp)
+                    if temp == 'Copper':
+                        gold += 1
+                    elif temp == 'Silver':
+                        gold += 2
+                    elif temp == 'Gold':
+                        gold += 3
+                    if deckplayer1 == []:
+                        deckplayer2 = grave2
+                        grave2 = []
+                    turn = True
+            else:
+                for i in range(5):
+                    temp = (random.choice(deckplayer2))
+                    hand2.append(temp)
+                    deckplayer2.remove(temp)
+                    if temp == 'Copper':
+                        gold += 1
+                    elif temp == 'Silver':
+                        gold += 2
+                    elif temp == 'Gold':
+                        gold += 3
+                    if deckplayer2 == []:
+                        deckplayer2 = grave2
+                        grave2 = []
+                    turn = True
             turn_count += 1
+            bot.sendMessage(chat_id=str(user2_id), text='You got ' + str(hand2) + 'after shufle.')
             if user3_name == 'null' and turn_count == 3:
                 turn_count = 1
             if turn_count == 1:
@@ -1168,6 +1126,40 @@ def end(bot,update):
             grave3 += buy_temp
             hand3 = []
             buy_temp = []
+            if temp_deck_top != []:
+                c = temp_deck_top3[0]
+                hand3.append(c)
+                temp_deck_top3 = []
+                for i in range(4):
+                    temp = (random.choice(deckplayer3))
+                    hand3.append(temp)
+                    deckplayer3.remove(temp)
+                    if temp == 'Copper':
+                        gold += 1
+                    elif temp == 'Silver':
+                        gold += 2
+                    elif temp == 'Gold':
+                        gold += 3
+                    if deckplayer3 == []:
+                        deckplayer3 = grave3
+                        grave3 = []
+                    turn = True
+            else:
+                for i in range(5):
+                    temp = (random.choice(deckplayer3))
+                    hand3.append(temp)
+                    deckplayer3.remove(temp)
+                    if temp == 'Copper':
+                        gold += 1
+                    elif temp == 'Silver':
+                        gold += 2
+                    elif temp == 'Gold':
+                        gold += 3
+                    if deckplayer3 == []:
+                        deckplayer3 = grave3
+                        grave3 = []
+                    turn = True
+            bot.sendMessage(chat_id=str(user3_id), text='You got ' + str(hand3) + 'after shufle.')
             update.message.reply_text(str(user3_name) + ' is done!\nIts now your turn , ' + str(user1_name) + ' @' + user1_tag + '\nType /draw')
             turn_count += 1
             if turn_count == 4:
@@ -1281,7 +1273,7 @@ def main():
     test.add_handler(CommandHandler('end',end))
     test.add_handler(CommandHandler('join',join))
     test.add_handler(CommandHandler('start',start))
-    test.add_handler(CommandHandler('use',use))
+    test.add_handler(CommandHandler('action',action))
     test.add_handler(CommandHandler('playerlist',playerlist))
     test.add_handler(RegexHandler('.*status.*',status))
     test.add_handler(RegexHandler('.*reset.*', reset))
