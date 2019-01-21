@@ -55,9 +55,62 @@ def start(bot,update):
     global start_game
     start_game = True
     update.message.reply_text("Loby is closed\n" + str(user1_name) + ' is drawing.\nType /draw.')
+    global temp_deck_top, temp_deck_top2, temp_deck_top3
+    global gold
+    global points
+    global deckplayer1
+    global deckplayer2
+    global deckplayer3
+    global grave
+    global grave2
+    global grave3
+    global turn
+    global hand
+    global turnnum
+    if turn_count == 0:
+        update.message.reply_text('Type /join to join the game\nType /start to start the game.')
+    else:
+        for i in range(5):
+            temp = (random.choice(deckplayer1))
+            hand.append(temp)
+            deckplayer1.remove(temp)
+            if temp == 'Copper':
+                gold += 1
+            elif temp == 'Silver':
+                gold += 2
+            elif temp == 'Gold':
+                gold += 3
+            turn = True
+            update.message.reply_text(chat_id = user1_id,text = 'You got ' + str(hand) + ' .\nType ( /buy ) or ( /use ) to proceed')
+            for i in range(5):
+                temp = (random.choice(deckplayer2))
+                hand2.append(temp)
+                deckplayer2.remove(temp)
+                if temp == 'Copper':
+                    gold += 1
+                elif temp == 'Silver':
+                    gold += 2
+                elif temp == 'Gold':
+                    gold += 3
+                turn = True
+                update.message.reply_text(chat_id = user2_id,text = 'You got ' + str(hand2) + ' .\nType ( /buy ) or ( /use ) to proceed')
+                if user3_id !='null':
+                    for i in range(5):
+                        temp = (random.choice(deckplayer3))
+                        hand3.append(temp)
+                        deckplayer3.remove(temp)
+                        if temp == 'Copper':
+                            gold += 1
+                        elif temp == 'Silver':
+                            gold += 2
+                        elif temp == 'Gold':
+                            gold += 3
+                        turn = True
+            update.message.reply_text(chat_id = user3_id,text = 'You got ' + str(hand3) + ' .\nType ( /buy ) or ( /use ) to proceed')
+        else:
+            update.message.reply_text('Its not your turn or you havent joined the game yet.')
     turn_count = 1
     turnnum = 1
-    return(turn_count,turnnum)
 
 
 def button(bot,update):
@@ -69,6 +122,7 @@ def button(bot,update):
     global buy_temp
     global buy_time
     query = update.callback_query
+    #buy section
     if query.data == 'Silver':
         if (buy_turn == True) and (gold - 3 >= 0):
             buy_temp.append('Silver')
@@ -133,6 +187,7 @@ def button(bot,update):
             query.edit_message_text('You have bought Workshop .\nType /buy to continue buying cards\nType /use to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
+    #end of buy section
     if query.data=='usevillage':
         if action>0:
             action-=1
