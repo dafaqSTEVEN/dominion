@@ -1267,7 +1267,6 @@ def lg(bot,update):
 def main():
     updater = Updater('599551578:AAE709inuNhedfLCwIVKF9fWXJNJ-pqv5lg')
     test = updater.dispatcher
-    test.add_handler(CommandHandler('draw',draw))
     test.add_handler(CommandHandler('money',money))
     test.add_handler(CommandHandler('point',point))
     test.add_handler(CommandHandler('buy',buy))
