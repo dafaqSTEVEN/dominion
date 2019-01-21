@@ -67,8 +67,10 @@ def start(bot,update):
     global turn
     global hand
     global turnnum
-    if turn_count == 0:
-        update.message.reply_text('Type /join to join the game\nType /start to start the game.')
+    turn_count = 1
+    turnnum = 1
+    if turn_count >= 1:
+        update.message.reply_text('The game is started.')
     else:
         for i in range(5):
             temp = (random.choice(deckplayer1))
@@ -109,8 +111,7 @@ def start(bot,update):
             update.message.reply_text(chat_id = user3_id,text = 'You got ' + str(hand3) + ' .\nType ( /buy ) or ( /use ) to proceed')
         else:
             update.message.reply_text('Its not your turn or you havent joined the game yet.')
-    turn_count = 1
-    turnnum = 1
+
 
 
 def button(bot,update):
