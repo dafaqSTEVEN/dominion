@@ -26,6 +26,9 @@ temp_deck_top=[]
 temp_deck_top2 = []
 temp_deck_top3 = []
 gold = 0
+gold1 =0
+gold2=0
+gold3=0
 points = 0
 points2 = 0
 points3 = 0
@@ -33,6 +36,7 @@ turn = False
 buy_turn = False
 buy_time = 1
 action = 1
+chat_id = 'null'
 user1_id = 'null'
 user2_id = 'null'
 user3_id = 'null'
@@ -60,7 +64,7 @@ def start(bot,update):
     global turnnum
     global start_game
     start_game = True
-    update.message.reply_text("Loby is closed\n" + str(user1_name) + ' is drawing.\nType /action.')
+    update.message.reply_text("Loby is closed\n" + str(user1_name) + 's turn.\nType /action.')
     global temp_deck_top, temp_deck_top2, temp_deck_top3
     global gold
     global points
@@ -73,8 +77,11 @@ def start(bot,update):
     global turn
     global hand
     global turnnum
+    global gold1,gold2,gold3
+    global chat_id
     turn_count = 1
     turnnum = 1
+    chat_id = str(update.message.chat.id)
     if turn_count > 1:
         update.message.reply_text('The game is started.')
     else:
@@ -83,11 +90,11 @@ def start(bot,update):
                 hand.append(temp)
                 deckplayer1.remove(temp)
                 if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
+                    gold1 += 1
+                elif temp1 == 'Silver':
                     gold += 2
                 elif temp == 'Gold':
-                    gold += 3
+                    gold1 += 3
                 turn = True
         bot.sendMessage(chat_id = str(user1_id),text = 'You got ' + str(hand) + ' .\nType ( /action ) or ( /buy ) to proceed')
         for i in range(5):
@@ -95,11 +102,11 @@ def start(bot,update):
             hand2.append(temp)
             deckplayer2.remove(temp)
             if temp == 'Copper':
-                gold += 1
+                gold2 += 1
             elif temp == 'Silver':
-                gold += 2
+                gold2 += 2
             elif temp == 'Gold':
-                gold += 3
+                gold2 += 3
             turn = True
         bot.sendMessage(chat_id = str(user2_id),text = 'You got ' + str(hand2) + ' .\nType ( /action ) or ( /buy ) to proceed')
         if user3_id !='null':
@@ -108,11 +115,11 @@ def start(bot,update):
                 hand3.append(temp)
                 deckplayer3.remove(temp)
                 if temp == 'Copper':
-                    gold += 1
+                    gold3 += 1
                 elif temp == 'Silver':
-                    gold += 2
+                    gold3 += 2
                 elif temp == 'Gold':
-                    gold += 3
+                    gold3 += 3
                 turn = True
             bot.sendMessage(chat_id = str(user3_id),text = 'You got ' + str(hand3) + ' .\nType ( /action ) or ( /buy ) to proceed')
 
@@ -893,11 +900,11 @@ def join(bot,update):
 
 
 
-def action(bot,update):
+def actionphase(bot,update):
     keyboard = [[]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     if turn_count == 1:
-        update.message.reply_text(str(user1_name) + ', you have : ' + str(hand))
+        bot.sendMessage(chat_id=user1_id,text=str(user1_name) + ', you have : ' + str(hand))
         for i in range(len(hand)):
             tempp = hand[i]
             if tempp == 'Village':
@@ -914,7 +921,7 @@ def action(bot,update):
                 keyboard.append([InlineKeyboardButton("Workshop", callback_data="useworkshop")])
         update.message.reply_text('Cards available : ', reply_markup=reply_markup)
     elif turn_count == 2:
-        update.message.reply_text(str(user2_name) + ', you have : ' + str(hand2))
+        bot.sendMessage(chat_id=user2_id,text=str(user2_name) + ', you have : ' + str(hand2))
         for i in range(len(hand2)):
             tempp = hand2[i]
             if tempp == 'Village':
@@ -931,7 +938,7 @@ def action(bot,update):
                 keyboard.append([InlineKeyboardButton("Workshop", callback_data="useworkshop")])
         update.message.reply_text('Cards available : ', reply_markup=reply_markup)
     elif turn_count == 3:
-        update.message.reply_text(str(user3_name) + ', you have : ' + str(hand))
+        bot.sendMessage(chat_id=user3_id,text=str(user3_name) + ', you have : ' + str(hand))
         for i in range(len(hand3)):
             tempp = hand3[i]
             if tempp == 'Village':
@@ -953,7 +960,12 @@ def action(bot,update):
 def buy(bot,update):
     global gold
     global buy_turn
-    update.message.reply_text('You have <' + str(gold) + '> dollar')
+    if turn_count == 1:
+        bot.sendMessage(chat_id=user1_id,text='You have <' + str(gold) + '> dollar')
+    elif turn_count == 2:
+        bot.sendMessage(chat_id=user2_id,text='You have <' + str(gold) + '> dollar')
+    else:
+        bot.sendMessage(chat_id=user3_id,text='You have <' + str(gold) + '> dollar')
     buy_turn = True
     keyboard = [[]]
     if gold >=6 :
@@ -1019,6 +1031,7 @@ def end(bot,update):
     global turn
     global hand
     global turnnum
+    global gold1,gold2,gold3
     turn = False
     turnnum += 1
     turn=False
@@ -1043,11 +1056,11 @@ def end(bot,update):
                         hand.append(temp)
                         deckplayer1.remove(temp)
                         if temp == 'Copper':
-                            gold += 1
+                            gold1 += 1
                         elif temp == 'Silver':
-                            gold += 2
+                            gold1 += 2
                         elif temp == 'Gold':
-                            gold += 3
+                            gold1 += 3
                         if deckplayer1 == []:
                             deckplayer1 = grave
                             grave = []
@@ -1058,16 +1071,18 @@ def end(bot,update):
                         hand.append(temp)
                         deckplayer1.remove(temp)
                         if temp == 'Copper':
-                            gold += 1
+                            gold1 += 1
                         elif temp == 'Silver':
-                            gold += 2
+                            gold1 += 2
                         elif temp == 'Gold':
-                            gold += 3
+                            gold1 += 3
                         if deckplayer1 == []:
                             deckplayer1 = grave
                             grave = []
                         turn = True
             bot.sendMessage(chat_id=str(user1_id), text='You got ' + str(hand) + 'after shufle.' )
+            gold1 = 0
+            gold = gold2
             update.message.reply_text(str(user1_name) + ' is done!\nIts now your turn , ' + str(user2_name) + ' @' + user2_tag +'\nType /draw')
             turn_count += 1
     elif turn_count == 2 :
@@ -1087,11 +1102,11 @@ def end(bot,update):
                     hand2.append(temp)
                     deckplayer2.remove(temp)
                     if temp == 'Copper':
-                        gold += 1
+                        gold2 += 1
                     elif temp == 'Silver':
-                        gold += 2
+                        gold2 += 2
                     elif temp == 'Gold':
-                        gold += 3
+                        gold2 += 3
                     if deckplayer1 == []:
                         deckplayer2 = grave2
                         grave2 = []
@@ -1102,11 +1117,11 @@ def end(bot,update):
                     hand2.append(temp)
                     deckplayer2.remove(temp)
                     if temp == 'Copper':
-                        gold += 1
+                        gold2 += 1
                     elif temp == 'Silver':
-                        gold += 2
+                        gold2 += 2
                     elif temp == 'Gold':
-                        gold += 3
+                        gold2 += 3
                     if deckplayer2 == []:
                         deckplayer2 = grave2
                         grave2 = []
@@ -1116,9 +1131,13 @@ def end(bot,update):
             if user3_name == 'null' and turn_count == 3:
                 turn_count = 1
             if turn_count == 1:
-                update.message.reply_text(str(user2_name) + ' is done!\nIts now your turn , ' + str( user1_name) + ' @' + user1_tag + '\nType /draw')
+                gold2 = 0
+                gold=gold1
+                update.message.reply_text(str(user2_name) + ' is done!\nIts now your turn , ' + str( user1_name) + ' @' + user1_tag + '\nType ( /action ) or ( /buy ) to proceed')
             elif turn_count == 3:
-                update.message.reply_text(str(user2_name) + ' is done!\nIts now your turn , ' + str(user3_name) + ' @' + user3_tag + '\nType /draw')
+                gold2 = 0
+                gold=gold3
+                update.message.reply_text(str(user2_name) + ' is done!\nIts now your turn , ' + str(user3_name) + ' @' + user3_tag + '\nType ( /action ) or ( /buy ) to proceed')
     elif turn_count == 3 :
         if str(update.message.from_user.id) != user3_id:
             update.message.reply_text('It is not your turn.')
@@ -1136,11 +1155,11 @@ def end(bot,update):
                     hand3.append(temp)
                     deckplayer3.remove(temp)
                     if temp == 'Copper':
-                        gold += 1
+                        gold3 += 1
                     elif temp == 'Silver':
-                        gold += 2
+                        gold3 += 2
                     elif temp == 'Gold':
-                        gold += 3
+                        gold3 += 3
                     if deckplayer3 == []:
                         deckplayer3 = grave3
                         grave3 = []
@@ -1151,17 +1170,19 @@ def end(bot,update):
                     hand3.append(temp)
                     deckplayer3.remove(temp)
                     if temp == 'Copper':
-                        gold += 1
+                        gold3 += 1
                     elif temp == 'Silver':
-                        gold += 2
+                        gold3 += 2
                     elif temp == 'Gold':
-                        gold += 3
+                        gold3 += 3
                     if deckplayer3 == []:
                         deckplayer3 = grave3
                         grave3 = []
                     turn = True
             bot.sendMessage(chat_id=str(user3_id), text='You got ' + str(hand3) + 'after shufle.')
-            update.message.reply_text(str(user3_name) + ' is done!\nIts now your turn , ' + str(user1_name) + ' @' + user1_tag + '\nType /draw')
+            update.message.reply_text(str(user3_name) + ' is done!\nIts now your turn , ' + str(user1_name) + ' @' + user1_tag + '\nType ( /action ) or ( /buy ) to proceed')
+            gold3 = 0
+            gold=gold1
             turn_count += 1
             if turn_count == 4:
                 turn_count = 1
@@ -1238,7 +1259,7 @@ def show (bot,update):
     update.message.reply_text('Deck\n'+str(deckplayer1)+'\n'+str(deckplayer2)+'\n'+str(deckplayer3))
 
 def admin(bot,update):
-    update.message.reply_text('/join\n/start\n/draw')
+    update.message.reply_text(chat_id)
 
 def error(bot,update,error):
     logger.warning('Update "%s" caused error "%s"', update, error)
@@ -1273,7 +1294,7 @@ def main():
     test.add_handler(CommandHandler('end',end))
     test.add_handler(CommandHandler('join',join))
     test.add_handler(CommandHandler('start',start))
-    test.add_handler(CommandHandler('action',action))
+    test.add_handler(CommandHandler('action',actionphase))
     test.add_handler(CommandHandler('playerlist',playerlist))
     test.add_handler(RegexHandler('.*status.*',status))
     test.add_handler(RegexHandler('.*reset.*', reset))
