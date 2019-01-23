@@ -1,3 +1,11 @@
 log
 test
-log
+log2019-01-23 13:48:53,913 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python35\lib\site-packages\telegram\ext\commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 94, in start
+    elif temp1 == 'Silver':
+NameError: name 'temp1' is not defined

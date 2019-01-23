@@ -91,8 +91,8 @@ def start(bot,update):
                 deckplayer1.remove(temp)
                 if temp == 'Copper':
                     gold1 += 1
-                elif temp1 == 'Silver':
-                    gold += 2
+                elif temp == 'Silver':
+                    gold1 += 2
                 elif temp == 'Gold':
                     gold1 += 3
                 turn = True
@@ -122,7 +122,7 @@ def start(bot,update):
                     gold3 += 3
                 turn = True
             bot.sendMessage(chat_id = str(user3_id),text = 'You got ' + str(hand3) + ' .\nType ( /action ) or ( /buy ) to proceed')
-
+        gold = gold1
 
 def button(bot,update):
     global deckplayer1,deckplayer2,deckplayer3
@@ -1047,6 +1047,7 @@ def end(bot,update):
             hand = []
             buy_temp = []
             if str(update.message.from_user.id) == user1_id and turn_count == 1:
+                gold1 = 0
                 if temp_deck_top != []:
                     c = temp_deck_top[0]
                     hand.append(c)
@@ -1080,15 +1081,15 @@ def end(bot,update):
                             deckplayer1 = grave
                             grave = []
                         turn = True
-            bot.sendMessage(chat_id=str(user1_id), text='You got ' + str(hand) + 'after shufle.' )
-            gold1 = 0
+            bot.sendMessage(chat_id=str(user1_id), text='Turn '+ str(turnnum) + '\nYou got ' + str(hand) + 'after shufle.' )
             gold = gold2
-            update.message.reply_text(str(user1_name) + ' is done!\nIts now your turn , ' + str(user2_name) + ' @' + user2_tag +'\nType /draw')
+            update.message.reply_text(str(user1_name) + ' is done!\nIts now your turn , ' + str(user2_name) + ' @' + user2_tag +'Type ( /action ) or ( /buy ) to proceed')
             turn_count += 1
     elif turn_count == 2 :
         if str(update.message.from_user.id) != user2_id:
             update.message.reply_text('It is not your turn.')
         else:
+            gold2 = 0
             grave2 += hand2
             grave2 += buy_temp
             hand2 = []
@@ -1127,21 +1128,20 @@ def end(bot,update):
                         grave2 = []
                     turn = True
             turn_count += 1
-            bot.sendMessage(chat_id=str(user2_id), text='You got ' + str(hand2) + 'after shufle.')
+            bot.sendMessage(chat_id=str(user2_id), text='Turn '+ str(turnnum) + '\nYou got ' + str(hand2) + 'after shufle.')
             if user3_name == 'null' and turn_count == 3:
                 turn_count = 1
             if turn_count == 1:
-                gold2 = 0
-                gold=gold1
+                gold = gold1
                 update.message.reply_text(str(user2_name) + ' is done!\nIts now your turn , ' + str( user1_name) + ' @' + user1_tag + '\nType ( /action ) or ( /buy ) to proceed')
             elif turn_count == 3:
-                gold2 = 0
                 gold=gold3
                 update.message.reply_text(str(user2_name) + ' is done!\nIts now your turn , ' + str(user3_name) + ' @' + user3_tag + '\nType ( /action ) or ( /buy ) to proceed')
     elif turn_count == 3 :
         if str(update.message.from_user.id) != user3_id:
             update.message.reply_text('It is not your turn.')
         else:
+            gold3 = 0
             grave3 += hand3
             grave3 += buy_temp
             hand3 = []
@@ -1179,7 +1179,7 @@ def end(bot,update):
                         deckplayer3 = grave3
                         grave3 = []
                     turn = True
-            bot.sendMessage(chat_id=str(user3_id), text='You got ' + str(hand3) + 'after shufle.')
+            bot.sendMessage(chat_id=str(user3_id), text='Turn '+ str(turnnum) + '\nYou got ' + str(hand3) + 'after shufle.')
             update.message.reply_text(str(user3_name) + ' is done!\nIts now your turn , ' + str(user1_name) + ' @' + user1_tag + '\nType ( /action ) or ( /buy ) to proceed')
             gold3 = 0
             gold=gold1
@@ -1249,7 +1249,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 1.4.1 (beta ready)')
+    update.message.reply_text('Normal\nv 1.5.0 (beta ready)')
 
 
 def show (bot,update):
