@@ -1,9 +1,10 @@
-from typing import List
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Updater,MessageHandler,CommandHandler,RegexHandler,CallbackQueryHandler
-import random
 import logging
-from telegram.error import (TelegramError, Unauthorized, BadRequest,TimedOut, ChatMigrated, NetworkError)
+import random
+from typing import List
+
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.error import (TelegramError, Unauthorized, BadRequest, TimedOut, ChatMigrated, NetworkError)
+from telegram.ext import Updater, MessageHandler, CommandHandler, RegexHandler, CallbackQueryHandler
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     filename='logging.txt',
@@ -1249,7 +1250,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 1.5.0 (beta ready)')
+    update.message.reply_text('Normal\nv 1.5.1 (beta ready)')
 
 
 def show (bot,update):
