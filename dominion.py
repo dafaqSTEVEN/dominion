@@ -3,7 +3,6 @@ import random
 from typing import List
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.error import (TelegramError, Unauthorized, BadRequest, TimedOut, ChatMigrated, NetworkError)
 from telegram.ext import Updater, MessageHandler, CommandHandler, RegexHandler, CallbackQueryHandler
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
