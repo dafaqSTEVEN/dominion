@@ -1500,7 +1500,7 @@ def start(bot,update):
 def quick(bot,update):
     global Provincecard
     global gold1,gold2,gold3
-    Provincecard = 8
+    Provincecard = 2
     gold1 = 8
     gold2 = 8
     gold3 = 8
