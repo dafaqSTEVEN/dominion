@@ -1137,7 +1137,7 @@ def end(bot,update):
         grave2 += deckplayer1
         grave2 += temp_deck_top
         for i in range(len(grave2)):
-            temp = grave[i]
+            temp = grave2[i]
             if temp == 'Estates':
                 points2 += 1
             elif temp == 'Duchy':
@@ -1148,7 +1148,7 @@ def end(bot,update):
         grave3 += deckplayer1
         grave3 += temp_deck_top
         for i in range(len(grave3)):
-            temp = grave[i]
+            temp = grave3[i]
             if temp == 'Estates':
                 points3 += 1
             elif temp == 'Duchy':
