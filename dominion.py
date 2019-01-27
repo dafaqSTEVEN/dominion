@@ -134,6 +134,38 @@ def button(bot,update):
     global buy_time
     query = update.callback_query
     #buy section
+    if query.data == 'Province':
+        if (buy_turn == True) and (gold - 8 >= 0):
+            buy_temp.append('Province')
+            gold -= 8
+            buy_time -= 1
+            query.edit_message_text('You have bought Province.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or it is not your turn.')
+    if query.data == 'Duchy':
+        if (buy_turn == True) and (gold - 5 >= 0):
+            buy_temp.append('Duchy')
+            gold -= 5
+            buy_time -= 1
+            query.edit_message_text('You have bought Duchy.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or it is not your turn.')
+    if query.data == 'Estates':
+        if (buy_turn == True) and (gold - 2 >= 0):
+            buy_temp.append('Estates')
+            gold -= 2
+            buy_time -= 1
+            query.edit_message_text('You have bought Estates.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or it is not your turn.')
+    if query.data == 'Copper':
+        if (buy_turn == True) and (gold - 0 >= 0):
+            buy_temp.append('Copper')
+            gold -= 0
+            buy_time -= 1
+            query.edit_message_text('You have bought Copper.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data == 'Silver':
         if (buy_turn == True) and (gold - 3 >= 0):
             buy_temp.append('Silver')
@@ -554,7 +586,6 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
                 grave3.append('Harbinger')
                 query.message.reply_text('Cards available:', reply_markup=reply_markup)
-            action-=1
         else:
             query.message.reply_text('you dont have enough action')
     if query.data == 'uselaboratory':
@@ -968,8 +999,10 @@ def buy(bot,update):
         bot.sendMessage(chat_id=user3_id,text='You have <' + str(gold) + '> dollar')
     buy_turn = True
     keyboard = [[]]
-    if gold >=6 :
+    if gold >=8:
+        keyboard.append([InlineKeyboardButton('Province', callback_data='Province')])
         keyboard.append([InlineKeyboardButton('Gold', callback_data='Gold')])
+        keyboard.append([InlineKeyboardButton("Duchy", callback_data="Duchy")])
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
         keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
@@ -977,8 +1010,22 @@ def buy(bot,update):
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
-        update.message.reply_text('Buy Gold costs 6 dollars\nBuy Laboratory costs 5 dollars\nBuy Witch costs 5 dollars\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
+        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
+        update.message.reply_text('Buy Province for 8 dollar\nBuy Gold costs 6 dollars\nBuy Duchy For 5 dollar\nBuy Laboratory costs 5 dollars\nBuy Witch costs 5 dollars\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
+    elif gold == 7 or gold == 6 :
+        keyboard.append([InlineKeyboardButton('Gold', callback_data='Gold')])
+        keyboard.append([InlineKeyboardButton("Duchy", callback_data="Duchy")])
+        keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
+        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
+        keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
+        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
+        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
+        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
+        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
+        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
+        update.message.reply_text('Buy Gold costs 6 dollars\nBuy Duchy For 5 dollar\nBuy Laboratory costs 5 dollars\nBuy Witch costs 5 dollars\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
     elif gold == 5:
+        keyboard.append([InlineKeyboardButton("Duchy", callback_data="Duchy")])
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
         keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
@@ -986,25 +1033,35 @@ def buy(bot,update):
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
-        update.message.reply_text('Buy Witch costs 5 dollars\nBuy Laboratory costs 5 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
+        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
+        update.message.reply_text('Buy Duchy For 5 dollar\nBuy Witch costs 5 dollars\nBuy Laboratory costs 5 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
     elif gold == 4:
-        update.message.reply_text('Buy Harbinger costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
+        update.message.reply_text('Buy Harbinger costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
         keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
+        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
     elif gold == 3 :
-        update.message.reply_text('Buy Harbinger costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar')
+        update.message.reply_text('Buy Harbinger costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
         keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
+        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
     elif gold == 2:
-        update.message.reply_text('Buy Courtyard costs 2 dollar')
+        update.message.reply_text('Buy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
+        keyboard.append([InlineKeyboardButton("Estates", callback_data="Estates")])
+        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
+    elif gold == 0:
+        update.message.reply_text('Buy Copper for 0 dollar')
+        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
     update.message.reply_text('Cards available : ',reply_markup=InlineKeyboardMarkup(keyboard))
+
+
 
 def end(bot,update):
     global turn
@@ -1200,6 +1257,7 @@ def point(bot,update):
     update.message.reply_text('You have <' + str(points) + '> points')
 
 def reset(bot,update):
+    global chat_id
     global gold
     global deckplayer1
     global deckplayer2
@@ -1211,12 +1269,16 @@ def reset(bot,update):
     global hand
     global hand2
     global hand3
-    global gold2,gold3,points,points2,points3,buy_turn,buy_time,action,user1_id,user1_name,user2_id,user2_name,user3_id,user3_name,current_player,inlinehand,courtyard_temp,turn_count,turnnum,start_game
+    global gold1,gold2,gold3,points,points2,points3,buy_turn,buy_time,action,user1_id,user1_name,user2_id,user2_name,user3_id,user3_name,current_player,inlinehand,courtyard_temp,turn_count,turnnum,start_game
     global turn
     global hand
-    deckplayer1 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates','Estates']
-    deckplayer2 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates','Estates']
-    deckplayer3 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates','Estates']
+    global user1_tag,user2_tag,user3_tag
+    deckplayer1 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
+                   'Estates']
+    deckplayer2 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
+                   'Estates']
+    deckplayer3 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
+                   'Estates']
     grave = []
     grave2 = []
     grave3 = []
@@ -1225,6 +1287,7 @@ def reset(bot,update):
     hand2 = []
     hand3 = []
     gold = 0
+    gold1 = 0
     gold2 = 0
     gold3 = 0
     points = 0
@@ -1234,12 +1297,16 @@ def reset(bot,update):
     buy_turn = False
     buy_time = 1
     action = 1
+    chat_id = 'null'
     user1_id = 'null'
     user2_id = 'null'
     user3_id = 'null'
     user1_name = 'null'
     user2_name = 'null'
     user3_name = 'null'
+    user1_tag = 'null'
+    user2_tag = 'null'
+    user3_tag = 'null'
     current_player = 1
     courtyard_temp = 0
     inlinehand = []
@@ -1249,7 +1316,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 1.5.1 (beta ready)')
+    update.message.reply_text('Normal\nv 1.6.0 (beta ready)')
 
 
 def show (bot,update):
