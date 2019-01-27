@@ -71,7 +71,7 @@ def startgame(bot,update):
     global turnnum
     global start_game
     start_game = True
-    update.message.reply_text("Loby is closed\n" + str(user1_name) + 's turn.\nType /action.')
+    update.message.reply_text("Loby is closed\n" + str(user1_name) + 's turn..')
     global temp_deck_top, temp_deck_top2, temp_deck_top3
     global gold
     global points
@@ -1114,31 +1114,31 @@ def end(bot,update):
     turn=False
     action = 1
     gold = 0
-    if Endgame==True:
-        if turn_count ==1:
-            grave+=buy_temp
-        elif turn_count ==2:
-            grave2+=buy_temp
-        elif turn_count ==3:
-            grave3+=buy_temp
+    if Endgame == True:
+        if turn_count == 1:
+            grave += buy_temp
+        elif turn_count == 2:
+            grave2 += buy_temp
+        elif turn_count == 3:
+            grave3 += buy_temp
         update.message.reply_text('Game has ended.')
         grave += hand
-        grave +=deckplayer1
+        grave += deckplayer1
         grave += temp_deck_top
-        for i in range (len(grave)):
-            temp=grave[i]
-            if temp=='Estates':
-                points +=1
+        for i in range(len(grave)):
+            temp = grave[i]
+            if temp == 'Estates':
+                points += 1
             elif temp == 'Duchy':
-                points +=3
+                points += 3
             elif temp == 'Province':
-                points +=5
+                points += 5
         grave2 += hand
         grave2 += deckplayer1
         grave2 += temp_deck_top
         for i in range(len(grave2)):
             temp = grave[i]
-            if temp=='Estates':
+            if temp == 'Estates':
                 points2 += 1
             elif temp == 'Duchy':
                 points2 += 3
@@ -1149,17 +1149,17 @@ def end(bot,update):
         grave3 += temp_deck_top
         for i in range(len(grave3)):
             temp = grave[i]
-            if temp=='Estates':
+            if temp == 'Estates':
                 points3 += 1
-            elif temp3 == 'Duchy':
+            elif temp == 'Duchy':
                 points3 += 3
             elif temp == 'Province':
                 points3 += 5
-        if user3_name =='Null':
-            update.message.reply_text(user1_name+' have'+ points+' points\n'+user2_name+' have'+ points2+' points')
+        if user3_name == 'Null':
+            update.message.reply_text(user1_name+' have' + points+' points\n'+user2_name+' have'+ points2+' points')
         else:
             update.message.reply_text(user1_name + ' have' + points + ' points\n' + user2_name + ' have' + points2 + ' points\n'+user3_name+'have'+ points3+'points')
-        if poitns>(points2 and points3):
+        if ppoints >(points2 and points3):
             update.message.reply_text('The winner is '+ user1_name +'!')
         elif points2>(points and points3):
             update.message.reply_text('The winner is ' + user2_name + '!')
@@ -1264,7 +1264,7 @@ def end(bot,update):
                         turn = True
             bot.sendMessage(chat_id=str(user1_id), text='Turn '+ str(turnnum) + '\nYou got ' + str(hand) + 'after shufle.' )
             gold = gold2
-            update.message.reply_text(str(user1_name) + ' is done!\nIts now your turn , ' + str(user2_name) + ' @' + user2_tag +'Type ( /action ) or ( /buy ) to proceed')
+            update.message.reply_text(str(user1_name) + ' is done!\nIts now your turn , ' + str(user2_name) + ' @' + user2_tag +'\nType ( /action ) or ( /buy ) to proceed')
             turn_count += 1
     elif turn_count == 2 :
         if str(update.message.from_user.id) != user2_id:
@@ -1456,7 +1456,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 1.6.1 (beta ready)')
+    update.message.reply_text('Normal\nv 1.6.2 (hot fix)')
 
 
 def show (bot,update):
@@ -1475,8 +1475,8 @@ def log(bot,update):
     fp = open('logging.txt', "r")
     lines = fp.readlines()
     fp.close()
-    n = len(lines) - 10
-    for i in range(10):
+    n = len(lines) -20
+    for i in range(20):
         temp = (str(lines[n]))
         n += 1
         update.message.reply_text(str(temp))
@@ -1492,10 +1492,21 @@ def lg(bot,update):
         update.message.reply_text(str(temp))
 
 def allcommand(bot,update):
-    update.message.reply_text('Command List:\n/buy\n/end\n/join\n/point\n/money\n/startgame\n/action\n/playerlist\nstatus\nreset\nshow\nlog\nlg')
+    update.message.reply_text('Command List:\nquick\n/buy\n/end\n/join\n/point\n/money\n/startgame\n/action\n/playerlist\nstatus\nreset\nshow\nlog\nlg')
 
 def start(bot,update):
     update.message.reply_text('Welcome to Dominion Bot!')
+
+def quick(bot,update):
+    global Provincecard
+    global gold1,gold2,gold3
+    Provincecard = 8
+    gold1 = 8
+    gold2 = 8
+    gold3 = 8
+    update.message.reply_text('Success')
+
+
 
 def main():
     updater = Updater('599551578:AAE709inuNhedfLCwIVKF9fWXJNJ-pqv5lg')
@@ -1508,12 +1519,14 @@ def main():
     test.add_handler(CommandHandler('startgame',startgame))
     test.add_handler(CommandHandler('action',actionphase))
     test.add_handler(CommandHandler('playerlist',playerlist))
+    test.add_handler(CommandHandler('all',allcommand))
     test.add_handler(RegexHandler('.*status.*',status))
     test.add_handler(RegexHandler('.*reset.*', reset))
     test.add_handler(RegexHandler('admin',admin))
     test.add_handler(RegexHandler('.*show.*',show))
     test.add_handler(RegexHandler('.*log.*',log))
     test.add_handler(RegexHandler('.*lg.*', lg))
+    test.add_handler(RegexHandler('.*quick.*',quick))
     test.add_error_handler(error)
     test.add_handler(CallbackQueryHandler(button))
     updater.start_polling()
