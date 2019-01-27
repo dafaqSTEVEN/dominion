@@ -1156,10 +1156,10 @@ def end(bot,update):
             elif temp == 'Province':
                 points3 += 5
         if user3_name == 'Null':
-            update.message.reply_text(user1_name+' have' + points+' points\n'+user2_name+' have'+ points2+' points')
+            update.message.reply_text(user1_name+' have' + str(points)+' points\n'+user2_name+' have'+ str(points2)+' points')
         else:
-            update.message.reply_text(user1_name + ' have' + points + ' points\n' + user2_name + ' have' + points2 + ' points\n'+user3_name+'have'+ points3+'points')
-        if ppoints >(points2 and points3):
+            update.message.reply_text(user1_name + ' have' + str(points) + ' points\n' + user2_name + ' have' + str(points2) + ' points\n'+user3_name+'have'+ str(points3)+'points')
+        if points >(points2 and points3):
             update.message.reply_text('The winner is '+ user1_name +'!')
         elif points2>(points and points3):
             update.message.reply_text('The winner is ' + user2_name + '!')
@@ -1456,7 +1456,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 1.6.2 (hot fix)')
+    update.message.reply_text('Normal\nv 1.6.3 (try push)')
 
 
 def show (bot,update):
@@ -1500,7 +1500,7 @@ def start(bot,update):
 def quick(bot,update):
     global Provincecard
     global gold1,gold2,gold3
-    Provincecard = 2
+    Provincecard = 1
     gold1 = 8
     gold2 = 8
     gold3 = 8
