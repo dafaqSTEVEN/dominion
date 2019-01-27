@@ -52,14 +52,21 @@ inlinehand=[]
 turn_count=0
 turnnum = 0
 start_game=False
+Provincecard=10
+Duchycard=10
+Estatescard=10
+Villagecard=10
+Harbingercard=10
+Laboratorycard=10
+Witchcard=10
+Workshopcard=10
+Courtyardcard=10
+Endgame=False
 
 
 
 
-
-
-
-def start(bot,update):
+def startgame(bot,update):
     global turn_count
     global turnnum
     global start_game
@@ -96,7 +103,7 @@ def start(bot,update):
                 elif temp == 'Gold':
                     gold1 += 3
                 turn = True
-        bot.sendMessage(chat_id = str(user1_id),text = 'You got ' + str(hand) + ' .\nType ( /action ) or ( /buy ) to proceed')
+        bot.sendMessage(chat_id = str(user1_id),text = 'You got ' + str(hand) + ' .')
         for i in range(5):
             temp = (random.choice(deckplayer2))
             hand2.append(temp)
@@ -108,7 +115,7 @@ def start(bot,update):
             elif temp == 'Gold':
                 gold2 += 3
             turn = True
-        bot.sendMessage(chat_id = str(user2_id),text = 'You got ' + str(hand2) + ' .\nType ( /action ) or ( /buy ) to proceed')
+        bot.sendMessage(chat_id = str(user2_id),text = 'You got ' + str(hand2) + ' .')
         if user3_id !='null':
             for i in range(5):
                 temp = (random.choice(deckplayer3))
@@ -121,10 +128,11 @@ def start(bot,update):
                 elif temp == 'Gold':
                     gold3 += 3
                 turn = True
-            bot.sendMessage(chat_id = str(user3_id),text = 'You got ' + str(hand3) + ' .\nType ( /action ) or ( /buy ) to proceed')
+            bot.sendMessage(chat_id = str(user3_id),text = 'You got ' + str(hand3) + ' .')
         gold = gold1
 
 def button(bot,update):
+    global Endgame
     global deckplayer1,deckplayer2,deckplayer3
     global grave,grave2,grave3
     global temp_deck_top,temp_deck_top2,temp_deck_top3
@@ -132,32 +140,44 @@ def button(bot,update):
     global gold
     global buy_temp
     global buy_time
+    global Provincecard,Duchycard,Estatescard,Villagecard,Laboratorycard,Workshopcard,Harbingercard,Courtyardcard,Witchcard
     query = update.callback_query
     #buy section
     if query.data == 'Province':
-        if (buy_turn == True) and (gold - 8 >= 0):
+        if (buy_turn == True) and (gold - 8 >= 0) and (Provincecard == 1):
             buy_temp.append('Province')
             gold -= 8
             buy_time -= 1
+            Provincecard -= 1
             query.edit_message_text('You have bought Province.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
+            query.message.reply_text('Game will be ended after this bought')
+            Endgame=True
+        elif (buy_turn == True) and (gold - 8 >= 0) and (Provincecard>0):
+                buy_temp.append('Province')
+                gold -= 8
+                buy_time -= 1
+                Provincecard -= 1
+                query.edit_message_text('You have bought Province.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
+                query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
     if query.data == 'Duchy':
-        if (buy_turn == True) and (gold - 5 >= 0):
+        if (buy_turn == True) and (gold - 5 >= 0) and (Duchycard>0):
             buy_temp.append('Duchy')
             gold -= 5
             buy_time -= 1
+            Duchycard -=1
             query.edit_message_text('You have bought Duchy.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
+            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
     if query.data == 'Estates':
-        if (buy_turn == True) and (gold - 2 >= 0):
+        if (buy_turn == True) and (gold - 2 >= 0) and (Estatescard>0):
             buy_temp.append('Estates')
             gold -= 2
             buy_time -= 1
+            Estatescard-=1
             query.edit_message_text('You have bought Estates.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
+            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
     if query.data == 'Copper':
         if (buy_turn == True) and (gold - 0 >= 0):
             buy_temp.append('Copper')
@@ -175,29 +195,32 @@ def button(bot,update):
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=='Witch':
-        if (buy_turn == True) and (gold - 5 >= 0):
+        if (buy_turn == True) and (gold - 5 >= 0) and (Witchcard>0):
             buy_temp.append('Witch')
             gold -= 3
             buy_time -= 1
+            Witchcard-=1
             query.edit_message_text('You have bought Witch .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
+            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
     if query.data=="Village":
-        if (buy_turn == True) and (gold - 3 >= 0):
+        if (buy_turn == True) and (gold - 3 >= 0) and (Villagecard>0):
             buy_temp.append('Village')
             gold -= 3
             buy_time -= 1
+            Villagecard-=1
             query.edit_message_text('You have bought Village .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
+            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
     if query.data=="Courtyard":
-        if (buy_turn == True) and (gold - 2 >= 0):
+        if (buy_turn == True) and (gold - 2 >= 0) and (Courtyardcard>0):
             buy_temp.append('Courtyard')
             gold -= 2
             buy_time -= 1
+            Courtyardcard-=1
             query.edit_message_text('You have bought Courtyard .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
+            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
     if query.data=='Gold':
         if (buy_turn == True) and (gold - 6 >= 0):
             buy_temp.append('Gold')
@@ -207,29 +230,32 @@ def button(bot,update):
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=="Harbinger":
-        if (buy_turn == True) and (gold - 3 >= 0):
+        if (buy_turn == True) and (gold - 3 >= 0) and(Harbingercard>0):
             buy_temp.append('Harbinger')
             gold -= 3
             buy_time -= 1
+            Harbingercard-=1
             query.edit_message_text('You have bought Harbinger .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
             query.message.reply_text('You dont have enough gold or it is not your turn.')
     if query.data=="Laboratory":
-        if (buy_turn == True) and (gold - 5 >= 0):
+        if (buy_turn == True) and (gold - 5 >= 0) and(Laboratorycard>0):
             buy_temp.append('Laboratory')
             gold -= 5
             buy_time -= 1
+            Laboratorycard-=1
             query.edit_message_text('You have bought Laboratory .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
+            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
     if query.data=="Workshop":
-        if (buy_turn == True) and (gold - 3 >= 0):
+        if (buy_turn == True) and (gold - 3 >= 0) and(Workshopcard>0):
             buy_temp.append('Workshop')
             gold -= 3
             buy_time -= 1
+            Workshopcard-=1
             query.edit_message_text('You have bought Workshop .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
         else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
+            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
     #end of buy section
     if query.data=='usevillage':
         if action>0:
@@ -927,7 +953,7 @@ def join(bot,update):
                 user3_id = str(update.message.from_user.id)
                 user3_name = str(update.message.from_user.first_name) + str(update.message.from_user.last_name)
                 user3_tag = str(update.message.from_user.username)
-            update.message.reply_text('Current player list :\n [' + str(user1_name) + ' / ' + str(user2_name) + ' / ' + str(user3_name) + ']\nType /join to join the game.\nType /start to start the game.')
+            update.message.reply_text('Current player list :\n [' + str(user1_name) + ' / ' + str(user2_name) + ' / ' + str(user3_name) + ']\nType /join to join the game.\nType /startgame to start the game.')
 
 
 
@@ -1064,8 +1090,11 @@ def buy(bot,update):
 
 
 def end(bot,update):
-    global turn
+    global chat_id
     global gold
+    global deckplayer1
+    global deckplayer2
+    global deckplayer3
     global grave
     global grave2
     global grave3
@@ -1073,29 +1102,124 @@ def end(bot,update):
     global hand
     global hand2
     global hand3
-    global turn_count
-    global turnnum
-    global action
-    global temp_deck_top, temp_deck_top2, temp_deck_top3
-    global gold
-    global points
-    global deckplayer1
-    global deckplayer2
-    global deckplayer3
-    global grave
-    global grave2
-    global grave3
+    global gold1, gold2, gold3, points, points2, points3, buy_turn, buy_time, action, user1_id, user1_name, user2_id, user2_name, user3_id, user3_name, current_player, inlinehand, courtyard_temp, turn_count, turnnum, start_game
     global turn
     global hand
-    global turnnum
-    global gold1,gold2,gold3
+    global user1_tag, user2_tag, user3_tag
+    global Provincecard, Duchycard, Estatescard, Villagecard, Laboratorycard, Workshopcard, Harbingercard, Courtyardcard, Witchcard
+    global temp_deck_top, temp_deck_top2, temp_deck_top3
+    global Endgame
     turn = False
     turnnum += 1
     turn=False
     action = 1
     gold = 0
-
-    if  turn_count == 1 :
+    if Endgame==True:
+        if turn_count ==1:
+            grave+=buy_temp
+        elif turn_count ==2:
+            grave2+=buy_temp
+        elif turn_count ==3:
+            grave3+=buy_temp
+        update.message.reply_text('Game has ended.')
+        grave += hand
+        grave +=deckplayer1
+        grave += temp_deck_top
+        for i in range (len(grave)):
+            temp=grave[i]
+            if temp=='Estates':
+                points +=1
+            elif temp == 'Duchy':
+                points +=3
+            elif temp == 'Province':
+                points +=5
+        grave2 += hand
+        grave2 += deckplayer1
+        grave2 += temp_deck_top
+        for i in range(len(grave2)):
+            temp = grave[i]
+            if temp=='Estates':
+                points2 += 1
+            elif temp == 'Duchy':
+                points2 += 3
+            elif temp == 'Province':
+                points2 += 5
+        grave3 += hand
+        grave3 += deckplayer1
+        grave3 += temp_deck_top
+        for i in range(len(grave3)):
+            temp = grave[i]
+            if temp=='Estates':
+                points3 += 1
+            elif temp3 == 'Duchy':
+                points3 += 3
+            elif temp == 'Province':
+                points3 += 5
+        if user3_name =='Null':
+            update.message.reply_text(user1_name+' have'+ points+' points\n'+user2_name+' have'+ points2+' points')
+        else:
+            update.message.reply_text(user1_name + ' have' + points + ' points\n' + user2_name + ' have' + points2 + ' points\n'+user3_name+'have'+ points3+'points')
+        if poitns>(points2 and points3):
+            update.message.reply_text('The winner is '+ user1_name +'!')
+        elif points2>(points and points3):
+            update.message.reply_text('The winner is ' + user2_name + '!')
+        elif points3>(points and points2):
+            update.message.reply_text('The winner is ' + user3_name + '!')
+        update.message.reply_text('Game has ended, Type /join to join a new game.')
+        deckplayer1 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
+                       'Estates']
+        deckplayer2 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
+                       'Estates']
+        deckplayer3 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
+                       'Estates']
+        grave = []
+        grave2 = []
+        grave3 = []
+        buy_temp = []
+        hand = []
+        hand2 = []
+        hand3 = []
+        temp_deck_top = []
+        temp_deck_top2 = []
+        temp_deck_top3 = []
+        gold = 0
+        gold1 = 0
+        gold2 = 0
+        gold3 = 0
+        points = 0
+        points2 = 0
+        points3 = 0
+        turn = False
+        buy_turn = False
+        buy_time = 1
+        action = 1
+        chat_id = 'null'
+        user1_id = 'null'
+        user2_id = 'null'
+        user3_id = 'null'
+        user1_name = 'null'
+        user2_name = 'null'
+        user3_name = 'null'
+        user1_tag = 'null'
+        user2_tag = 'null'
+        user3_tag = 'null'
+        current_player = 1
+        courtyard_temp = 0
+        inlinehand = []
+        turn_count = 0
+        turnnum = 0
+        start_game = False
+        Provincecard = 10
+        Duchycard = 10
+        Estatescard = 10
+        Villagecard = 10
+        Harbingercard = 10
+        Laboratorycard = 10
+        Witchcard = 10
+        Workshopcard = 10
+        Courtyardcard = 10
+        Endgame = False
+    elif  turn_count == 1 :
         if str(update.message.from_user.id) != user1_id:
             update.message.reply_text('It is not your turn.')
         else:
@@ -1273,6 +1397,9 @@ def reset(bot,update):
     global turn
     global hand
     global user1_tag,user2_tag,user3_tag
+    global Provincecard, Duchycard, Estatescard, Villagecard, Laboratorycard, Workshopcard, Harbingercard, Courtyardcard,Witchcard
+    global temp_deck_top,temp_deck_top2,temp_deck_top3
+    global Endgame
     deckplayer1 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
                    'Estates']
     deckplayer2 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
@@ -1286,6 +1413,9 @@ def reset(bot,update):
     hand = []
     hand2 = []
     hand3 = []
+    temp_deck_top = []
+    temp_deck_top2 = []
+    temp_deck_top3 = []
     gold = 0
     gold1 = 0
     gold2 = 0
@@ -1313,6 +1443,16 @@ def reset(bot,update):
     turn_count = 0
     turnnum = 0
     start_game = False
+    Provincecard = 10
+    Duchycard = 10
+    Estatescard = 10
+    Villagecard = 10
+    Harbingercard = 10
+    Laboratorycard = 10
+    Witchcard = 10
+    Workshopcard = 10
+    Courtyardcard = 10
+    Endgame = False
     update.message.reply_text('Success')
 
 def status(bot,update):
@@ -1351,6 +1491,11 @@ def lg(bot,update):
         n += 1
         update.message.reply_text(str(temp))
 
+def allcommand(bot,update):
+    update.message.reply_text('Command List:\n/buy\n/end\n/join\n/point\n/money\n/startgame\n/action\n/playerlist\nstatus\nreset\nshow\nlog\nlg')
+
+def start(bot,update):
+    update.message.reply_text('Welcome to Dominion Bot!')
 
 def main():
     updater = Updater('599551578:AAE709inuNhedfLCwIVKF9fWXJNJ-pqv5lg')
@@ -1360,7 +1505,7 @@ def main():
     test.add_handler(CommandHandler('buy',buy))
     test.add_handler(CommandHandler('end',end))
     test.add_handler(CommandHandler('join',join))
-    test.add_handler(CommandHandler('start',start))
+    test.add_handler(CommandHandler('startgame',startgame))
     test.add_handler(CommandHandler('action',actionphase))
     test.add_handler(CommandHandler('playerlist',playerlist))
     test.add_handler(RegexHandler('.*status.*',status))
