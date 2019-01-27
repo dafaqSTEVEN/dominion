@@ -1155,10 +1155,10 @@ def end(bot,update):
                 points3 += 3
             elif temp == 'Province':
                 points3 += 5
-        if user3_name == 'Null':
-            update.message.reply_text(user1_name+' have' + str(points)+' points\n'+user2_name+' have'+ str(points2)+' points')
+        if user3_name == 'null':
+            update.message.reply_text(user1_name+' have ' + str(points)+' points\n'+user2_name+' have'+ str(points2)+' points')
         else:
-            update.message.reply_text(user1_name + ' have' + str(points) + ' points\n' + user2_name + ' have' + str(points2) + ' points\n'+user3_name+'have'+ str(points3)+'points')
+            update.message.reply_text(user1_name + ' have ' + str(points) + ' points\n' + user2_name + ' have' + str(points2) + ' points\n'+user3_name+'have'+ str(points3)+'points')
         if points >(points2 and points3):
             update.message.reply_text('The winner is '+ user1_name +'!')
         elif points2>(points and points3):
@@ -1456,7 +1456,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 1.6.3 (try push)')
+    update.message.reply_text('Normal\nv 2.0.0 (close beta ready)')
 
 
 def show (bot,update):
