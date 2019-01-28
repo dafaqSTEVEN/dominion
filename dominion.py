@@ -61,6 +61,7 @@ Laboratorycard=10
 Witchcard=10
 Workshopcard=10
 Courtyardcard=10
+Moneylendercard=10
 Endgame=False
 
 
@@ -140,9 +141,18 @@ def button(bot,update):
     global gold
     global buy_temp
     global buy_time
-    global Provincecard,Duchycard,Estatescard,Villagecard,Laboratorycard,Workshopcard,Harbingercard,Courtyardcard,Witchcard
+    global Provincecard,Duchycard,Estatescard,Villagecard,Laboratorycard,Workshopcard,Harbingercard,Courtyardcard,Witchcard,Moneylendercard
     query = update.callback_query
     #buy section
+    if query.data == 'Moneylender':
+        if (buy_turn == true) and (gold - 4 >= 0):
+            buy_temp.append('Moneylender')
+            gold-=4
+            buy_time-=1
+            Moneylendercard-=1
+            query.edit_message_text('You have bought Moneylender.\nype /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
     if query.data == 'Province':
         if (buy_turn == True) and (gold - 8 >= 0) and (Provincecard == 1):
             buy_temp.append('Province')
@@ -913,6 +923,28 @@ def button(bot,update):
         elif turn_count == 3:
             grave3.append('Harbinger')
         query.edit_message_text('Harbinger is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
+<<<<<<< HEAD
+=======
+    if query.data == 'w_laboratory':
+        if turn_count == 1:
+            grave.append('Laboratory')
+        elif turn_count == 2:
+            grave2.append('Laboratory')
+        elif turn_count == 3:
+            grave3.append('Laboratory')
+        query.edit_message_text('Laboratory is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
+    if query.data == 'usemoneylender':
+        if turn_count == 1:
+            if 'Copper' in hand:
+                hand.remove('Copper')
+                gold+=3
+            elif 'Copper' in hand2:
+                hand2.remove('Copper')
+                gold+=3
+            elif 'Copper' in hand3:
+                hand3.remove('Copper')
+                gold+=3
+>>>>>>> aad87a51ed0bf42e6cd9de9e58cda0648375ff96
 
 def join(bot,update):
     global user1_id
@@ -1020,29 +1052,32 @@ def buy(bot,update):
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
         keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
+        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
         keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
         keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
-        update.message.reply_text('Buy Province for 8 dollar\nBuy Gold costs 6 dollars\nBuy Duchy For 5 dollar\nBuy Laboratory costs 5 dollars\nBuy Witch costs 5 dollars\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
+        update.message.reply_text('Buy Province for 8 dollar\nBuy Gold costs 6 dollars\nBuy Duchy For 5 dollar\nBuy Laboratory costs 5 dollars\nBuy Witch costs 5 dollars\nBuy Moneylender costs 4 dollar\nBuy Workshop costs 4 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
     elif gold == 7 or gold == 6 :
         keyboard.append([InlineKeyboardButton('Gold', callback_data='Gold')])
         keyboard.append([InlineKeyboardButton("Duchy", callback_data="Duchy")])
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
         keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
+        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
         keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
         keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
         keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
-        update.message.reply_text('Buy Gold costs 6 dollars\nBuy Duchy For 5 dollar\nBuy Laboratory costs 5 dollars\nBuy Witch costs 5 dollars\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
+        update.message.reply_text('Buy Gold costs 6 dollars\nBuy Duchy For 5 dollar\nBuy Laboratory costs 5 dollars\nBuy Witch costs 5 dollars\nBuy Moneylender costs 4 dollar\nBuy Workshop costs 4 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
     elif gold == 5:
         keyboard.append([InlineKeyboardButton("Duchy", callback_data="Duchy")])
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
         keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
+        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
         keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
@@ -1050,7 +1085,8 @@ def buy(bot,update):
         keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
         update.message.reply_text('Buy Duchy For 5 dollar\nBuy Witch costs 5 dollars\nBuy Laboratory costs 5 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
     elif gold == 4:
-        update.message.reply_text('Buy Harbinger costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
+        update.message.reply_text('Buy Moneylender costs 4 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
+        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
         keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
@@ -1444,7 +1480,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.1 (Close Beta Development)')
+    update.message.reply_text('Normal\nv 2.0.3 (Close Beta Development)')
 
 
 def show (bot,update):
