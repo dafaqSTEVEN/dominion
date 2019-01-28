@@ -144,15 +144,15 @@ def button(bot,update):
     global Provincecard,Duchycard,Estatescard,Villagecard,Laboratorycard,Workshopcard,Harbingercard,Courtyardcard,Witchcard,Moneylendercard
     query = update.callback_query
     #buy section
-	if query.data == 'Moneylender':
-		if (buy_turn == true) and (gold - 4 >= 0):
-			buy_temp.append('Moneylender')
-			gold-=4
-			buy_time-=1
-			Moneylendercard-=1
-			query.edit_message_text('You have bought Moneylender.\nype /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-		else:
-			query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
+    if query.data == 'Moneylender':
+        if (buy_turn == true) and (gold - 4 >= 0):
+            buy_temp.append('Moneylender')
+            gold-=4
+            buy_time-=1
+            Moneylendercard-=1
+            query.edit_message_text('You have bought Moneylender.\nype /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
+        else:
+            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
     if query.data == 'Province':
         if (buy_turn == True) and (gold - 8 >= 0) and (Provincecard == 1):
             buy_temp.append('Province')
@@ -932,17 +932,17 @@ def button(bot,update):
         elif turn_count == 3:
             grave3.append('Laboratory')
         query.edit_message_text('Laboratory is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-	if query.data == 'usemoneylender':
-		if turn_count == 1:
-			if 'Copper' in hand:
-				hand.remove('Copper')
-				gold+=3
-			elif 'Copper' in hand2:
-				hand2.remove('Copper')
-				gold+=3
-			elif 'Copper' in hand3:
-				hand3.remove('Copper')
-				gold+=3
+    if query.data == 'usemoneylender':
+        if turn_count == 1:
+            if 'Copper' in hand:
+                hand.remove('Copper')
+                gold+=3
+            elif 'Copper' in hand2:
+                hand2.remove('Copper')
+                gold+=3
+            elif 'Copper' in hand3:
+                hand3.remove('Copper')
+                gold+=3
 
 def join(bot,update):
     global user1_id
@@ -1050,7 +1050,7 @@ def buy(bot,update):
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
         keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-		keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
+        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
         keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
@@ -1063,7 +1063,7 @@ def buy(bot,update):
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
         keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-		keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
+        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
         keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
@@ -1075,7 +1075,7 @@ def buy(bot,update):
         keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
         keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
         keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-		keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
+        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
         keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
@@ -1084,8 +1084,8 @@ def buy(bot,update):
         update.message.reply_text('Buy Duchy For 5 dollar\nBuy Witch costs 5 dollars\nBuy Laboratory costs 5 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
     elif gold == 4:
         update.message.reply_text('Buy Moneylender costs 4 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar')
-		keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
-		keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
+        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
+        keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
         keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
         keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
         keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
@@ -1478,7 +1478,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.1 (Close Beta Development)')
+    update.message.reply_text('Normal\nv 2.0.3 (Close Beta Development)')
 
 
 def show (bot,update):
