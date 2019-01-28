@@ -544,8 +544,6 @@ def button(bot,update):
         reply_markup = InlineKeyboardMarkup(keyboard)
         if action >0 :
             if turn_count == 1:
-                query.edit_message_text('You have ' + str(grave) +' in your discarded pile')
-                hand.remove('Harbinger')
                 for i in range(len(grave)):
                     h_temp = grave[i]
                     if h_temp == 'Village':
@@ -564,13 +562,12 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
                     elif h_temp == 'Harbinger':
                         keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
+                query.edit_message_text('You have ' + str(grave) + ' in your discarded pile,Cards available:',reply_markup=reply_markup)
+                hand.remove('Harbinger')
                 grave.append('Harbinger')
-                query.message.reply_text('Cards available:',reply_markup=reply_markup)
             elif turn_count ==2 :
-                hand2.remove('Harbinger')
-                query.edit_message_text('You have ' + str(grave2) + ' in your discarded pile')
                 for i in range(len(grave2)):
-                    h_temp = grave[i]
+                    h_temp = grave2[i]
                     if h_temp == 'Village':
                         keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
                     elif h_temp == 'Witch':
@@ -588,12 +585,11 @@ def button(bot,update):
                     elif h_temp == 'Harbinger':
                         keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
                 grave2.append('Harbinger')
-                query.message.reply_text('Cards available:', reply_markup=reply_markup)
+                hand2.remove('Harbinger')
+                query.edit_message_text('You have ' + str(grave2) + ' in your discarded pile,Cards availble:',reply_markup=reply_markup)
             elif turn_count == 3 :
-                hand.remove('Harbinger')
-                query.edit_message_text('You have ' + str(grave3) + ' in your discarded pile')
                 for i in range(len(grave3)):
-                    h_temp = grave[i]
+                    h_temp = grave3[i]
                     if h_temp == 'Village':
                         keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
                     elif h_temp == 'Witch':
@@ -611,9 +607,10 @@ def button(bot,update):
                     elif h_temp == 'Harbinger':
                         keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
                 grave3.append('Harbinger')
-                query.message.reply_text('Cards available:', reply_markup=reply_markup)
+                hand.remove('Harbinger')
+                query.edit_message_text('You have ' + str(grave3) + ' in your discarded pile,Cards available',reply_markup=reply_markup)
         else:
-            query.message.reply_text('you dont have enough action')
+            query.message.reply_text('You dont have enough action')
     if query.data == 'uselaboratory':
         if action >0:
             action -= 1
@@ -1456,7 +1453,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.0 (close beta ready)')
+    update.message.reply_text('Normal\nv 2.0.1 (Close Beta Development)')
 
 
 def show (bot,update):
