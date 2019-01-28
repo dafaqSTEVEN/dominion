@@ -693,7 +693,6 @@ def button(bot,update):
                 grave3.append('Workshop')
 
             keyboard.append([InlineKeyboardButton("Workshop", callback_data="w_workshop")])
-            keyboard.append([InlineKeyboardButton("Laboratory", callback_data="w_laboratory")])
             keyboard.append([InlineKeyboardButton("Harbinger", callback_data="w_harbinger")])
             keyboard.append([InlineKeyboardButton("Village", callback_data="w_village")])
             keyboard.append([InlineKeyboardButton("Silver", callback_data="w_silver")])
@@ -914,14 +913,6 @@ def button(bot,update):
         elif turn_count == 3:
             grave3.append('Harbinger')
         query.edit_message_text('Harbinger is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'w_laboratory':
-        if turn_count == 1:
-            grave.append('Laboratory')
-        elif turn_count == 2:
-            grave2.append('Laboratory')
-        elif turn_count == 3:
-            grave3.append('Laboratory')
-        query.edit_message_text('Laboratory is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
 
 def join(bot,update):
     global user1_id
