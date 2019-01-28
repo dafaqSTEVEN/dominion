@@ -923,8 +923,7 @@ def button(bot,update):
         elif turn_count == 3:
             grave3.append('Harbinger')
         query.edit_message_text('Harbinger is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-<<<<<<< HEAD
-=======
+
     if query.data == 'w_laboratory':
         if turn_count == 1:
             grave.append('Laboratory')
@@ -944,7 +943,6 @@ def button(bot,update):
             elif 'Copper' in hand3:
                 hand3.remove('Copper')
                 gold+=3
->>>>>>> aad87a51ed0bf42e6cd9de9e58cda0648375ff96
 
 def join(bot,update):
     global user1_id
