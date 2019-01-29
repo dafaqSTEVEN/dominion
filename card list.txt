@@ -1,0 +1,15 @@
+[CARD LIST]
+0 Copper ch
+2 Courtyard ch
+2 Estates ch
+3 Silver ch
+3 Village ch
+3 Harbinger ch
+3 Workshop ch
+4 Moneylender ch
+
+5 Witch ch
+5 Laboratory ch
+5 Duchy ch
+6 Gold ch
+8 Province ch
