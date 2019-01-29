@@ -145,7 +145,7 @@ def button(bot,update):
     query = update.callback_query
     #buy section
     if query.data == 'Moneylender':
-        if (buy_turn == true) and (gold - 4 >= 0):
+        if (buy_turn == True) and (gold - 4 >= 0):
             buy_temp.append('Moneylender')
             gold-=4
             buy_time-=1
