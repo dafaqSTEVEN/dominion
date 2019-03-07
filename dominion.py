@@ -1639,7 +1639,6 @@ def end(bot,update):
                     turn = True
             bot.sendMessage(chat_id=str(user3_id), text='Turn '+ str(turnnum) + '\nYou got ' + str(hand3) + 'after shufle.')
             update.message.reply_text(str(user3_name) + ' is done!\nIts now your turn , ' + str(user1_name) + ' @' + user1_tag + '\nType ( /action ) or ( /buy ) to proceed')
-            gold3 = 0
             gold=gold1
             turn_count += 1
             if turn_count == 4:
@@ -1734,7 +1733,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.7 (Close Beta Development)')
+    update.message.reply_text('Normal\nv 2.0.8 (Close Beta Development)')
 
 
 def show (bot,update):
