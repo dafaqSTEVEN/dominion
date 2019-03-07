@@ -1158,7 +1158,7 @@ def button(bot,update):
         if turn_count ==3 :
             if 'Copper' in hand3:
                 hand3.remove('Copper')
-                hand.remove('Moneylender')
+                hand3.remove('Moneylender')
                 grave.append('Moneylender')
                 gold+=3
                 query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
