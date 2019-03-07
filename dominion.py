@@ -1142,14 +1142,16 @@ def button(bot,update):
                 gold+=3
                 query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
                 query.message.reply_text(chat_id=user1_id,text='You have' + str(hand) + 'after using Moneylender')
-            elif 'Copper' in hand2:
+        if turn_count == 2:
+            if 'Copper' in hand2:
                 hand2.remove('Copper')
                 hand.remove('Moneylender')
                 grave.append('Moneylender')
                 gold+=3
                 query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
                 query.message.reply_text(chat_id=user2_id, text='You have' + str(hand) + 'after using Moneylender')
-            elif 'Copper' in hand3:
+        if turn_count ==3 :
+            if 'Copper' in hand3:
                 hand3.remove('Copper')
                 hand.remove('Moneylender')
                 grave.append('Moneylender')
@@ -1727,7 +1729,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.5 (Close Beta Development)')
+    update.message.reply_text('Normal\nv 2.0.6 (Close Beta Development)')
 
 
 def show (bot,update):
