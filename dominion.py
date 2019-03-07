@@ -581,7 +581,7 @@ def button(bot,update):
                         keyboard.append([InlineKeyboardButton('Gold', callback_data="c_gold")])
                     elif c_temp == 'Estates':
                         keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
-                query.edit_message_text('Select a card to place on top of your deck :',replymarkup=replymarkup)
+                query.edit_message_text('Select a card to place on top of your deck :',replymarkup=reply_markup)
             query.message.reply_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
         else:
             query.edit_message_text('You dont have enough Action.')
@@ -1483,6 +1483,12 @@ def end(bot,update):
                 gold1 = 0
                 if temp_deck_top != []:
                     c = temp_deck_top[0]
+                    if c == 'Copper':
+                        gold2 += 1
+                    elif c == 'Silver':
+                        gold2 += 2
+                    elif c == 'Gold':
+                        gold2 += 3
                     hand.append(c)
                     temp_deck_top = []
                     for i in range(4):
@@ -1530,6 +1536,12 @@ def end(bot,update):
             if temp_deck_top2 != []:
                 c = temp_deck_top2[0]
                 hand2.append(c)
+                if c == 'Copper':
+                    gold2 += 1
+                elif c == 'Silver':
+                    gold2 += 2
+                elif c == 'Gold':
+                    gold2 += 3
                 temp_deck_top2 = []
                 for i in range(4):
                     temp = (random.choice(deckplayer2))
@@ -1541,7 +1553,7 @@ def end(bot,update):
                         gold2 += 2
                     elif temp == 'Gold':
                         gold2 += 3
-                    if deckplayer1 == []:
+                    if deckplayer2 == []:
                         deckplayer2 = grave2
                         grave2 = []
                     turn = True
@@ -1581,6 +1593,12 @@ def end(bot,update):
             buy_temp = []
             if temp_deck_top != []:
                 c = temp_deck_top3[0]
+                if c == 'Copper':
+                    gold2 += 1
+                elif c == 'Silver':
+                    gold2 += 2
+                elif c == 'Gold':
+                    gold2 += 3
                 hand3.append(c)
                 temp_deck_top3 = []
                 for i in range(4):
