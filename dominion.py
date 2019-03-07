@@ -9,6 +9,11 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     filename='logging.txt',
                     level=logging.INFO)
 
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    filename='record.txt',
+                    level=logging.DEBUG)
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -1596,11 +1601,11 @@ def end(bot,update):
             if temp_deck_top != []:
                 c = temp_deck_top3[0]
                 if c == 'Copper':
-                    gold2 += 1
+                    gold3 += 1
                 elif c == 'Silver':
-                    gold2 += 2
+                    gold3 += 2
                 elif c == 'Gold':
-                    gold2 += 3
+                    gold3 += 3
                 hand3.append(c)
                 temp_deck_top3 = []
                 for i in range(4):
@@ -1729,7 +1734,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.6 (Close Beta Development)')
+    update.message.reply_text('Normal\nv 2.0.7 (Close Beta Development)')
 
 
 def show (bot,update):
@@ -1760,6 +1765,16 @@ def lg(bot,update):
     fp.close()
     n = len(lines) - 3
     for i in range(3):
+        temp = (str(lines[n]))
+        n += 1
+        update.message.reply_text(str(temp))
+
+def record(bot,update):
+    fp = open('record.txt', "r")
+    lines = fp.readlines()
+    fp.close()
+    n = len(lines) - 10
+    for i in range(10):
         temp = (str(lines[n]))
         n += 1
         update.message.reply_text(str(temp))
@@ -1800,6 +1815,7 @@ def main():
     test.add_handler(RegexHandler('.*log.*',log))
     test.add_handler(RegexHandler('.*lg.*', lg))
     test.add_handler(RegexHandler('.*quick.*',quick))
+    test.add_handler(RegexHandler('.*record.*', record))
     test.add_error_handler(error)
     test.add_handler(CallbackQueryHandler(button))
     updater.start_polling()
