@@ -1147,6 +1147,8 @@ def button(bot,update):
                 gold+=3
                 query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
                 query.message.reply_text(chat_id=user1_id,text='You have' + str(hand) + 'after using Moneylender')
+            else:
+                query.edit_message_text('You dont have Copper')
         if turn_count == 2:
             if 'Copper' in hand2:
                 hand2.remove('Copper')
@@ -1155,6 +1157,8 @@ def button(bot,update):
                 gold+=3
                 query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
                 query.message.reply_text(chat_id=user2_id, text='You have' + str(hand) + 'after using Moneylender')
+            else:
+                query.edit_message_text('You dont have Copper')
         if turn_count ==3 :
             if 'Copper' in hand3:
                 hand3.remove('Copper')
@@ -1163,6 +1167,8 @@ def button(bot,update):
                 gold+=3
                 query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
                 query.message.reply_text(chat_id=user3_id, text='You have' + str(hand) + 'after using Moneylender')
+            else:
+                query.edit_message_text('You dont have Copper')
 
     
 
@@ -1391,7 +1397,9 @@ def end(bot,update):
             elif temp == 'Duchy':
                 points += 3
             elif temp == 'Province':
-                points += 5
+                points += 6
+            elif temp == 'Curse':
+                points -=1
         grave2 += hand
         grave2 += deckplayer1
         grave2 += temp_deck_top
@@ -1402,7 +1410,10 @@ def end(bot,update):
             elif temp == 'Duchy':
                 points2 += 3
             elif temp == 'Province':
-                points2 += 5
+                points2 += 6
+            elif temp == 'Curse':
+                points2 -= 1
+        grave2 += hand
         grave3 += hand
         grave3 += deckplayer1
         grave3 += temp_deck_top
@@ -1413,7 +1424,10 @@ def end(bot,update):
             elif temp == 'Duchy':
                 points3 += 3
             elif temp == 'Province':
-                points3 += 5
+                points3 += 6
+            elif temp == 'Curse':
+                points3 -= 1
+        grave2 += hand
         if user3_name == 'null':
             update.message.reply_text(user1_name+' have ' + str(points)+' points\n'+user2_name+' have'+ str(points2)+' points')
         else:
@@ -1733,7 +1747,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.9 (Close Beta Development)')
+    update.message.reply_text('Normal\nv 2.0.10 (Close Beta Development)')
 
 
 def show (bot,update):
