@@ -1150,7 +1150,7 @@ def button(bot,update):
         if turn_count == 2:
             if 'Copper' in hand2:
                 hand2.remove('Copper')
-                hand.remove('Moneylender')
+                hand2.remove('Moneylender')
                 grave.append('Moneylender')
                 gold+=3
                 query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
@@ -1733,7 +1733,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.8 (Close Beta Development)')
+    update.message.reply_text('Normal\nv 2.0.9 (Close Beta Development)')
 
 
 def show (bot,update):
