@@ -1138,10 +1138,10 @@ def button(bot,update):
         query.edit_message_text('Moneylender is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
 
     if query.data == 'usemoneylender':
-        gold-=1
         if turn_count == 1:
             if 'Copper' in hand:
                 hand.remove('Copper')
+                gold -= 1
                 hand.remove('Moneylender')
                 grave.append('Moneylender')
                 gold+=3
@@ -1152,8 +1152,9 @@ def button(bot,update):
         if turn_count == 2:
             if 'Copper' in hand2:
                 hand2.remove('Copper')
+                gold -= 1
                 hand2.remove('Moneylender')
-                grave.append('Moneylender')
+                grave2.append('Moneylender')
                 gold+=3
                 query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
                 query.message.reply_text(chat_id=user2_id, text='You have' + str(hand) + 'after using Moneylender')
@@ -1162,8 +1163,9 @@ def button(bot,update):
         if turn_count ==3 :
             if 'Copper' in hand3:
                 hand3.remove('Copper')
+                gold -= 1
                 hand3.remove('Moneylender')
-                grave.append('Moneylender')
+                grave3.append('Moneylender')
                 gold+=3
                 query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
                 query.message.reply_text(chat_id=user3_id, text='You have' + str(hand) + 'after using Moneylender')
@@ -1747,7 +1749,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.10 (Close Beta Development)')
+    update.message.reply_text('Normal\nv 2.0.11 (Close Beta Development)')
 
 
 def show (bot,update):
