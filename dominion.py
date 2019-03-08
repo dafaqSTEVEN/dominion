@@ -68,6 +68,10 @@ Workshopcard=10
 Courtyardcard=10
 Moneylendercard=10
 Endgame=False
+a = 0
+b = 0
+c = 0
+d = 0
 
 
 
