@@ -1758,7 +1758,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.12 (Close Beta Development)')
+    update.message.reply_text('Normal\nv 2.0.13 (Close Beta Development)')
 
 
 def show (bot,update):
@@ -1766,7 +1766,7 @@ def show (bot,update):
     update.message.reply_text(user1_id+ '\n' +str(update.message.from_user.id))
     update.message.reply_text('Grave\n'+str(grave)+'\n'+str(grave2)+'\n'+str(grave3))
     update.message.reply_text('Deck\n'+str(deckplayer1)+'\n'+str(deckplayer2)+'\n'+str(deckplayer3))
-    update.message.reply_text(a +'\n' +b +'\n'+ c +'\n'+d)
+    update.message.reply_text(str(a) +'\n' +str(b) +'\n'+ str(c) +'\n'+str(d))
 
 def admin(bot,update):
     update.message.reply_text(chat_id)
