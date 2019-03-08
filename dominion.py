@@ -1157,7 +1157,7 @@ def button(bot,update):
                 grave2.append('Moneylender')
                 gold+=3
                 query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
-                query.message.reply_text(chat_id=user2_id, text='You have' + str(hand) + 'after using Moneylender')
+                query.message.reply_text(chat_id=user2_id, text='You have' + str(hand2) + 'after using Moneylender')
             else:
                 query.edit_message_text('You dont have Copper')
         if turn_count ==3 :
@@ -1168,7 +1168,7 @@ def button(bot,update):
                 grave3.append('Moneylender')
                 gold+=3
                 query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
-                query.message.reply_text(chat_id=user3_id, text='You have' + str(hand) + 'after using Moneylender')
+                query.message.reply_text(chat_id=user3_id, text='You have' + str(hand3) + 'after using Moneylender')
             else:
                 query.edit_message_text('You dont have Copper')
 
@@ -1247,7 +1247,7 @@ def actionphase(bot,update):
                 keyboard.append([InlineKeyboardButton("Workshop", callback_data="useworkshop")])
         update.message.reply_text('Cards available : ', reply_markup=reply_markup)
     elif turn_count == 3:
-        bot.sendMessage(chat_id=user3_id,text=str(user3_name) + ', you have : ' + str(hand))
+        bot.sendMessage(chat_id=user3_id,text=str(user3_name) + ', you have : ' + str(hand3))
         for i in range(len(hand3)):
             tempp = hand3[i]
             if tempp == 'Village':
@@ -1357,6 +1357,7 @@ def buy(bot,update):
 
 
 def end(bot,update):
+    global a,b,c,d
     global chat_id
     global gold
     global deckplayer1
@@ -1396,12 +1397,16 @@ def end(bot,update):
             temp = grave[i]
             if temp == 'Estates':
                 points += 1
+                a += 1
             elif temp == 'Duchy':
                 points += 3
+                b +=1
             elif temp == 'Province':
                 points += 6
+                c += 1
             elif temp == 'Curse':
                 points -=1
+                d += 1
         grave2 += hand
         grave2 += deckplayer1
         grave2 += temp_deck_top
@@ -1415,7 +1420,6 @@ def end(bot,update):
                 points2 += 6
             elif temp == 'Curse':
                 points2 -= 1
-        grave2 += hand
         grave3 += hand
         grave3 += deckplayer1
         grave3 += temp_deck_top
@@ -1434,13 +1438,14 @@ def end(bot,update):
             update.message.reply_text(user1_name+' have ' + str(points)+' points\n'+user2_name+' have'+ str(points2)+' points')
         else:
             update.message.reply_text(user1_name + ' have ' + str(points) + ' points\n' + user2_name + ' have' + str(points2) + ' points\n'+user3_name+'have'+ str(points3)+'points')
-        if points >(points2 and points3):
+        if points > (points2 and points3):
             update.message.reply_text('The winner is '+ user1_name +'!')
-        elif points2>(points and points3):
+        elif points2 >(points and points3):
             update.message.reply_text('The winner is ' + user2_name + '!')
-        elif points3>(points and points2):
+        elif points3 > (points and points2):
             update.message.reply_text('The winner is ' + user3_name + '!')
         update.message.reply_text('Game has ended, Type /join to join a new game.')
+
         deckplayer1 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
                        'Estates']
         deckplayer2 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
@@ -1749,7 +1754,7 @@ def reset(bot,update):
     update.message.reply_text('Success')
 
 def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.11 (Close Beta Development)')
+    update.message.reply_text('Normal\nv 2.0.12 (Close Beta Development)')
 
 
 def show (bot,update):
@@ -1757,6 +1762,7 @@ def show (bot,update):
     update.message.reply_text(user1_id+ '\n' +str(update.message.from_user.id))
     update.message.reply_text('Grave\n'+str(grave)+'\n'+str(grave2)+'\n'+str(grave3))
     update.message.reply_text('Deck\n'+str(deckplayer1)+'\n'+str(deckplayer2)+'\n'+str(deckplayer3))
+    update.message.reply_text(a +'\n' +b +'\n'+ c +'\n'+d)
 
 def admin(bot,update):
     update.message.reply_text(chat_id)
