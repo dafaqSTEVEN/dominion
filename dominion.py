@@ -72,7 +72,7 @@ a = 0
 b = 0
 c = 0
 d = 0
-
+allow = True
 
 
 
@@ -1819,8 +1819,11 @@ def quick(bot,update):
     gold3 = 8
     update.message.reply_text('Success')
 
+
+
 def reply(bot,update):
-    if update.message.from_user.id == 322858632 or update.message.from_user.id == 566661007:
+    global allow
+    if (update.message.from_user.id == 322858632 or update.message.from_user.id == 566661007) and allow == True:
         answer = ['啱啊','我同意','好','好 ! ','係咩','pass','pass','pass','pass']
         result = random.choice(answer)
         if result != 'pass':
@@ -1828,6 +1831,12 @@ def reply(bot,update):
         else:
             bot.sendMessage(text = 'passed.',chat_id=436384576)
             pass
+    if 'allow_off' in update.message.text:
+        allow = False
+        update.message.reply_text('Allow_FALSE\n' + str(allow))
+    if 'allow_on' in  update.message.text:
+        allow = True
+        update.message.reply_text('Allow_True\n' + str(allow))
 
 
 def main():
