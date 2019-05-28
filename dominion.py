@@ -1820,7 +1820,7 @@ def quick(bot,update):
     update.message.reply_text('Success')
 
 def reply(bot,update):
-    if update.message.from_user.id == (322858632 or 566661007):
+    if update.message.from_user.id == 322858632 or update.message.from_user.id == 566661007:
         answer = ['啱啊','我同意','好','好 ! ','係咩','pass','pass','pass','pass']
         result = random.choice(answer)
         if result != 'pass':
