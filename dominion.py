@@ -1819,6 +1819,15 @@ def quick(bot,update):
     gold3 = 8
     update.message.reply_text('Success')
 
+def reply(bot,update):
+    if update.message.from_user.id == (322858632 or 566661007):
+        answer = ['啱啊','我同意','好','好 ! ','係咩','pass','pass','pass','pass']
+        result = random.choice(answer)
+        if result != 'pass':
+            update.message.reply_text(result)
+        else:
+            bot.sendMessage(text = 'passed.',chat_id=436384576)
+            pass
 
 
 def main():
@@ -1841,6 +1850,7 @@ def main():
     test.add_handler(RegexHandler('.*lg.*', lg))
     test.add_handler(RegexHandler('.*quick.*',quick))
     test.add_handler(RegexHandler('.*record.*', record))
+    test.add_handler(RegexHandler('.*.*',reply))
     test.add_error_handler(error)
     test.add_handler(CallbackQueryHandler(button))
     updater.start_polling()
