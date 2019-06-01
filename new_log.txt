@@ -1,0 +1,1142 @@
+2019-06-01 01:14:56,697 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 01:14:56,697 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 286, in button
+    query.edit_message_text('[ IN PROGRESS ]')
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\callbackquery.py", line 141, in edit_message_text
+    chat_id=self.message.chat_id, message_id=self.message.message_id, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply_markup of the message
+2019-06-01 01:14:57,250 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 01:14:57,250 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 286, in button
+    query.edit_message_text('[ IN PROGRESS ]')
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\callbackquery.py", line 141, in edit_message_text
+    chat_id=self.message.chat_id, message_id=self.message.message_id, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply_markup of the message
+2019-06-01 01:14:57,810 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 01:14:57,810 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 286, in button
+    query.edit_message_text('[ IN PROGRESS ]')
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\callbackquery.py", line 141, in edit_message_text
+    chat_id=self.message.chat_id, message_id=self.message.message_id, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply_markup of the message
+2019-06-01 01:21:53,852 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 01:21:53,852 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 257, in button
+    bot.edit_message_text(messge_id = use_me['Hand_message'].message_id,text='[ INFO ]'+ ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))), chat_id = use_me["user_id"])
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message to edit not found
+2019-06-01 01:31:48,500 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 225, in button
+    use_me['Use'].append(use_me['Hand'][i])
+IndexError: list index out of range
+2019-06-01 01:33:37,951 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 225, in button
+    use_me['Use'].append(use_me['Hand'][i])
+IndexError: list index out of range
+2019-06-01 01:34:26,342 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 225, in button
+    use_me['Use'].append(use_me['Hand'][i])
+IndexError: list index out of range
+2019-06-01 01:36:30,551 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 225, in button
+    use_me['Use'].append(use_me['Hand'][i])
+IndexError: list index out of range
+2019-06-01 01:39:18,713 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 225, in button
+    use_me['Use'].append(use_me['Hand'][i])
+IndexError: list index out of range
+2019-06-01 16:01:07,864 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 228, in button
+    keyboard.append([InlineKeyboardButton(str(temppp[i].name),callback_data=str(temppp.name)+'_d')])
+AttributeError: 'list' object has no attribute 'name'
+2019-06-01 16:04:21,353 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 231, in button
+    bot.sendMessage(chat_id=use_me['user_id'],text='[ CELLAR ]\nYou have discarded ' + str(temppp.name) + '.')
+AttributeError: 'list' object has no attribute 'name'
+2019-06-01 16:04:40,675 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 231, in button
+    bot.sendMessage(chat_id=use_me['user_id'],text='[ CELLAR ]\nYou have discarded ' + str(temppp.name) + '.')
+AttributeError: 'list' object has no attribute 'name'
+2019-06-01 16:04:42,721 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 231, in button
+    bot.sendMessage(chat_id=use_me['user_id'],text='[ CELLAR ]\nYou have discarded ' + str(temppp.name) + '.')
+AttributeError: 'list' object has no attribute 'name'
+2019-06-01 16:04:44,029 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 231, in button
+    bot.sendMessage(chat_id=use_me['user_id'],text='[ CELLAR ]\nYou have discarded ' + str(temppp.name) + '.')
+AttributeError: 'list' object has no attribute 'name'
+2019-06-01 16:16:11,257 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 16:16:11,258 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 215, in button
+    bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']),message_id=use_me['Message'].message_id)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 16:16:12,725 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 16:16:12,725 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 233, in button
+    bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']),message_id=use_me['Message'].message_id)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 16:17:14,362 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 16:17:14,362 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 233, in button
+    bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 16:17:17,075 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 16:17:17,075 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 233, in button
+    bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 16:19:48,919 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 16:19:48,919 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 216, in button
+    bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']),message_id=use_me['Message'].message_id)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 16:19:56,626 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 16:19:56,626 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 234, in button
+    bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']),message_id=use_me['Message'].message_id)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 16:22:31,355 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 16:22:31,356 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 216, in button
+    bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']),message_id=use_me['Message'].message_id)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 16:22:35,369 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 236, in button
+    bot.sendMessage(chat_id=use_me['user_id'],text='[ CELLAR ]\nYou have discarded ' + str(temppp[i].name) + '.')
+IndexError: list index out of range
+2019-06-01 16:22:45,712 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 236, in button
+    bot.sendMessage(chat_id=use_me['user_id'],text='[ CELLAR ]\nYou have discarded ' + str(temppp[i].name) + '.')
+IndexError: list index out of range
+2019-06-01 16:23:49,402 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 16:23:49,402 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 216, in button
+    bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']),message_id=use_me['Message'].message_id)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 19:02:10,252 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:10,252 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:14,520 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:14,520 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:15,937 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:16,980 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:20,204 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:20,204 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:21,409 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:21,410 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:26,176 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:26,176 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:28,092 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:28,176 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:32,360 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:32,361 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:33,576 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:33,577 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:38,046 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:38,087 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:43,722 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:43,723 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:47,988 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:47,988 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:49,217 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:49,217 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:53,485 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:53,485 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:55,209 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:55,209 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:59,977 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:02:59,977 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:05,561 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:05,566 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:12,153 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:12,154 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:13,363 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:14,265 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:17,581 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:17,581 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:19,295 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:22,102 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:23,501 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:23,501 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:25,958 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 222, in button
+    print(len(use_me['Hand']))
+OSError: [Errno 22] Invalid argument
+2019-06-01 19:03:26,194 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:26,195 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:30,406 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:30,406 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:31,622 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:31,622 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:36,338 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:36,338 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:38,054 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:03:38,054 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:42,540 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:42,540 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:46,808 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:46,808 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:48,084 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:49,444 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:52,349 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:52,349 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:58,464 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:58,465 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:59,740 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:04:59,740 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:04,016 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:04,017 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:09,606 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:09,606 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:15,525 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:15,525 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:22,173 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:22,173 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:23,437 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:23,437 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:32,029 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:32,030 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:43,410 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:43,410 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:57,814 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:05:57,814 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-01 19:16:34,590 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 19:16:34,590 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 216, in button
+    bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']),message_id=use_me['Message'].message_id)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 19:16:34,620 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 227, in button
+    print(temppp[i].name)
+UnboundLocalError: local variable 'temppp' referenced before assignment
+2019-06-01 19:18:13,357 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 19:18:13,358 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 216, in button
+    bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']),message_id=use_me['Message'].message_id)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 21:39:53,812 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 21:39:53,812 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 216, in button
+    bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']),message_id=use_me['Message'].message_id)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 21:52:19,101 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-01 21:52:19,101 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 224, in button
+    bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))) + '\nkey:'+ str(uuid4()), chat_id=use_me["user_id"])
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\utils\request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2019-06-01 21:52:41,402 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 245, in button
+    query.edit_message_text('[ SELECT ]\nChoose any amount of card to discard, press DONE when done.\nkey:' + str(uuid4()),reply_markup=InlineKeyboardMarkup(keyboard))
+IndexError: list index out of range
+2019-06-01 21:53:03,159 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 245, in button
+    query.edit_message_text('[ SELECT ]\nChoose any amount of card to discard, press DONE when done.\nkey:' + str(uuid4()),reply_markup=InlineKeyboardMarkup(keyboard))
+IndexError: list index out of range
+2019-06-01 21:53:17,501 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 245, in button
+    query.edit_message_text('[ SELECT ]\nChoose any amount of card to discard, press DONE when done.\nkey:' + str(uuid4()),reply_markup=InlineKeyboardMarkup(keyboard))
+IndexError: list index out of range
+2019-06-01 22:21:13,273 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 263, in button
+    if query.data == str(use_me['Hand'].name) + '_chapel':
+AttributeError: 'list' object has no attribute 'name'
+2019-06-01 22:43:53,269 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+TypeError: add() got an unexpected keyword argument 'user_data'
+2019-06-01 22:44:19,214 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+TypeError: add() got an unexpected keyword argument 'user_data'
+2019-06-01 22:44:26,723 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+TypeError: add() got an unexpected keyword argument 'user_data'
+2019-06-01 22:57:28,245 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 250, in button
+    use_me['Hand'].remove(Moat)
+ValueError: list.remove(x): x not in list
