@@ -30,6 +30,8 @@ turn = 0
 result_hand = []
 EndGame = False
 chapel_counter = 0
+vassal_status = False
+merchant_status = False
 
 print(datetime.datetime.now())
 print('Running on Local.')
@@ -98,6 +100,7 @@ def join(bot,update):
 
 
 def startgame(bot,update):
+    global gold
     if update.message.chat.type == 'private':
         update.message.reply_text('[ ! ]\nCommand only available in groups.')
     else:
@@ -155,9 +158,11 @@ def startgame(bot,update):
                         text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
                             use_me['Buy']) + '\nGold : ' + str(use_me['Gold']), chat_id=use_me['user_id'])
                     use_me['Menu'] = bot.sendMessage(chat_id=use_me['user_id'],text = '[ SELECT ]\nPlease Select :',reply_markup = reply_markup)
+                    getgold(use_me)
                 elif i != getturn():
-                        use_me = user_list['user' + str(i)]
-                        bot.sendMessage(text = "[ AWAIT ] Waiting for other player's turn",chat_id= use_me['user_id'])
+                    use_me = user_list['user' + str(i)]
+                    bot.sendMessage(text = "[ AWAIT ] Waiting for other player's turn",chat_id= use_me['user_id'])
+                    getgold(use_me)
             keyboard2 = [[InlineKeyboardButton('Click Me', url= 't.me/dominion_beta_bot')]]
             bot.sendMessage(chat_id=chat_id,text='[ INFO ]\nThe Game has started.Please check your PM.',reply_markup=InlineKeyboardMarkup(keyboard2))
             for i in range(player_in_game):
@@ -167,22 +172,27 @@ def startgame(bot,update):
 
 
 def button(bot,update):
-    global turn,EndGame,user_list,display_card_list,display_list,chat_id,result_hand,game_status,cellar_counter,card_market,chapel_counter
+    global turn,EndGame,user_list,display_card_list,display_list,chat_id,result_hand,game_status,cellar_counter,card_market,chapel_counter,vassal_status,merchant_status,bu_counter,militia_counter,emp_count
     query = update.callback_query
     filter_result = [[]]
+    if query.data == 'cancel':
+        query.edit_message_text('[ OK ] Canceled.')
+
     if query.data == 'action':
         for i in range(6):
             if i == getturn():
-                det(user_list['user'+str(i)]['Hand'])
-            else:
-                pass
-        if result_hand == []:
-            query.answer(text = "[ ! ]\nYou don't have any action card",show_alert = True)
-        else:
-            for i in range(len(result_hand)):
-                filter_result.append([InlineKeyboardButton(str(result_hand[i].name),callback_data=str(result_hand[i].name))])
-            filter_result.append([InlineKeyboardButton('Cancel',callback_data='cancel')])
-            query.message.reply_text(text = '[ SELECT ]\nPlease select a Action card to play.',reply_markup = InlineKeyboardMarkup(filter_result))
+                use_me = user_list['user' + str(i)]
+                if use_me['Action'] <= 0:
+                    query.message.reply_text('[ ! ]\nYou dont have enough Action')
+                else:
+                    det(user_list['user'+str(i)]['Hand'])
+                    if result_hand == []:
+                        query.answer(text = "[ ! ]\nYou don't have any action card",show_alert = True)
+                    else:
+                        for i in range(len(result_hand)):
+                            filter_result.append([InlineKeyboardButton(str(result_hand[i].name),callback_data=str(result_hand[i].name))])
+                        filter_result.append([InlineKeyboardButton('Cancel',callback_data='cancel')])
+                        query.message.reply_text(text = '[ SELECT ]\nPlease select a Action card to play.',reply_markup = InlineKeyboardMarkup(filter_result))
 
     for i in range(len(card_market)):
         if str(query.data) == str(card_market[i].name + '_b'):
@@ -207,18 +217,21 @@ def button(bot,update):
                     empty +=1
             if empty >= 3 :
                 EndGame = True
+
     if query.data == 'Cellar':
         cellar_counter = 0
         keyboard = [[]]
         for i in range(player_in_game):
             if i == getturn():
                 use_me = user_list[str('user' + str(i))]
-                use_me['Action'] -= 1
-                use_me['Action'] +=1
-                use_me['Hand'].remove(Cellar)
-                use_me['Discard'].append(Cellar)
+                if vassal_status is False:
+                    use_me['Action'] -= 1
+                    use_me['Hand'].remove(Cellar)
+                    use_me['Use'].append(Cellar)
+                use_me['Action'] += 1
                 for i in range(len(use_me['Hand'])):
                     keyboard.append([InlineKeyboardButton(str(use_me['Hand'][i].name),callback_data=str(use_me['Hand'][i].name)+'_d')])
+                keyboard.append([InlineKeyboardButton('Cancel', callback_data='cancel')])
                 keyboard.append([InlineKeyboardButton('Done',callback_data='done_d')])
                 query.edit_message_text('[ SELECT ]\nChoose any amount of card to discard, press DONE when done.',reply_markup = InlineKeyboardMarkup(keyboard))
                 bot.sendMessage(chat_id = chat_id,text= '[ ACTION ]\n('+'Turn '+str(turn)+')Player '+str(use_me['user_name'])+' has played [ Cellar ].')
@@ -230,11 +243,13 @@ def button(bot,update):
         for i in range(player_in_game):
             if i == getturn():
                 use_me = user_list[str('user' + str(i))]
-                use_me['Action'] -= 1
-                use_me['Hand'].remove(Chapel)
-                use_me['Discard'].append(Chapel)
+                if vassal_status is False:
+                    use_me['Action'] -= 1
+                    use_me['Hand'].remove(Chapel)
+                    use_me['Use'].append(Chapel)
                 for i in range(len(use_me['Hand'])):
                     keyboard.append([InlineKeyboardButton(str(use_me['Hand'][i].name),callback_data=str(use_me['Hand'][i].name)+'_chapel')])
+                keyboard.append([InlineKeyboardButton('Cancel', callback_data='cancel')])
                 keyboard.append([InlineKeyboardButton('Done',callback_data='done_chapel')])
                 query.edit_message_text('[ SELECT ]\nChoose up to 4 cards to trash, press DONE when done.',reply_markup = InlineKeyboardMarkup(keyboard))
                 bot.sendMessage(chat_id = chat_id,text= '[ ACTION ]\n('+'Turn '+str(turn)+')Player '+str(use_me['user_name'])+' has played [ CHAPEL ].')
@@ -246,9 +261,10 @@ def button(bot,update):
             if i == getturn():
                 display_temp = []
                 use_me = user_list[str('user' + str(i))]
-                use_me['Action'] -= 1
-                use_me['Hand'].remove(Moat)
-                use_me['Discard'].append(Moat)
+                if vassal_status is False:
+                    use_me['Action'] -= 1
+                    use_me['Hand'].remove(Moat)
+                    use_me['Use'].append(Moat)
                 for i in range(2):
                     if len(use_me['Deck']) == 0:
                         use_me['Deck'] += use_me['Discard']
@@ -261,12 +277,488 @@ def button(bot,update):
                         tempp = use_me['Deck'].pop(0)
                         display_temp.append(str(tempp.name))
                         use_me['Hand'].append(tempp)
+                    gold_b(tempp,use_me)
                 bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(use_me['user_name']) + ' has played [ Moat ].')
                 bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))) + '\nkey:' + str(uuid4()), chat_id=use_me["user_id"])
                 bot.edit_message_text(chat_id=use_me['user_id'],
                                       text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']),
                                       message_id=use_me['Message'].message_id)
-                query.edit_message_text('You have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
+                query.edit_message_text('[ MOAT ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
+
+    if query.data == 'Harbinger':
+        for i in range(player_in_game):
+            if i == getturn():
+                keyboard = [[]]
+                use_me = user_list[str('user' + str(i))]
+                if vassal_status is False:
+                    use_me['Hand'].remove(Harbinger)
+                    use_me['Use'].append(Harbinger)
+                    use_me['Action'] -= 1
+                use_me['Action'] += 1
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp,use_me)
+                bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(use_me['user_name']) + ' has played [ Harbinger ].')
+                bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))) + '\nkey:' + str(uuid4()), chat_id=use_me["user_id"])
+                bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold'])+'\nkey:' + str(uuid4()),message_id=use_me['Message'].message_id)
+                query.edit_message_text('[ HARBINGER ]\nYou have drawn[ ' + str(tempp.name) + ' ].')
+                if len(use_me['Discard']) == 0:
+                    query.message.reply_text('[ ! ]\nYou have no cards in your discarded pile.')
+                else:
+                    for g in range(len(use_me['Discard'])):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Discard'][g].name),callback_data=str(use_me['Discard'][g].name) + '_har')])
+                    keyboard.append([InlineKeyboardButton('Cancel',callback_data='cancel')])
+                    query.message.reply_text('[ SELECT ]\nPlease select a card to place on top of your deck from the discarded pile.',reply_markup = InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Merchant':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                if vassal_status is False:
+                    use_me['Action'] -= 1
+                    use_me['Hand'].remove(Merchant)
+                    use_me['Use'].append(Merchant)
+                use_me['Action'] += 1
+                query.edit_message_text("[ NOTE ]\nAs Dominion Bot auto-plays treasures for you, Merchant's Original effect(The first time you play a Silver this turn, +$1) is changed to\n[ When you own a Silver in your hand(single or multiple), you gain $1 this round. Playing this card multiple times in the same round will only be effective once.]\nThe effect remains mostly unchanged.")
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp, use_me)
+                if Silver in use_me['Hand'] and merchant_status is False:
+                    use_me['Gold'] += 1
+                    merchant_status = True
+                query.message.reply_text('[ MERCHANT ]\nYou have drawn [ '+ str(tempp.name) + ' ].')
+                bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(
+                    use_me['user_name']) + ' has played [ MERCHANT ].')
+                bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(
+                    turn) + '\nThis is your Hand\n==========================\n' + str(
+                    '\n'.join(map(getname, use_me["Hand"]))) + '\nkey:' + str(uuid4()), chat_id=use_me["user_id"])
+                bot.edit_message_text(chat_id=use_me['user_id'],
+                                      text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
+                                          use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(
+                                          uuid4()), message_id=use_me['Message'].message_id)
+
+    if query.data == 'Vassal':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                if vassal_status is False:
+                    use_me['Action'] -= 1
+                    use_me['Gold'] += 2
+                    use_me['Hand'].remove(Vassal)
+                    use_me['Use'].append(Vassal)
+                tempppp = use_me['Deck'].pop(0)
+                use_me['Discard'].append(tempppp)
+                if isinstance(tempppp,action):
+                    keyboard = [[InlineKeyboardButton('Yes',callback_data= str(tempppp.name))],[InlineKeyboardButton('No',callback_data='No')]]
+                    vassal_status = True
+                    query.edit_message_text('[ VASSAL ]\n' + str(tempppp.name) + ' is revealed. Do you want to play it?',reply_markup = InlineKeyboardMarkup(keyboard))
+                    bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(
+                        use_me['user_name']) + ' has played [ VASSAL ].')
+                    bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(
+                        turn) + '\nThis is your Hand\n==========================\n' + str(
+                        '\n'.join(map(getname, use_me["Hand"]))) + '\nkey:' + str(uuid4()), chat_id=use_me["user_id"])
+                    bot.edit_message_text(chat_id=use_me['user_id'],
+                                          text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
+                                              use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(
+                                              uuid4()), message_id=use_me['Message'].message_id)
+                else:
+                    query.edit_message_text('[ VASSAL ]\n' + str(tempppp.name) + ' is revealed and is not an action card, therefore discarded.')
+                    bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(
+                        use_me['user_name']) + ' has played [ VASSAL ].')
+                    bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(
+                        turn) + '\nThis is your Hand\n==========================\n' + str(
+                        '\n'.join(map(getname, use_me["Hand"]))) + '\nkey:' + str(uuid4()), chat_id=use_me["user_id"])
+                    bot.edit_message_text(chat_id=use_me['user_id'],
+                                          text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
+                                              use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(
+                                              uuid4()), message_id=use_me['Message'].message_id)
+
+
+    if query.data == 'Village':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                if vassal_status is False:
+                    use_me['Hand'].remove(Village)
+                    use_me['Use'].append(Village)
+                    use_me['Action'] -= 1
+                use_me['Action'] += 2
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp, use_me)
+                query.edit_message_text('[ VILLAGE ]\nYou have drawn[ ' + str(tempp.name) + ' ].')
+                bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(
+                    use_me['user_name']) + ' has played [ VILLAGE ].')
+                bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(
+                        turn) + '\nThis is your Hand\n==========================\n' + str(
+                        '\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+                bot.edit_message_text(chat_id=use_me['user_id'],
+                                          text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
+                                              use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(
+                                              uuid4()), message_id=use_me['Message'].message_id)
+
+    if query.data == 'Workshop':
+        for i in range(player_in_game):
+            if i == getturn():
+                keyboard = [[]]
+                use_me = user_list[str('user' + str(i))]
+                if vassal_status is False:
+                    use_me['Action'] -=1
+                    use_me['Hand'].remove(Workshop)
+                    use_me['Use'].append(Workshop)
+                bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+                bot.edit_message_text(chat_id=use_me['user_id'],
+                                      text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(uuid4()), message_id=use_me['Message'].message_id)
+                for i in range(len(card_market)):
+                        if card_market[i].cost <= 4:
+                            keyboard.append([InlineKeyboardButton(str(card_market[i].name + '(Cost : ' +str(card_market[i].cost) + ')'),callback_data=str(card_market[i].name)+'_ws')])
+                bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(
+                    use_me['user_name']) + ' has played [ WORKSHOP ].')
+                query.edit_message_text('[ SELECT ]\Gain a Card costing up to $4',reply_markup = InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Bureaucrat':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                if vassal_status is False:
+                    use_me['Action'] -=1
+                    use_me['Hand'].remove(Bureaucrat)
+                    use_me['Use'].append(Bureaucrat)
+                use_me['Deck'].insert(0,Silver)
+                bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+                bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(uuid4()),message_id=use_me['Message'].message_id)
+                bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(use_me['user_name']) + ' has played [ BUREAUCRAT ].')
+                query.edit_message_text('[ BUREAUCRAT ]\nYou have gained a silver on to your Deck.')
+                bu_counter = [str(1),str(len(user_list))]
+                query.message.reply_text('[ AWAIT ]\nWaiting for other players to select their card.  ' + str(' / '.join(bu_counter)))
+                bot.edit_message_text(text = '[ AWAIT ]\nWaiting for user to complete',chat_id = use_me['user_id'],message_id = use_me['Menu'].message_id)
+            else:
+                use_me = user_list[str('user' + str(i))]
+                if Moat in use_me['Hand']:
+                    bot.sendMessage(text = '[ MOAT ]\nPlayer' + str(user_list[str('user' + str(getturn()))]['user_name']) + ' wants to play Bureaucrat\n[ Effect : Each other player reveals a Victory card from his hand and puts it on his deck (or reveals a hand with no Victory cards).  ]\nBut Moat protects you and you have not been affected.' ,chat_id=use_me['user_id'])
+                    bot.sendMessage(chat_id=chat_id,text = ('[ MOAT ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(use_me['user_name']) + ' has revealed [ MOAT ] to be immune from [ BUREAUCRAT ].'))
+                    bu_counter[0] = str(int(bu_counter[0]) + 1)
+                    if str(bu_counter[0]) == str(bu_counter[1]):
+                        keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                     InlineKeyboardButton('Buy', callback_data="buy"),
+                                     InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                        bot.edit_message_text(text='[ SELECT ]\nPlease Select :', reply_markup=reply_markup,
+                                              chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                              message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                    bot.sendMessage(chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                    text='Player Done.  ' + str(' / '.join(bu_counter)))
+                else:
+                    keyboard = [[]]
+                    display_temp = []
+                    for g in range(len(use_me['Hand'])):
+                        display_temp.append(use_me['Hand'][g].name)
+                        if isinstance(use_me['Hand'][g],victory):
+                            keyboard.append([InlineKeyboardButton(str(use_me['Hand'][g].name),callback_data=str(use_me['Hand'][g].name +str(i) +'_select_v'))])
+                    if keyboard == [[]]:
+                        bot.sendMessage(chat_id=chat_id,text = '[ BUREAUCRAT ]\nPlayer' + str(use_me['user_name'] + ' has no victory in hand, therefore hand is revealed.\n' + str('\n'.join(display_temp))))
+                        bu_counter[0] = str(int(bu_counter[0]) + 1)
+                        if str(bu_counter[0]) == str(bu_counter[1]):
+                            keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                         InlineKeyboardButton('Buy', callback_data="buy"),
+                                         InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                            reply_markup = InlineKeyboardMarkup(keyboard)
+                            bot.edit_message_text(text='[ SELECT ]\nPlease Select :', reply_markup=reply_markup,
+                                                  chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                                  message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                        bot.sendMessage(chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                        text='Player Done.  ' + str(' / '.join(bu_counter)))
+                        for k in range(player_in_game):
+                            use_me = user_list[str('user' + str(k))]
+                            bot.sendMessage(chat_id=use_me['user_id'],text='[ LOG ]\nHand revealed in Group.')
+                    else:
+                        bot.sendMessage(chat_id = use_me['user_id'],text = '[ SELECT ]\nChoose a victory to place on top of your Deck.',reply_markup=InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Militia':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                if vassal_status is False:
+                    use_me['Action'] -=1
+                    use_me['Hand'].remove(Militia)
+                    use_me['Use'].append(Militia)
+                use_me['Gold'] += 2
+                bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+                bot.edit_message_text(chat_id=use_me['user_id'],text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(uuid4()),message_id=use_me['Message'].message_id)
+                bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(use_me['user_name']) + ' has played [ MILITIA ].')
+                query.edit_message_text('[ MILITIA ]\nYou have gained $2 .')
+                militia_counter = [str(1),str(len(user_list))]
+                query.message.reply_text('[ AWAIT ]\nWaiting for other players to select their card.  ' + str(' / '.join(militia_counter)))
+                bot.edit_message_text(text = '[ AWAIT ]\nWaiting for user to complete',chat_id = use_me['user_id'],message_id = use_me['Menu'].message_id)
+            else:
+                use_me = user_list[str('user' + str(i))]
+                if Moat in use_me['Hand']:
+                    bot.sendMessage(text = '[ MOAT ]\nPlayer' + str(user_list[str('user' + str(getturn()))]['user_name']) + ' wants to play Militia\n[ Effect : Each other player discards down to 3 cards in his hand. ]\nBut Moat protects you and you have not been affected.' ,chat_id=use_me['user_id'])
+                    bot.sendMessage(chat_id=chat_id,text = ('[ MOAT ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(use_me['user_name']) + ' has revealed [ MOAT ] to be immune from [ MILITIA ].'))
+                    militia_counter[0] = str(int(militia_counter[0]) + 1)
+                    if str(militia_counter[0]) == str(militia_counter[1]):
+                        keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                     InlineKeyboardButton('Buy', callback_data="buy"),
+                                     InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                        bot.edit_message_text(text='[ SELECT ]\nPlease Select :', reply_markup=reply_markup,
+                                              chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                              message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                    bot.sendMessage(chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                    text='Player Done.  ' + str(' / '.join(militia_counter)))
+                elif len(use_me['Hand']) <= 3:
+                    militia_counter[0] = str(int(militia_counter[0]) + 1)
+                    bot.sendMessage(chat_id=use_me['user_id'],text = '[ MILITIA ]\nCards in hand equal or less then 3 therefore ignored.')
+                    if str(militia_counter[0]) == str(militia_counter[1]):
+                        keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                     InlineKeyboardButton('Buy', callback_data="buy"),
+                                     InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                        bot.edit_message_text(text='[ SELECT ]\nPlease Select :', reply_markup=reply_markup,
+                                              chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                              message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                    bot.sendMessage(chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                    text='Player Done.  ' + str(' / '.join(militia_counter)))
+                else:
+                    keyboard = [[]]
+                    for g in range(len(use_me['Hand'])):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Hand'][g].name),callback_data=str(use_me['Hand'][g].name +str(i) +'_select_mil'))])
+                    bot.sendMessage(chat_id = use_me['user_id'],text = '[ SELECT ]\nDiscard down to 3 cards in hand.',reply_markup=InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Moneylender':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                if vassal_status is False:
+                    use_me['Action'] -= 1
+                    use_me['Hand'].remove(Moneylender)
+                    use_me['Use'].append(Moneylender)
+                if Copper in use_me['Hand']:
+                    use_me['Hand'].remove(Copper)
+                    use_me['Gold'] += 2
+                    query.edit_message_text('[ MONEYLENDER ]\nA copper is trashed from your hand and you have gained $3 this turn.')
+                else:
+                    query.edit_message_text('[ ! ]\nYou dont have any Copper in your hand.')
+                bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(
+                    turn) + '\nThis is your Hand\n==========================\n' + str(
+                    '\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+                bot.edit_message_text(chat_id=use_me['user_id'],
+                                      text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
+                                          use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(uuid4()),
+                                      message_id=use_me['Message'].message_id)
+                bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(
+                    use_me['user_name']) + ' has played [ MONEYLENDER ].')
+
+    if query.data == 'Poacher':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                if vassal_status is False:
+                    use_me['Hand'].remove(Poacher)
+                    use_me['Use'].append(Poacher)
+                    use_me['Action'] -=1
+                use_me['Action'] += 1
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp, use_me)
+                emp_count = 0
+                for i in range(len(card_market)):
+                    if card_market[i].usage  == 0:
+                        emp_count +=1
+                if emp_count == 0:
+                    bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(
+                        turn) + '\nThis is your Hand\n==========================\n' + str(
+                        '\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+                    bot.edit_message_text(chat_id=use_me['user_id'],
+                                          text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
+                                              use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(
+                                              uuid4()),
+                                          message_id=use_me['Message'].message_id)
+                    bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(
+                        use_me['user_name']) + ' has played [ POACHER ].')
+                    query.edit_message_text('[ POACHER ]\nYou have drawn ' + str(tempp.name) + '.')
+                else:
+                    keyboard = [[]]
+                    for i in range(len(use_me['Hand'])):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Hand'][i].name),callback_data=str(use_me['Hand'][i].name+'_poa'))])
+                    query.edit_message_text('[ SELECT ]\nSelect ' + str(emp_count) + 'cards to discard.',reply_markup = InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Remodel':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                if vassal_status is False:
+                    use_me['Hand'].remove(Remodel)
+                    use_me['Use'].append(Remodel)
+                    use_me['Action'] -=1
+                keyboard = [[]]
+                bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(
+                    use_me['user_name']) + ' has played [ REMODEL ].')
+                for i in range(len(use_me['Hand'])):
+                    keyboard.append([InlineKeyboardButton(str(use_me['Hand'][i].name  + '(Cost : ' +str(use_me['Hand'][i].cost) + ')'),callback_data=str(use_me['Hand'][i].name + '_remodel'))])
+                query.edit_message_text('[ REMODEL ]\nSelect a card to trash.',reply_markup = InlineKeyboardMarkup(keyboard))
+                bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))) + str(uuid4()), chat_id=use_me["user_id"])
+                bot.edit_message_text(chat_id=use_me['user_id'],
+                                      text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(uuid4()),
+                                      message_id=use_me['Message'].message_id)
+
+    if query.data == 'Smithy':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                display_temp = []
+                for i in range(3):
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                        use_me['Discard'].clear()
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    gold_b(tempp, use_me)
+                bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(
+                    use_me['user_name']) + ' has played [ SMITHY ].')
+                query.edit_message_text('[ SMITHY ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
+                bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(
+                    turn) + '\nThis is your Hand\n==========================\n' + str(
+                    '\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+                bot.edit_message_text(chat_id=use_me['user_id'],
+                                      text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
+                                          use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(
+                                          uuid4()), message_id=use_me['Message'].message_id)
+
+
+    for i in range(player_in_game):
+        use_me = user_list[str('user' + str(i))]
+        for g in range(len(use_me['Hand'])):
+            if query.data == str(use_me['Hand'][g].name +str(i) +'_select_v'):
+                query.edit_message_text('[ BUREAUCRAT ]\n' + str(use_me['Hand'][g].name) + ' is placed on top of your Deck.')
+                temp = use_me['Hand']
+                use_me['Hand'].remove(temp[g])
+                use_me['Deck'].insert(0, temp[g])
+                bot.edit_message_text(message_id=use_me['Hand_preview'].message_id, text='[ INFO ]' + ' Turn' + str(
+                    turn) + '\nThis is your Hand\n==========================\n' + str(
+                    '\n'.join(map(getname, use_me["Hand"]))) +'\nkey:' + str(uuid4()), chat_id=use_me["user_id"])
+                bu_counter[0] = str(int(bu_counter[0]) + 1)
+                if str(bu_counter[0]) == str(bu_counter[1]):
+                    keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                 InlineKeyboardButton('Buy', callback_data="buy"),
+                                 InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                    reply_markup = InlineKeyboardMarkup(keyboard)
+                    bot.edit_message_text(text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup, chat_id=user_list[str('user' + str(getturn()))]['user_id'],message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(bu_counter)))
+                break
+            if query.data == str(use_me['Hand'][g].name +str(i) +'_select_mil'):
+                query.edit_message_text('[ MILITIA ]\n' + str(use_me['Hand'][g].name) + ' is discarded.')
+                temp = use_me['Hand']
+                use_me['Hand'].remove(temp[g])
+                use_me['Discard'].append(temp[g])
+                bot.edit_message_text(message_id=use_me['Hand_preview'].message_id, text='[ INFO ]' + ' Turn' + str(
+                    turn) + '\nThis is your Hand\n==========================\n' + str(
+                    '\n'.join(map(getname, use_me["Hand"]))) +'\nkey:' + str(uuid4()), chat_id=use_me["user_id"])
+                if len(use_me['Hand']) <= 3:
+                    militia_counter[0] = str(int(militia_counter[0]) + 1)
+                    if str(militia_counter[0]) == str(militia_counter[1]):
+                        keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                     InlineKeyboardButton('Buy', callback_data="buy"),
+                                     InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                        bot.edit_message_text(text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup, chat_id=user_list[str('user' + str(getturn()))]['user_id'],message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                    bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(militia_counter)))
+                else:
+                    keyboard = [[]]
+                    for g in range(len(use_me['Hand'])):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Hand'][g].name), callback_data=str(
+                            use_me['Hand'][g].name + str(i) + '_select_mil'))])
+                    bot.sendMessage(chat_id=use_me['user_id'], text='[ SELECT ]\nDiscard down to 3 cards in hand.',
+                                    reply_markup=InlineKeyboardMarkup(keyboard))
+                break
+            if query.data == str(use_me['Hand'][g].name +'_poa'):
+                temp = use_me['Hand']
+                use_me['Hand'].remove(temp[g])
+                use_me['Discard'].append(temp[g])
+                query.message.reply_text('[ POACHER ]\nYou have discarded ' + str(temp[g].name))
+                bot.edit_message_text(message_id=use_me['Hand_message'].message_id, text='[ INFO ]' + ' Turn' + str(
+                    turn) + '\nThis is your Hand\n==========================\n' + str(
+                    '\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+                bot.edit_message_text(chat_id=use_me['user_id'],
+                                      text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
+                                          use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(
+                                          uuid4()),
+                                      message_id=use_me['Message'].message_id)
+                if emp_count >0:
+                    emp_count -= 1
+                    keyboard = [[]]
+                    for i in range(len(use_me['Hand'])):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Hand'][i].name),
+                                                              callback_data=str(use_me['Hand'][i].name + '_poa'))])
+                    query.edit_message_text('[ SELECT ]\nSelect ' + str(emp_count) + 'cards to discard.',
+                                            reply_markup=InlineKeyboardMarkup(keyboard))
+                else:
+                    query.edit_message_text('[ POACHER ]\nDone.')
+            if query.data == str(use_me['Hand'][g].name + '_remodel'):
+                temp = use_me['Hand'][g]
+                use_me['Hand'].remove(temp)
+                keyboard = [[]]
+                for i in range(len(card_market)):
+                    if card_market[i].cost <= temp.cost:
+                        keyboard.append([InlineKeyboardButton(str(card_market[i].name + '(Cost : ' +str(card_market[i].cost) + ')'),callback_data= str(card_market[i].name)+ '_g_rem')])
+                query.edit_message_text('[ REMODEL ]\nSelect a card to gain.',reply_markup = InlineKeyboardMarkup(keyboard))
+
+
+
+    for i in range(player_in_game):
+        if i == getturn():
+            use_me = user_list[str('user' + str(i))]
+            for i in range(len(use_me['Discard'])):
+                if query.data == str(use_me['Discard'][i].name) + '_har':
+                    use_me['Deck'].insert(0,use_me['Discard'][i])
+                    query.edit_message_text('[ HARBINGER ]\nYou have placed [ ' + str(use_me['Discard'][i].name) + ' ] on top of your Deck.')
+                    break
+
+    for i in range(player_in_game):
+        if i == getturn():
+            use_me = user_list[str('user'+str(i))]
+            for i in range(len(card_market)):
+                if query.data == str(card_market[i].name)+'_ws':
+                    use_me['Buy_temp'].append(card_market[i])
+                    query.edit_message_text('[ WORKSHOP ]\nYou have gained [ ' + str(card_market[i].name) + ' ] .')
+                    break
+                if query.data == str(card_market[i].name) + '_g_rem':
+                    use_me['Buy_temp'].append(card_market[i])
+                    query.edit_message_text('[ REMODEL ]\nYou have gained [ ' + str(card_market[i].name) + ' ] .')
 
 
     for i in range(player_in_game):
@@ -290,7 +782,6 @@ def button(bot,update):
                 if query.data == str(use_me['Hand'][i].name) + '_chapel':
                     if chapel_counter < 3:
                         chapel_counter += 1
-                        print(chapel_counter)
                         keyboard = [[]]
                         temppp = use_me['Hand']
                         bot.sendMessage(chat_id=use_me['user_id'],text='[ CHAPEL ]\nYou have trashed ' + str(temppp[i].name) + '.')
@@ -333,33 +824,33 @@ def button(bot,update):
                         tempp = use_me['Deck'].pop(0)
                         display_temp.append(str(tempp.name))
                         use_me['Hand'].append(tempp)
+                    gold_b(tempp,use_me)
                 query.edit_message_text('[ CELLAR ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) +' ].')
                 bot.edit_message_text(message_id = use_me['Hand_message'].message_id,text='[ INFO ]'+ ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))), chat_id = use_me["user_id"])
-
+                bot.edit_message_text(chat_id=use_me['user_id'],
+                                      text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
+                                          use_me['Buy']) + '\nGold : ' + str(use_me['Gold']) + '\nkey:' + str(
+                                          uuid4()), message_id=use_me['Message'].message_id)
 
     if query.data == 'buy':
-        global buy_time,gold
         keyboard = [[]]
         for i in range(player_in_game):
             if i == getturn():
                 use_me = user_list[str('user' + str(i))]
-                gold = getgold(use_me)
                 buy_time = use_me['Buy']
                 if buy_time > 0:
                     for i in range(len(card_market)):
                         if card_market[i].usage <= 0:
                             query.message.reply_text('[ ! ]\nThere is no more ' + card_market[i].name + '  in the pile.')
-                        elif card_market[i].cost <= gold :
+                        elif card_market[i].cost <= use_me['Gold'] :
                             keyboard.append([InlineKeyboardButton(str(card_market[i].name + '(Cost : ' +str(card_market[i].cost) + ')'),callback_data = str(card_market[i].name)+'_b')])
-
 
                     keyboard.append([InlineKeyboardButton('Cancel',callback_data='cancel')])
                     query.message.reply_text('[ SELECT ]\nPlease select a card to buy',reply_markup = InlineKeyboardMarkup(keyboard))
                 else:
                     query.message.reply_text('[ ! ]\nYou dont have enough Buy.')
 
-    if query.data == 'cancel':
-        query.edit_message_text('[ OK ] Canceled.')
+
 
 
 
@@ -386,6 +877,7 @@ def button(bot,update):
                 use_me['Buy'] = 1
                 use_me['Action'] = 1
                 query.answer(text='[ INFO ]\nYou turn has ended.' ,show_alert = True)
+                use_me['Hand_preview'] = bot.sendMessage(text='[ LOG ]' + ' Turn' + str(turn) + '\nThis is your Hand for next turn \n----------------\n' + str('\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
                 bot.sendMessage(text='[ Clean Up ]\n(Turn '+ str(turn) + ')Player'+str(use_me['user_name']) + ' has ended.',chat_id= chat_id)
         if EndGame == False:
             turn += 1
@@ -400,6 +892,9 @@ def button(bot,update):
                     keyboard = [[InlineKeyboardButton('Action', callback_data="action"),InlineKeyboardButton('Buy', callback_data="buy"),InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
                     reply_markup = InlineKeyboardMarkup(keyboard)
                     use_me['Menu'] = bot.sendMessage(chat_id=use_me['user_id'],text = '[ SELECT ]\nPlease Select :',reply_markup = reply_markup)
+                    getgold(use_me)
+                    vassal_status = False
+                    merchant_status = False
                 elif i != getturn():
                     use_me = user_list['user' + str(i)]
                     bot.sendMessage(text = "[ AWAIT ] Waiting for other player's turn",chat_id= use_me['user_id'])
@@ -488,6 +983,15 @@ def getcost(self):
 def getname(self):
     return self.name
 
+def gold_b(self,user):
+    if self == Copper:
+        user['Gold'] += 1
+    if self == Silver:
+        user['Gold'] += 2
+    if self == Gold:
+        user['Gold'] += 3
+
+
 def getgold(self):
     temp_copper = self['Hand'].count(Copper)
     temp_silver = self['Hand'].count(Silver)
@@ -506,7 +1010,6 @@ def getpoint(self):
     counter = 0
     for i in range(len(self)):
         counter += self[i].points
-    print(counter)
 
     return counter
 
