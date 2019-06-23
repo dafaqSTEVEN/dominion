@@ -94,7 +94,7 @@ Poacher = action('Poacher',4,10,0)
 
 Remodel = action('Remodel',4,10,0)
 
-Smith = action('Smith',4,10,0)
+Smithy = action('Smith',4,10,0)
 
 Throne_Room = action('Throne Room',4,10,0)
 
