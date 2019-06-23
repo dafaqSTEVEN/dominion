@@ -600,6 +600,20 @@ def button(bot,update):
                 else:
                     query.edit_message_text('[ ! ]\nYou dont have any Action cards.')
 
+    if query.data == 'Bandit':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Bandit)
+                use_me['Gold'] += 3
+                
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me,Bandit.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                
+
+                
+
     for i in range(player_in_game):
         use_me = user_list[str('user' + str(i))]
         for g in range(len(use_me['Hand'])):
@@ -849,9 +863,11 @@ def button(bot,update):
             result_hand = []
 
     TR_temp = update.callback_query.data
-
+    for i in range(len(card_market))
+        if card_market[i].name = TR_temp
+            use_TR = card_market[i]
     if TR_status is True:
-        keyboard = [[InlineKeyboardButton(str(TR_temp),callback_data=str(TR_temp))]]
+        keyboard = [[InlineKeyboardButton(str(use_TR.name),callback_data=str(use_TR.name))]]
         query.message.reply_text('[ THRONE_ROOM ]\nPlay the card again',InlineKeyboardMarkup(keyboard))
         TR_status = False
 
