@@ -21,9 +21,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     filename='new_log.txt',
                     level=logging.INFO)
 
-node = {}
-#node = {'group_id' : user_list }
-#node['group_id']['user0']['Hand']
+
 user_list= {}
 display_list = []
 display_card_list = []
