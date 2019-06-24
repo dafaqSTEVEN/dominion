@@ -2393,4 +2393,7 @@ Traceback (most recent call last):
   File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\json\encoder.py", line 179, in default
     raise TypeError(f'Object of type {o.__class__.__name__} '
 TypeError: Object of type InlineKeyboardMarkup is not JSON serializable
+<<<<<<< HEAD
+>>>>>>> parent of 710f90e... node
+=======
 >>>>>>> parent of 710f90e... node
