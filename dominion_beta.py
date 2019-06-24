@@ -605,14 +605,80 @@ def button(bot,update):
             if i == getturn():
                 use_me = user_list[str('user' + str(i))]
                 usecard(use_me,Bandit)
-                use_me['Gold'] += 3
-                
+                use_me['Discard'].append(Gold)
+                query.edit_message_text('[ BANDIT ]\nYou have gained a Gold into your discarded pile.')
+                bandit_counter = [str(1),str(len(user_list))]
                 bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me,Bandit.name, 'ACTION'))
                 bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
                 bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
-                
-
-                
+                query.message.reply_text('[ AWAIT ]\nWaiting for other players to select their card.  ' + str(' / '.join(bu_counter)))
+                bot.edit_message_text(text = '[ AWAIT ]\nWaiting for user to complete',chat_id = use_me['user_id'],message_id = use_me['Menu'].message_id)
+            else:
+                use_me = user_list[str('user' + str(i))]
+                if Moat in use_me['Hand']:
+                    bot.sendMessage(text = '[ MOAT ]\nPlayer' + str(user_list[str('user' + str(getturn()))]['user_name']) + ' wants to play Bandit\n[ Effect : Each other player reveals the top 2 cards of their deck, trashes a revealed Treasure other than Copper, and discards the rest.  ]\nBut Moat protects you and you have not been affected.' ,chat_id=use_me['user_id'])
+                    bot.sendMessage(chat_id=chat_id,text = ('[ MOAT ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(use_me['user_name']) + ' has revealed [ MOAT ] to be immune from [ BANDIT ].'))
+                    bandit_counter[0] = str(int(bandit_counter[0]) + 1)
+                    if str(bandit_counter[0]) == str(bandit_counter[1]):
+                        keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                     InlineKeyboardButton('Buy', callback_data="buy"),
+                                     InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                        bot.edit_message_text(text='[ SELECT ]\nPlease Select :', reply_markup=reply_markup,
+                                              chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                              message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                    bot.sendMessage(chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                    text='Player Done.  ' + str(' / '.join(bandit_counter)))
+                else:
+                    temp = []
+                    bandit_use_me = []
+                    for i in range(2):
+                        here = use_me['Deck'].pop(0)
+                        temp.append(here)
+                    for i in range(len(temp)):
+                        if temp[i].name != 'Copper' and isinstance(temp[i],treasure):
+                            bandit_use_me.append(temp[i])
+                        else:
+                            use_me['Discard'].append(temp[i])
+                            query.message.reply_text('[ BANDIT ]\n' + str(temp[i].name) + ' is discarded.')
+                    if len(bandit_use_me) > 1:
+                        if Silver in bandit_use_me:
+                            query.message.reply_text('[ BANDIT ]\nSilver is trashed. ')
+                            bandit_use_me.remove(Silver)
+                            use_me['Discard'].append(bandit_use_me[0])
+                        else:
+                            query.message.reply_text('[ BANDIT ]\nGold is trashed. ')
+                            bandit_use_me.remove(Gold)
+                            use_me['Discard'].append(bandit_use_me[0])
+                        banndit_counter[0] = str(int(bandit_counter[0]) + 1)
+                        if str(bandit_counter[0]) == str(bandit_counter[1]):
+                            keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                             InlineKeyboardButton('Buy', callback_data="buy"),
+                                             InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                            reply_markup = InlineKeyboardMarkup(keyboard)
+                            bot.edit_message_text(text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup, chat_id=user_list[str('user' + str(getturn()))]['user_id'],message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                        bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(bandit_counter)))
+                    elif len(bandit_use_me) == 1 :
+                        query.message.reply_text('[ BANDIT ]\n' + str(bandit_use_me[0].name) + ' is trashed.')
+                        banndit_counter[0] = str(int(bandit_counter[0]) + 1)
+                        if str(bandit_counter[0]) == str(bandit_counter[1]):
+                            keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                             InlineKeyboardButton('Buy', callback_data="buy"),
+                                             InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                            reply_markup = InlineKeyboardMarkup(keyboard)
+                            bot.edit_message_text(text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup, chat_id=user_list[str('user' + str(getturn()))]['user_id'],message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                        bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(bandit_counter)))
+                    elif len(bandit_use_me) == 0:
+                        query.message.reply_text('[ BANDIT ]\nNo card is trashed.')
+                        banndit_counter[0] = str(int(bandit_counter[0]) + 1)
+                        if str(bandit_counter[0]) == str(bandit_counter[1]):
+                            keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                             InlineKeyboardButton('Buy', callback_data="buy"),
+                                             InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                            reply_markup = InlineKeyboardMarkup(keyboard)
+                            bot.edit_message_text(text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup, chat_id=user_list[str('user' + str(getturn()))]['user_id'],message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                        bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(bandit_counter)))
+                          
 
     for i in range(player_in_game):
         use_me = user_list[str('user' + str(i))]
@@ -863,8 +929,8 @@ def button(bot,update):
             result_hand = []
 
     TR_temp = update.callback_query.data
-    for i in range(len(card_market))
-        if card_market[i].name = TR_temp
+    for i in range(len(card_market)):
+        if card_market[i].name == TR_temp:
             use_TR = card_market[i]
     if TR_status is True:
         keyboard = [[InlineKeyboardButton(str(use_TR.name),callback_data=str(use_TR.name))]]
