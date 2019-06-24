@@ -2391,3 +2391,4 @@ Traceback (most recent call last):
   File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\json\encoder.py", line 179, in default
     raise TypeError(f'Object of type {o.__class__.__name__} '
 TypeError: Object of type InlineKeyboardMarkup is not JSON serializable
+2019-06-24 09:33:20,620 - telegram.vendor.ptb_urllib3.urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x043B8C30>, 'Connect timed out. (connect timeout=5.0)')': /bot851835971:AAGVgxB8TGLM9hF9AhL6IGwOGXwcBjszHN8/getUpdates
