@@ -182,7 +182,7 @@ def startgame(bot,update):
 
 
 def button(bot,update):
-    global turn,EndGame,user_list,display_card_list,display_list,chat_id,result_hand,game_status,cellar_counter,card_market,chapel_counter,vassal_status,merchant_status,bu_counter,militia_counter,emp_count,TR_status,TR_temp
+    global turn,EndGame,user_list,display_card_list,display_list,chat_id,result_hand,game_status,cellar_counter,card_market,chapel_counter,vassal_status,merchant_status,bu_counter,militia_counter,emp_count,TR_status,TR_temp,bandit_counter
     query = update.callback_query
     filter_result = [[]]
     if query.data == 'cancel':
@@ -652,7 +652,7 @@ def button(bot,update):
                             query.message.reply_text('[ BANDIT ]\nGold is trashed. ')
                             bandit_use_me.remove(Gold)
                             use_me['Discard'].append(bandit_use_me[0])
-                        banndit_counter[0] = str(int(bandit_counter[0]) + 1)
+                        bandit_counter[0] = str(int(bandit_counter[0]) + 1)
                         if str(bandit_counter[0]) == str(bandit_counter[1]):
                             keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
                                              InlineKeyboardButton('Buy', callback_data="buy"),
@@ -662,7 +662,7 @@ def button(bot,update):
                         bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(bandit_counter)))
                     elif len(bandit_use_me) == 1 :
                         query.message.reply_text('[ BANDIT ]\n' + str(bandit_use_me[0].name) + ' is trashed.')
-                        banndit_counter[0] = str(int(bandit_counter[0]) + 1)
+                        bandit_counter[0] = str(int(bandit_counter[0]) + 1)
                         if str(bandit_counter[0]) == str(bandit_counter[1]):
                             keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
                                              InlineKeyboardButton('Buy', callback_data="buy"),
@@ -672,7 +672,7 @@ def button(bot,update):
                         bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(bandit_counter)))
                     elif len(bandit_use_me) == 0:
                         query.message.reply_text('[ BANDIT ]\nNo card is trashed.')
-                        banndit_counter[0] = str(int(bandit_counter[0]) + 1)
+                        bandit_counter[0] = str(int(bandit_counter[0]) + 1)
                         if str(bandit_counter[0]) == str(bandit_counter[1]):
                             keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
                                              InlineKeyboardButton('Buy', callback_data="buy"),
@@ -931,12 +931,13 @@ def button(bot,update):
             result_hand = []
 
     TR_temp = update.callback_query.data
+    global use_TR
     for i in range(len(card_market)):
         if card_market[i].name == TR_temp:
             use_TR = card_market[i]
     if TR_status is True:
         keyboard = [[InlineKeyboardButton(str(use_TR.name),callback_data=str(use_TR.name))]]
-        query.message.reply_text('[ THRONE_ROOM ]\nPlay the card again',InlineKeyboardMarkup(keyboard))
+        query.message.reply_text('[ THRONE_ROOM ]\nPlay the card again',reply_markup = InlineKeyboardMarkup(keyboard))
         TR_status = False
 
 
@@ -1063,9 +1064,12 @@ def getpoint(self):
     return counter
 
 def usecard(self,card_name):
-    if vassal_status and TR_status is False:
+    print(vassal_status)
+    print(TR_status)
+    if (vassal_status and TR_status) is False:
         self['Action'] -= 1
         self['Hand'].remove(card_name)
+        print('removed : ' + str(card_name))
         self['Use'].append(card_name)
 
 def ty(self):
