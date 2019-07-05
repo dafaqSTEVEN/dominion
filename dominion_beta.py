@@ -38,8 +38,16 @@ chapel_counter = 0
 vassal_status = False
 merchant_status = False
 TR_status = False
+library_status = False
 
-print(datetime.datetime.now())
+with open(dir_path + '/game_id/test_log.csv', 'r+')as var:
+    read_data = csv.reader(var,delimiter = ',')
+    row_count = int(len(list(read_data)) / 2)
+    write_data = csv.writer(var, delimiter=',')
+    write_data.writerow([str('Test' + str(row_count)),datetime.datetime.now()])
+    print('[ Test ' + str(row_count) + ' ]\n' + str(datetime.datetime.now()))
+
+
 print('Running on Local.')
 print('==============================================')
 
@@ -53,11 +61,12 @@ def new(bot,update):
     elif update.message.chat.type == 'group' or 'supergroup':
         global game_status,chat_id,message_id,display_list
         chat_id = update.message.chat_id
+        chat_name = update.message.chat.title
         if game_status is False:
             game_status = None
             with open(dir_path + '/game_id/game_id.csv', 'a+')as var:
                 write_data = csv.writer(var, delimiter=',')
-                write_data.writerow([uuid4(), chat_id, datetime.datetime.now()])
+                write_data.writerow([uuid4(), chat_id,chat_name,datetime.datetime.now()])
             user_name = str(update.message.from_user.first_name) + str(update.message.from_user.last_name)
             user_tag = update.message.from_user.username
             user_id = update.message.from_user.id
@@ -182,12 +191,21 @@ def startgame(bot,update):
 
 
 def button(bot,update):
-    global turn,EndGame,user_list,display_card_list,display_list,chat_id,result_hand,game_status,cellar_counter,card_market,chapel_counter,vassal_status,merchant_status,bu_counter,militia_counter,emp_count,TR_status,TR_temp,bandit_counter
+    global turn,EndGame,user_list,display_card_list,display_list,chat_id,result_hand,game_status,cellar_counter,card_market,chapel_counter,vassal_status,merchant_status,bu_counter,militia_counter,emp_count,TR_status,TR_temp,bandit_counter,library_status
     query = update.callback_query
     filter_result = [[]]
     if query.data == 'cancel':
         query.edit_message_text('[ OK ] Canceled.')
 
+    TR_temp = update.callback_query.data
+    global use_TR
+    for i in range(len(card_market)):
+        if card_market[i].name == TR_temp:
+            use_TR = card_market[i]
+    if TR_status is True:
+        keyboard = [[InlineKeyboardButton(str(use_TR.name), callback_data=str(use_TR.name))]]
+        query.message.reply_text('[ THRONE_ROOM ]\nPlay the card again', reply_markup=InlineKeyboardMarkup(keyboard))
+        TR_status = False
 
 
     if query.data == 'action':
@@ -265,9 +283,9 @@ def button(bot,update):
     if query.data == 'Moat':
         for i in range(player_in_game):
             if i == getturn():
-                display_temp = []
                 use_me = user_list[str('user' + str(i))]
                 usecard(use_me,Moat)
+                display_temp = []
                 for i in range(2):
                     if len(use_me['Deck']) == 0:
                         use_me['Deck'] += use_me['Discard']
@@ -580,6 +598,7 @@ def button(bot,update):
                         display_temp.append(str(tempp.name))
                         use_me['Hand'].append(tempp)
                     gold_b(tempp, use_me)
+                query.edit_message_text('[ SMITHY ]\nYou have drawn ' + str('\n'.join(tempp.name)) + '.')
                 bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Smithy.name, 'ACTION'))
                 bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
                 bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
@@ -613,7 +632,7 @@ def button(bot,update):
                 bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me,Bandit.name, 'ACTION'))
                 bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
                 bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
-                query.message.reply_text('[ AWAIT ]\nWaiting for other players to select their card.  ' + str(' / '.join(bu_counter)))
+                query.message.reply_text('[ AWAIT ]\nWaiting for other players to select their card.  ' + str(' / '.join(bandit_counter)))
                 bot.edit_message_text(text = '[ AWAIT ]\nWaiting for user to complete',chat_id = use_me['user_id'],message_id = use_me['Menu'].message_id)
             else:
                 use_me = user_list[str('user' + str(i))]
@@ -680,7 +699,125 @@ def button(bot,update):
                             reply_markup = InlineKeyboardMarkup(keyboard)
                             bot.edit_message_text(text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup, chat_id=user_list[str('user' + str(getturn()))]['user_id'],message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
                         bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(bandit_counter)))
-                          
+
+    if query.data == 'Council Room':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Council_Room)
+                display_temp = []
+                use_me['Buy'] += 1
+                for i in range(4):
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                        use_me['Discard'].clear()
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    gold_b(tempp, use_me)
+                query.edit_message_text('[ COUNCIL ROOM ]\nYou have drawn ' + str('\n'.join(tempp.name)) + '.')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Council_Room.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                    chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                    message_id=getHand_Message_id(use_me))
+            else:
+                use_me = user_list[str('user' + str(i))]
+                display_temp = []
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp, use_me)
+                bot.sendMessage(chat_id = use_me['user_id'],text = '[ COUNCIL ROOM ]\nYou have drawn ' + str(tempp.name) + '.')
+
+    if query.data == 'Festival':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Festival)
+                use_me['Action'] += 2
+                use_me['Buy'] += 1
+                use_me['Gold'] += 2
+            bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Festival.name, 'ACTION'))
+            bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                chat_id=getChat_id_private(use_me))
+            bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                message_id=getHand_Message_id(use_me))
+
+
+    if query.data == 'Laboratory':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Laboratory)
+                use_me['Action'] += 1
+                display_temp = []
+                for i in range(2):
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                        use_me['Discard'].clear()
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    gold_b(tempp, use_me)
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Laboratory.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                    chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                    message_id=getHand_Message_id(use_me))
+                query.edit_message_text('[ LABORATORY ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
+
+    if query.data == 'Library':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me, Library)
+                display_temp = []
+                global tempp
+                while len(use_me['Hand']) <= 7:
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        use_me['Discard'].clear()
+                        try:
+                            tempp = use_me['Deck'].pop(0)
+                        except IndexError:
+                            query.message.reply_text('[ ! ]You dont have any cards in you deck.')
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                    if not isinstance(tempp,action):
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    else:
+                        keyboard = [[InlineKeyboardButton('Yes',callback_data = tempp.name + '_library_yes'),InlineKeyboardButton('No',callback_data = tempp.name + '_library_no')]]
+                        query.edit_message_text('[ LIBRARY ]\nYou have drawn [ ' + tempp.name + ' ]. Do you want to discard it?',reply_markup = InlineKeyboardMarkup(keyboard))
+                        while library_status == False :
+                            if library_status == True:
+                                library_status = False
+                                break
+                    gold_b(tempp,use_me)
+
+
+
+
 
     for i in range(player_in_game):
         use_me = user_list[str('user' + str(i))]
@@ -770,6 +907,14 @@ def button(bot,update):
                 if query.data == str(card_market[i].name) + '_g_rem':
                     use_me['Buy_temp'].append(card_market[i])
                     query.edit_message_text('[ REMODEL ]\nYou have gained [ ' + str(card_market[i].name) + ' ] .')
+                if query.data == str(card_market[i].name) + '_library_yes':
+                    use_me['Discard'].append(card_market[i])
+                    library_status = True
+                    query.edit_message_text('[ LIBRARY ]\nDiscarded [ ' + str(card_market[i].name) + ' ].')
+                if query.data == str(card_market[i].name) + 'library_no':
+                    use_me['Hand'].append(card_market[i])
+                    library_status = True
+                    query.edit_message_text('[ LIBRARY ]\nDrawn [ ' + str(card_market[i].name) + ' ].')
 
 
     for i in range(player_in_game):
@@ -930,16 +1075,6 @@ def button(bot,update):
             turn = 0
             result_hand = []
 
-    TR_temp = update.callback_query.data
-    global use_TR
-    for i in range(len(card_market)):
-        if card_market[i].name == TR_temp:
-            use_TR = card_market[i]
-    if TR_status is True:
-        keyboard = [[InlineKeyboardButton(str(use_TR.name),callback_data=str(use_TR.name))]]
-        query.message.reply_text('[ THRONE_ROOM ]\nPlay the card again',reply_markup = InlineKeyboardMarkup(keyboard))
-        TR_status = False
-
 
 
 
@@ -986,7 +1121,7 @@ def getHand_Message_id(self):
     return message_id
 
 def getStatus_Message_id(self):
-    message_id = self['Hand_message'].message_id
+    message_id = self['Message'].message_id
     return message_id
 
 def getChat_id_private(self):
@@ -999,8 +1134,8 @@ def getUpdateHand_text(self):
     return text
 
 def getUpdateStatus_text(self):
-    text = '[ INFO ] Status:\nAction : ' + str(self['Action']) + '\nBuy : ' + str(self['Buy']) + '\nGold : ' + str(self['Gold']) + '\n\nkey:' +str(uuid4())
-    return text
+    content = '[ INFO ] Status:\nAction : ' + str(self['Action']) + '\nBuy : ' + str(self['Buy']) + '\nGold : ' + str(self['Gold']) + '\n\nkey:' +str(uuid4())
+    return content
 
 def GroupInfo(self,card_name,type):
     text = '[ ' + type + ' ]\n('+'Turn '+str(turn)+')Player '+str(self['user_name'])+' has played [ '+ card_name + ' ].'
@@ -1064,12 +1199,9 @@ def getpoint(self):
     return counter
 
 def usecard(self,card_name):
-    print(vassal_status)
-    print(TR_status)
     if (vassal_status and TR_status) is False:
         self['Action'] -= 1
         self['Hand'].remove(card_name)
-        print('removed : ' + str(card_name))
         self['Use'].append(card_name)
 
 def ty(self):

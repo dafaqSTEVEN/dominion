@@ -101,7 +101,7 @@ Throne_Room = action('Throne Room',4,10,0)
 # Action cards costing 5 dollars-----------------------------------------
 Bandit = action_attack('Bandit',5,10,0)
 
-Council_Room = action('Council room',5,10,0)
+Council_Room = action('Council Room',5,10,0)
 
 Festival = action('Festival',5,10,0)
 

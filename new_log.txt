@@ -2492,3 +2492,764 @@ TypeError: Object of type InlineKeyboardMarkup is not JSON serializable
 2019-06-24 22:50:45,376 - telegram.vendor.ptb_urllib3.urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x02D53490>, 'Connect timed out. (connect timeout=5.0)')': /bot851835971:AAGVgxB8TGLM9hF9AhL6IGwOGXwcBjszHN8/getUpdates
 2019-06-24 22:50:50,378 - telegram.vendor.ptb_urllib3.urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x02D53370>, 'Connection to api.telegram.org timed out. (connect timeout=5.0)')': /bot851835971:AAGVgxB8TGLM9hF9AhL6IGwOGXwcBjszHN8/getUpdates
 2019-06-24 22:51:13,083 - telegram.vendor.ptb_urllib3.urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x02E03DD0>, 'Connection to api.telegram.org timed out. (connect timeout=5.0)')': /bot851835971:AAGVgxB8TGLM9hF9AhL6IGwOGXwcBjszHN8/getUpdates
+2019-06-28 01:34:29,689 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2019-06-28 01:34:29,689 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "dominion_beta.py", line 160, in startgame
+    bot.sendMessage(text='[ INFO ]'+ ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname,use_me["Hand"]))), chat_id=use_me["user_id"])
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 221, in _request_wrapper
+    raise Unauthorized(message)
+telegram.error.Unauthorized: Forbidden: bot can't initiate conversation with a user
+2019-06-28 01:44:45,952 - telegram.vendor.ptb_urllib3.urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x02EF53D0>, 'Connect timed out. (connect timeout=5.0)')': /bot851835971:AAGVgxB8TGLM9hF9AhL6IGwOGXwcBjszHN8/getUpdates
+2019-06-28 01:46:26,842 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:26,842 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:28,100 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:28,101 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:32,410 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:32,410 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:38,377 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:38,377 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:44,090 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:44,091 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:50,724 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:50,725 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:52,031 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:46:52,031 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:47:01,031 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:47:01,031 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:47:12,955 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:47:12,955 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:47:27,596 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:47:27,596 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:47:28,896 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:47:28,896 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:47:49,616 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:47:49,616 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:48:15,502 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:48:16,956 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:48:19,821 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:48:19,822 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:49:02,782 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:49:02,783 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:49:33,031 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:49:33,031 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:49:37,348 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:49:37,348 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:07,611 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:07,850 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:11,929 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:13,192 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:13,193 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:14,725 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:19,207 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:19,208 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:25,553 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:25,554 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:29,238 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:29,238 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:33,558 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:33,559 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:42,220 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:42,221 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:54,210 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:50:54,211 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:05,917 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:05,917 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:10,415 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:10,416 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:11,730 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:11,730 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:15,984 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:15,985 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:21,752 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:21,753 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:27,800 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:27,801 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:34,494 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:34,495 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:35,814 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:35,814 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:45,436 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:45,437 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:57,165 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:51:57,165 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:52:12,393 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:52:12,394 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:52:33,130 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:52:33,130 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-06-28 01:52:39,431 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-06-28 02:07:58,804 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 625, in button
+    query.message.reply_text('[ AWAIT ]\nWaiting for other players to select their card.  ' + str(' / '.join(bu_counter)))
+NameError: name 'bu_counter' is not defined
+2019-07-03 01:00:12,706 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "dominion_beta.py", line 56, in new
+    chat_name = update.message.chat_title
+AttributeError: 'Message' object has no attribute 'chat_title'
+2019-07-03 01:00:49,527 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:21:18,709 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:22:30,205 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:22:44,233 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:23:44,157 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:24:44,888 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:27:12,397 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:27:31,079 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:29:09,493 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:29:17,125 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:32:40,933 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:32:47,133 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:33:28,525 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:34:20,285 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:35:18,053 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:38:52,620 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "dominion_beta.py", line 800, in button
+    if not isinstance(tempp,Action):
+NameError: name 'Action' is not defined
+2019-07-05 05:41:03,301 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:42:21,278 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "dominion_beta.py", line 802, in button
+    display_temp.append(str(tempp.name))
+UnboundLocalError: local variable 'display_temp' referenced before assignment
+2019-07-05 05:44:07,856 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-07-05 05:44:07,856 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\ext\updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telegram\utils\request.py", line 233, in _request_wrapper
+    raise NetworkError('{0} ({1})'.format(message, resp.status))
+telegram.error.NetworkError: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2019-07-05 05:44:07,934 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2019-07-05 05:46:19,613 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 799, in button
+    tempp = use_me['Deck'].pop(0)
+IndexError: pop from empty list
+2019-07-05 05:51:07,681 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 792, in button
+    usecard(use_me, Library)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 1203, in usecard
+    self['Action'] -= 1
+ValueError: list.remove(x): x not in list
+2019-07-05 05:51:08,741 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 792, in button
+    usecard(use_me, Library)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 1203, in usecard
+    self['Action'] -= 1
+ValueError: list.remove(x): x not in list
+2019-07-05 05:51:09,317 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 792, in button
+    usecard(use_me, Library)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 1203, in usecard
+    self['Action'] -= 1
+ValueError: list.remove(x): x not in list
+2019-07-05 05:51:09,535 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 792, in button
+    usecard(use_me, Library)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 1203, in usecard
+    self['Action'] -= 1
+ValueError: list.remove(x): x not in list
+2019-07-05 05:51:12,769 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\callbackqueryhandler.py", line 143, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 792, in button
+    usecard(use_me, Library)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 1203, in usecard
+    self['Action'] -= 1
+ValueError: list.remove(x): x not in list
