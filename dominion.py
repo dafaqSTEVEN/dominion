@@ -1411,6 +1411,18 @@ def notiall(bot,update):
     for i in range(len(list)):
         bot.sendMessage(text = '[ NOTIFICATION ]\nHey Everyone. Glad to announce that DOMINON BOT is officialy in FULLY FUNCTIONAL BETA TEST.\nBugs exsists and are meant to be fix.Please notify me if you have encountered any bug.\nP.S. Games could only run on ! at a time for now ,will be fixed next patch.\nThanks for playing DOMINION BETA BOT.',chat_id = list[i])
 
+def quicknoti(bot,update,user_data):
+    content = update.message.text.partition(' ')[2]
+    with open(dir_path + '/game_id/game_id.csv', 'r')as all_gp:
+        read_inside = csv.DictReader(all_gp,delimiter = ',')
+        list = []
+        for row in read_inside:
+            if row['group_id'] not in list:
+                list.append(row['group_id'])
+        print(list)
+    for i in range(len(list)):
+        bot.sendMessage(text = str(content),chat_id=list[0])
+
 
 logger = logging.getLogger(__name__)
 
@@ -1427,6 +1439,7 @@ def main():
     test.add_handler(CommandHandler('say',say,pass_user_data= True))
     test.add_handler(CommandHandler('restart',restart))
     test.add_handler(CommandHandler('notiall',notiall))
+    test.add_handler(CommandHandler('quicknoti', quicknoti, pass_user_data=True))
     updater.start_polling()
     updater.idle()
 
