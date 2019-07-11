@@ -1421,8 +1421,29 @@ def quicknoti(bot,update,user_data):
                 list.append(row['group_id'])
         print(list)
     for i in range(len(list)):
-        bot.sendMessage(text = str(content),chat_id=list[0])
+        bot.sendMessage(text = str(content),chat_id=list[i])
 
+def log(bot,update):
+    fp = open('new_log.txt', "r")
+    lines = fp.readlines()
+    fp.close()
+    n = len(lines) -20
+    for i in range(20):
+        temp = (str(lines[n]))
+        n += 1
+        bot.sendMessage(text = str(temp),chat_id= 337412327)
+    update.message.reply_text('Sent.')
+
+def lg(bot,update):
+    fp = open('new_log.txt', "r")
+    lines = fp.readlines()
+    fp.close()
+    n = len(lines) - 3
+    for i in range(3):
+        temp = (str(lines[n]))
+        n += 1
+        bot.sendMessage(text = str(temp),chat_id= 337412327)
+    update.message.reply_text('Sent.')
 
 logger = logging.getLogger(__name__)
 
@@ -1440,6 +1461,8 @@ def main():
     test.add_handler(CommandHandler('restart',restart))
     test.add_handler(CommandHandler('notiall',notiall))
     test.add_handler(CommandHandler('quicknoti', quicknoti, pass_user_data=True))
+    test.add_handler(RegexHandler('.*log.*',log))
+    test.add_handler(RegexHandler('.*lg.*', lg))
     updater.start_polling()
     updater.idle()
 
