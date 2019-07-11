@@ -11,7 +11,6 @@ import csv
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, MessageHandler, CommandHandler, RegexHandler, CallbackQueryHandler
 import inspect
-from pythonping import ping
 import socket
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -191,7 +190,7 @@ def startgame(bot,update):
 
 
 def button(bot,update):
-    global turn,EndGame,user_list,display_card_list,display_list,chat_id,result_hand,game_status,cellar_counter,card_market,chapel_counter,vassal_status,merchant_status,bu_counter,militia_counter,emp_count,TR_status,TR_temp,bandit_counter,library_status
+    global turn,EndGame,user_list,display_card_list,display_list,chat_id,result_hand,game_status,cellar_counter,card_market,chapel_counter,vassal_status,merchant_status,bu_counter,militia_counter,emp_count,TR_status,TR_temp,bandit_counter,library_status,top
     query = update.callback_query
     filter_result = [[]]
     if query.data == 'cancel':
@@ -236,7 +235,11 @@ def button(bot,update):
                     temp.usage -= 1
                     query.edit_message_text('[ INFO ]\nYou have bought '+ str(temp.name) +'.')
                     query.answer(text = '[ INFO ]\nYou have bought '+ str(temp.name) +'.',show_alert = True)
-                    bot.edit_message_text(chat_id = use_me['user_id'],text = '[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy'])+'\nGold : '+str(use_me['Gold']),message_id = use_me['Message'].message_id)
+                    try:
+                        bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                        bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                    except:
+                        print('something wrong right here')
                     bot.sendMessage(chat_id = chat_id,text = '[ Buy ]\n('+'Turn '+str(turn)+')Player '+str(use_me['user_name'])+' has bought [ '+ str(temp.name) +' ].')
             empty = 0
             for i in range(len(card_market)):
@@ -751,11 +754,11 @@ def button(bot,update):
                 use_me['Action'] += 2
                 use_me['Buy'] += 1
                 use_me['Gold'] += 2
-            bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Festival.name, 'ACTION'))
-            bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
-                chat_id=getChat_id_private(use_me))
-            bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
-                message_id=getHand_Message_id(use_me))
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Festival.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                    chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                    message_id=getHand_Message_id(use_me))
 
 
     if query.data == 'Laboratory':
@@ -778,12 +781,13 @@ def button(bot,update):
                         display_temp.append(str(tempp.name))
                         use_me['Hand'].append(tempp)
                     gold_b(tempp, use_me)
+                query.edit_message_text('[ LABORATORY ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
                 bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Laboratory.name, 'ACTION'))
                 bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
                     chat_id=getChat_id_private(use_me))
                 bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
                     message_id=getHand_Message_id(use_me))
-                query.edit_message_text('[ LABORATORY ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
+
 
     if query.data == 'Library':
         for i in range(player_in_game):
@@ -816,12 +820,133 @@ def button(bot,update):
                     gold_b(tempp,use_me)
 
 
+    if query.data == 'Market':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Market)
+                use_me['Action'] += 1
+                use_me['Buy'] += 1
+                use_me['Gold'] += 1
+                display_temp = []
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                    gold_b(tempp, use_me)
+                query.edit_message_text('[ MARKET ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Market.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                    chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                    message_id=getHand_Message_id(use_me))
 
+    if query.data == 'Mine':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Mine)
+                result_mining = mining(use_me['Hand'])
+                keyboard = []
+                if len(result_mining) > 0 :
+                    for i in range(len(result_mining)):
+                        keyboard.append(InlineKeyboardButton(str(result_mining[i].name),callback_data = str(result_mining[i].name) + '_mining'))
+                    query.message.reply_text('[ MINE ]\nSelect a treasure to trash.',reply_markup = InlineKeyboardMarkup(keyboard))
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Mine.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                    chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                    message_id=getHand_Message_id(use_me))
 
+    if query.data == 'Sentry':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me, Sentry)
+                use_me['Action'] += 1
+                display_temp = []
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp, use_me)
+                query.edit_message_text('[ SENTRY ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Market.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                top = []
+                for i in range(2):
+                    temppppp = use_me['Deck'].pop(0)
+                    top.append(temppppp)
+                keyboard = [[InlineKeyboardButton(str(top[0].name),callback_data=str(top[0].name) + '_sen_sel'),InlineKeyboardButton(str(top[1].name),callback_data=str(top[1].name) + '_sen_sel')]]
+                query.edit_message_text('[ SENTRY ]\nYou have drawn[ ' + str(' ,'.join(top)) + ' ].You can choose to Trash, Discard or Put them back in any order.The second card you select will be on top if you choose to put both of them back',reply_markup=InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Witch':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me, Witch)
+                display_temp = []
+                for i in range(2):
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                        use_me['Discard'].clear()
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    gold_b(tempp, use_me)
+                query.edit_message_text('[ WITCH ]\nYou have drawn ' + str('\n'.join(tempp.name)) + '.')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Smithy.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+            else:
+                use_me = user_list[str('user' + str(i))]
+                bot.sendMessage(chat_id=getChat_id_private(use_me),text = '[ Witch ]\nYou have gained a Curse.')
+                use_me['Discard'].append(Curse)
+
+    if query.data == 'Artisan':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me, Artisan)
+                keyboard = []
+                for i in range(len(card_market)):
+                    if card_market[i].cost <= 5 :
+                        keyboard.append(InlineKeyboardButton(card_market[i].name,callback_data= str(card_market[i].name) + '_art'))
+                query.edit_message_text('[ ARTISAN ]\n Select a card to gain.',reply_markup = InlineKeyboardMarkup(keyboard))
 
     for i in range(player_in_game):
         use_me = user_list[str('user' + str(i))]
         for g in range(len(use_me['Hand'])):
+            if query.data == str(use_me['Hand'][g].name +'_mining'):
+                value = use_me['Hand'].cost
+                value += 3
+                keyboard = []
+                for i in range(len(card_market)):
+                    if isinstance(card_market[i],treasure) and card_market[i].cost >= value:
+                        keyboard.append(InlineKeyboardButton(str(card_market[i].name),callback_data=str(card_market[i].name + '_m_gain')))
+                query.edit_message_text('[ MINE ]\nSelect a card to gain to your hand.',reply_markup=InlineKeyboardMarkup(keyboard))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
             if query.data == str(use_me['Hand'][g].name +str(i) +'_select_v'):
                 query.edit_message_text('[ BUREAUCRAT ]\n' + str(use_me['Hand'][g].name) + ' is placed on top of your Deck.')
                 temp = use_me['Hand']
@@ -884,7 +1009,11 @@ def button(bot,update):
                     if card_market[i].cost <= (temp.cost + 2):
                         keyboard.append([InlineKeyboardButton(str(card_market[i].name + '(Cost : ' +str(card_market[i].cost) + ')'),callback_data= str(card_market[i].name)+ '_g_rem')])
                 query.edit_message_text('[ REMODEL ]\nSelect a card to gain.',reply_markup = InlineKeyboardMarkup(keyboard))
-
+            if query.data == str(use_me['Hand'][g].name) + '_art_ins':
+                use_me['Deck'].insert(0,use_me['Hand'][g])
+                temp = use_me['Hand'][g]
+                query.edit_message_text('[ ARTISAN ]\nYou have placed [ ' + str(temp) +' ] on top of your deck.')
+                use_me['Hand'].remove(temp)
 
 
     for i in range(player_in_game):
@@ -903,6 +1032,18 @@ def button(bot,update):
                 if query.data == str(card_market[i].name)+'_ws':
                     use_me['Buy_temp'].append(card_market[i])
                     query.edit_message_text('[ WORKSHOP ]\nYou have gained [ ' + str(card_market[i].name) + ' ] .')
+                    bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                    bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                    break
+                if query.data == str(card_market[i].name)+'_art':
+                    use_me['Hand'].append(card_market[i])
+                    query.edit_message_text('[ ARTSIAN ]\nYou have gained [ ' + str(card_market[i].name) + ' ] .')
+                    bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                    bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                    keyboard = []
+                    for i in range(len(use_me['Hand'])):
+                        keyboard.append(InlineKeyboardButton(use_me['Hand'][i].name,callback_data= str(use_me['Hand'][i].name) + '_art_ins'))
+                    query.message.reply_text('[ ARTSIAN ]\nPut a card from your hand onto your deck.',reply_markup = InlineKeyboardMarkup(keyboard))
                     break
                 if query.data == str(card_market[i].name) + '_g_rem':
                     use_me['Buy_temp'].append(card_market[i])
@@ -915,6 +1056,44 @@ def button(bot,update):
                     use_me['Hand'].append(card_market[i])
                     library_status = True
                     query.edit_message_text('[ LIBRARY ]\nDrawn [ ' + str(card_market[i].name) + ' ].')
+                if query.data == str(card_market[i].name + '_m_gain'):
+                    use_me['Hand'].append(card_market[i])
+                    query.edit_message_text('[ MINE ]\nYou have gained [' + str(card_market[i].name) + ' ] in to your hand.')
+                    bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                        chat_id=getChat_id_private(use_me))
+                    bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                        message_id=getHand_Message_id(use_me))
+                if query.data == str(card_market[i].name) +  '_sen_sel':
+                    keyboard = [[InlineKeyboardButton('Trash',callback_data=str(card_market[i].name) +  '_sen_tra'),InlineKeyboardButton('Discard',callback_data=str(card_market[i].name) +  '_sen_dis'),InlineKeyboardButton('Put it back',callback_data=str(card_market[i].name) +  '_sen_back')]]
+                    query.message.reply_text('[ SENTRY ]\nChoose a option.',reply_markup = InlineKeyboardMarkup(keyboard))
+
+                if query.data == str(card_market[i].name) +  '_sen_tra':
+                    try:
+                        top.remove(card_market[i])
+                    except:
+                        print('Sentry Error encountered.')
+                    if len(top) > 0:
+                        keyboard = [[InlineKeyboardButton(top[0].name,callback_data=top[0].name + '_sen_sel')]]
+                        query.message.reply_text('[ SENTRY ]\nSelect for the second card.',reply_markup = InlineKeyboardMarkup(keyboard))
+                if query.data == str(card_market[i].name) +  '_sen_dis':
+                    try:
+                        top.remove(card_market[i])
+                    except:
+                        print('Sentry Error encountered.')
+                    use_me['Discard'].append(card_market[i])
+                    if len(top) > 0:
+                        keyboard = [[InlineKeyboardButton(top[0].name, callback_data=top[0].name + '_sen_sel')]]
+                        query.message.reply_text('[ SENTRY ]\nSelect for the second card.',reply_markup=InlineKeyboardMarkup(keyboard))
+                if query.data == str(card_market[i].name) + '_sen_back':
+                    try:
+                        top.remove(card_market[i])
+                    except:
+                        print('Sentry Error encountered.')
+                    use_me['Deck'].insert(0,card_market[i])
+                    if len(top) > 0:
+                        keyboard = [[InlineKeyboardButton(top[0].name, callback_data=top[0].name + '_sen_sel')]]
+                        query.message.reply_text('[ SENTRY ]\nSelect for the second card.',reply_markup=InlineKeyboardMarkup(keyboard))
+
 
 
     for i in range(player_in_game):
@@ -1076,7 +1255,9 @@ def button(bot,update):
             result_hand = []
 
 
-
+def mining(hand):
+    result_mining = list(filter(lambda a: not isinstance(a,treasure), hand))
+    return result_mining
 
 def force(bot,update):
     Province.usage = 1
@@ -1207,8 +1388,6 @@ def usecard(self,card_name):
 def ty(self):
     return self[0]
 
-def pingme(bot,update):
-    update.message.reply_text(str(ping(str('149.154.167.220'))))
 
 def restart(bot,update):
     global user_list,display_list,display_card_list,EndGame,chat_id,turn,result_hand,game_status
@@ -1236,7 +1415,6 @@ def main():
     test.add_handler(CallbackQueryHandler(button))
     test.add_handler(CommandHandler('say',say,pass_user_data= True))
     test.add_handler(CommandHandler('restart',restart))
-    test.add_handler(CommandHandler('ping',pingme))
     updater.start_polling()
     updater.idle()
 
