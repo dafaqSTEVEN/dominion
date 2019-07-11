@@ -3253,3 +3253,27 @@ Traceback (most recent call last):
   File "E:/Program/GITHUB/dominion/dominion_beta.py", line 1203, in usecard
     self['Action'] -= 1
 ValueError: list.remove(x): x not in list
+2019-07-12 04:38:32,442 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 67, in new
+    write_data = csv.writer(var, delimiter=',',newline = '')
+TypeError: 'newline' is an invalid keyword argument for this function
+2019-07-12 04:44:31,256 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion_beta.py", line 1412, in notiall
+    update.message.reply_text(text = '[ NOTIFICATION ]\nHey Everyone. Glad to announce that DOMINON BOT is officialy in FULLY FUNCTIONAL BETA TEST.\nBugs exsists and are meant to be fix.Please notify me if you have encountered any bug.\nP.S. Games could only run on ! at a time for now ,will be fixed next patch.\nThanks for playing DOMINION BETA BOT.',chat_id = list[i])
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\message.py", line 455, in reply_text
+    return self.bot.send_message(self.chat_id, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 76, in decorator
+    url, data = func(self, *args, **kwargs)
+TypeError: send_message() got multiple values for argument 'chat_id'

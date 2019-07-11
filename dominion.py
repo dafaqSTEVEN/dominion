@@ -1,1867 +1,1432 @@
 import logging
+from card import *
 import random
+import os,types
+from uuid import uuid4
+import itertools
+from datetime import date,timedelta
+import datetime
 from typing import List
-
+import csv
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, MessageHandler, CommandHandler, RegexHandler, CallbackQueryHandler
+import inspect
+import socket
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    filename='logging.txt',
+                    filename='new_log.txt',
                     level=logging.INFO)
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    filename='record.txt',
-                    level=logging.DEBUG)
+node = {}
+#node = {'group_id' : user_list }
+#node['group_id']['user0']['Hand']
+user_list= {}
+display_list = []
+display_card_list = []
+game_status = False
+chat_id = None
+current_game_card = []
+game_id = None
+turn = 0
+result_hand = []
+EndGame = False
+chapel_counter = 0
+vassal_status = False
+merchant_status = False
+TR_status = False
+library_status = False
+
+with open(dir_path + '/game_id/test_log.csv', 'r+')as var:
+    read_data = csv.reader(var,delimiter = ',')
+    row_count = int(len(list(read_data)) / 2)
+    write_data = csv.writer(var, delimiter=',')
+    write_data.writerow([str('Test' + str(row_count)),datetime.datetime.now()])
+    print('[ Test ' + str(row_count) + ' ]\n' + str(datetime.datetime.now()))
 
 
-logger = logging.getLogger(__name__)
+print('Running on Local.')
+print('==============================================')
 
 
-deckplayer1 = ['Copper','Copper','Copper','Copper','Copper','Copper','Copper','Estates','Estates','Estates']
-deckplayer2 = ['Copper','Copper','Copper','Copper','Copper','Copper','Copper','Estates','Estates','Estates']
-deckplayer3 =['Copper','Copper','Copper','Copper','Copper','Copper','Copper','Estates','Estates','Estates']
-grave = []
-grave2 = []
-grave3 = []
-buy_temp = []
-hand = []
-hand2 = []
-hand3 = []
-temp_deck_top=[]
-temp_deck_top2 = []
-temp_deck_top3 = []
-gold = 0
-gold1 =0
-gold2=0
-gold3=0
-points = 0
-points2 = 0
-points3 = 0
-turn = False
-buy_turn = False
-buy_time = 1
-action = 1
-chat_id = 'null'
-user1_id = 'null'
-user2_id = 'null'
-user3_id = 'null'
-user1_name = 'null'
-user2_name = 'null'
-user3_name = 'null'
-user1_tag = 'null'
-user2_tag = 'null'
-user3_tag = 'null'
-current_player = 1
-courtyard_temp = 0
-inlinehand=[]
-turn_count=0
-turnnum = 0
-start_game=False
-Provincecard=10
-Duchycard=10
-Estatescard=10
-Villagecard=10
-Harbingercard=10
-Laboratorycard=10
-Witchcard=10
-Workshopcard=10
-Courtyardcard=10
-Moneylendercard=10
-Endgame=False
-a = 0
-b = 0
-c = 0
-d = 0
-allow = True
+def start(bot,update):
+    update.message.reply_text('[ INFO ]\nThank you for initializing me.')
+
+def new(bot,update):
+    if update.message.chat.type == 'private':
+        update.message.reply_text('[ ! ]\nCommand only available in groups.')
+    elif update.message.chat.type == 'group' or 'supergroup':
+        global game_status,chat_id,message_id,display_list
+        chat_id = update.message.chat_id
+        chat_name = update.message.chat.title
+        if game_status is False:
+            game_status = None
+            with open(dir_path + '/game_id/game_id.csv', 'a+',newline = '')as var:
+                write_data = csv.writer(var, delimiter=',')
+                write_data.writerow([uuid4(), chat_id,chat_name,datetime.datetime.now()])
+            user_name = str(update.message.from_user.first_name) + str(update.message.from_user.last_name)
+            user_tag = update.message.from_user.username
+            user_id = update.message.from_user.id
+            user_list['user0'] = {'user_name': user_name,'user_id':user_id,'user_tag':user_tag}
+            update.message.reply_text('[ INFO ]\n'+str(user_name) + ' started a new game.\nType /join to join the game.')
+            for i in range(len(user_list)):
+                display_list.append(user_list['user' + str(i)]['user_name'])
+            message_id = bot.sendMessage(text='[ INFO ]\nCurrent player list : \n-------------------------------------\n' + str('\n'.join(display_list)), chat_id=chat_id)
+        elif game_status is True:
+            update.message.reply_text('[ ! ]\nGame has already started.\nType /join to join the game.')
+        elif game_status is None:
+                update.message.reply_text('[ ! ]\nType /join to join existing game.')
+
+
+
+
+
+def join(bot,update):
+    if update.message.chat.type == 'private':
+        update.message.reply_text('[ ! ]\nCommand only available in groups.')
+    elif update.message.chat.type == 'group' or 'supergroup':
+        global message_id,display_list
+        if game_status is None:
+            user_name = str(update.message.from_user.first_name) + str(update.message.from_user.last_name)
+            user_tag = update.message.from_user.username
+            user_id = update.message.from_user.id
+            ignore = False
+            for i in range(len(user_list)):
+                if user_name in user_list['user' + str(i)]['user_name']:
+                    update.message.reply_text('[ ! ]\nYou have already joined the game.')
+                    ignore = True
+            if ignore == False:
+                    for i in range(6):
+                        if 'user' + str(i) in user_list:
+                            pass
+                        else:
+                            user_list['user' + str(i)] = {'user_name':user_name,'user_id':user_id,'user_tag':user_tag}
+                            display_list.append(user_list['user' + str(i)]['user_name'])
+                            break
+                    update.message.reply_text('[ INFO ]\nYou have joined the game\n' +'[ '+ user_name +' ]\nType /join to join the game\nType /startgame to start the game')
+
+                    bot.edit_message_text(text = '[ INFO ]\nCurrent player list : \n-------------------------------------\n' + str('\n'.join(display_list)),message_id = message_id.message_id,chat_id = chat_id)
+        else:
+            update.message.reply_text('[ ! ]\nNo game is initialized.Type /new to start a new game')
 
 
 
 def startgame(bot,update):
-    global turn_count
-    global turnnum
-    global start_game
-    start_game = True
-    update.message.reply_text("Loby is closed\n" + str(user1_name) + 's turn.Type /buy to buy cards.')
-    global temp_deck_top, temp_deck_top2, temp_deck_top3
-    global gold
-    global points
-    global deckplayer1
-    global deckplayer2
-    global deckplayer3
-    global grave
-    global grave2
-    global grave3
-    global turn
-    global hand
-    global turnnum
-    global gold1,gold2,gold3
-    global chat_id
-    turn_count = 1
-    turnnum = 1
-    chat_id = str(update.message.chat.id)
-    if turn_count > 1:
-        update.message.reply_text('The game is started.')
+    global gold,EndGame,total_current_game_card
+    if update.message.chat.type == 'private':
+        update.message.reply_text('[ ! ]\nCommand only available in groups.')
     else:
-        for i in range(5):
-                temp = (random.choice(deckplayer1))
-                hand.append(temp)
-                deckplayer1.remove(temp)
-                if temp == 'Copper':
-                    gold1 += 1
-                elif temp == 'Silver':
-                    gold1 += 2
-                elif temp == 'Gold':
-                    gold1 += 3
-                turn = True
-        bot.sendMessage(chat_id = str(user1_id),text = 'You got ' + str(hand) + ' .')
-        for i in range(5):
-            temp = (random.choice(deckplayer2))
-            hand2.append(temp)
-            deckplayer2.remove(temp)
-            if temp == 'Copper':
-                gold2 += 1
-            elif temp == 'Silver':
-                gold2 += 2
-            elif temp == 'Gold':
-                gold2 += 3
-            turn = True
-        bot.sendMessage(chat_id = str(user2_id),text = 'You got ' + str(hand2) + ' .')
-        if user3_id !='null':
-            for i in range(5):
-                temp = (random.choice(deckplayer3))
-                hand3.append(temp)
-                deckplayer3.remove(temp)
-                if temp == 'Copper':
-                    gold3 += 1
-                elif temp == 'Silver':
-                    gold3 += 2
-                elif temp == 'Gold':
-                    gold3 += 3
-                turn = True
-            bot.sendMessage(chat_id = str(user3_id),text = 'You got ' + str(hand3) + ' .')
-        gold = gold1
+        global display_list,player_in_game,turn,game_status,card_market
+        if game_status is False:
+            update.message.reply_text('[ ! ]\nNo game is initialized.Type /new to start a new game')
+        elif game_status is True:
+            update.message.reply_text('[ ! ]\nGame has already started.')
+        else:
+            game_status = True
+            EndGame = False
+            player_in_game = len(user_list)
+            for i in range(player_in_game):
+                use_me = user_list['user' + str(i)]
+                use_me['Deck'] = list(itertools.repeat(Copper,7)) + list(itertools.repeat(Estates,3))
+                random.shuffle(use_me['Deck'])
+                use_me['Hand'] = [use_me['Deck'].pop(0) for i in range(5)]
+                use_me['Use'] = []
+                use_me['Buy_temp'] = []
+                use_me['Discard'] = []
+                getgold(use_me)
+                use_me['Buy'] = 1
+                use_me['Action'] = 1
+            update.message.reply_text('[ INFO ]\nAmount of Players : ' + str(player_in_game))
+            current_game_card.clear()
+            total_current_game_card = []
+            for i in range(len(card_list)):
+                total_current_game_card.append(card_list[i])
+            for i in range(10):
+                select = random.choice(total_current_game_card)
+                select.usage = 10
+                current_game_card.append(select)
+                total_current_game_card.remove(select)
+            current_game_card.sort(key=getcost)
+            for i in range(len(current_game_card)):
+                display_card_list.append(str(current_game_card[i].name) + '(' + str(current_game_card[i].cost) + ')')
+            display = '\n'.join(map(str,display_card_list))
+            update.message.reply_text('[ INFO ]\n10 action cards are chosen for the game :\n' + str(display))
+            Copper.usage = 60
+            Silver.usage = 40
+            Gold.usage = 30
+            Curse.usage = 40
+            Estates.usage = 12
+            Duchy.usage = 12
+            Province.usage = 12
+            card_market = current_game_card + [Copper,Silver,Gold,Estates,Duchy,Province]
+            card_market.sort(key = getcost)
+            turn = 1
+            for i in range(player_in_game):
+                use_me = user_list['user' + str(i)]
+                bot.sendMessage(text='[ INFO ]'+ ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname,use_me["Hand"]))), chat_id=use_me["user_id"])
+            keyboard = [[InlineKeyboardButton('Action', callback_data="action"),InlineKeyboardButton('Buy', callback_data="buy"),InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            for i in range(player_in_game):
+                if i == getturn():
+                    use_me = user_list['user' + str(i)]
+                    user_list['user' + str(i)]['Message'] = bot.sendMessage(
+                        text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
+                            use_me['Buy']) + '\nGold : ' + str(use_me['Gold']), chat_id=use_me['user_id'])
+                    use_me['Menu'] = bot.sendMessage(chat_id=use_me['user_id'],text = '[ SELECT ]\nPlease Select :',reply_markup = reply_markup)
+                    getgold(use_me)
+                elif i != getturn():
+                    use_me = user_list['user' + str(i)]
+                    bot.sendMessage(text = "[ AWAIT ] Waiting for other player's turn",chat_id= use_me['user_id'])
+                    getgold(use_me)
+            keyboard2 = [[InlineKeyboardButton('Click Me', url= 't.me/dominion_beta_bot')]]
+            bot.sendMessage(chat_id=chat_id,text='[ INFO ]\nThe Game has started.Please check your PM.',reply_markup=InlineKeyboardMarkup(keyboard2))
+            for i in range(player_in_game):
+                print(user_list['user'+ str(i)])
+
+
+
+
 
 def button(bot,update):
-    global Endgame
-    global deckplayer1,deckplayer2,deckplayer3
-    global grave,grave2,grave3
-    global temp_deck_top,temp_deck_top2,temp_deck_top3
-    global action
-    global gold
-    global buy_temp
-    global buy_time
-    global Provincecard,Duchycard,Estatescard,Villagecard,Laboratorycard,Workshopcard,Harbingercard,Courtyardcard,Witchcard,Moneylendercard
+    global turn,EndGame,user_list,display_card_list,display_list,chat_id,result_hand,game_status,cellar_counter,card_market,chapel_counter,vassal_status,merchant_status,bu_counter,militia_counter,emp_count,TR_status,TR_temp,bandit_counter,library_status,top,tempp
     query = update.callback_query
-    #buy section
-    if query.data == 'Moneylender':
-        if (buy_turn == True) and (gold - 4 >= 0) and (Moneylendercard >0):
-            buy_temp.append('Moneylender')
-            gold-=4
-            buy_time-=1
-            Moneylendercard-=1
-            query.edit_message_text('You have bought Moneylender.\nype /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
-    if query.data == 'Province':
-        if (buy_turn == True) and (gold - 8 >= 0) and (Provincecard == 1):
-            buy_temp.append('Province')
-            gold -= 8
-            buy_time -= 1
-            Provincecard -= 1
-            query.edit_message_text('You have bought Province.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-            query.message.reply_text('Game will be ended after this bought')
-            Endgame=True
-        elif (buy_turn == True) and (gold - 8 >= 0) and (Provincecard>0):
-                buy_temp.append('Province')
-                gold -= 8
-                buy_time -= 1
-                Provincecard -= 1
-                query.edit_message_text('You have bought Province.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-                query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
-    if query.data == 'Duchy':
-        if (buy_turn == True) and (gold - 5 >= 0) and (Duchycard>0):
-            buy_temp.append('Duchy')
-            gold -= 5
-            buy_time -= 1
-            Duchycard -=1
-            query.edit_message_text('You have bought Duchy.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
-    if query.data == 'Estates':
-        if (buy_turn == True) and (gold - 2 >= 0) and (Estatescard>0):
-            buy_temp.append('Estates')
-            gold -= 2
-            buy_time -= 1
-            Estatescard-=1
-            query.edit_message_text('You have bought Estates.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
-    if query.data == 'Copper':
-        if (buy_turn == True) and (gold - 0 >= 0):
-            buy_temp.append('Copper')
-            gold -= 0
-            buy_time -= 1
-            query.edit_message_text('You have bought Copper.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
-    if query.data == 'Silver':
-        if (buy_turn == True) and (gold - 3 >= 0):
-            buy_temp.append('Silver')
-            gold -= 3
-            buy_time -= 1
-            query.edit_message_text('You have bought Silver.\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
-    if query.data=='Witch':
-        if (buy_turn == True) and (gold - 5 >= 0) and (Witchcard>0):
-            buy_temp.append('Witch')
-            gold -= 3
-            buy_time -= 1
-            Witchcard-=1
-            query.edit_message_text('You have bought Witch .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
-    if query.data=="Village":
-        if (buy_turn == True) and (gold - 3 >= 0) and (Villagecard>0):
-            buy_temp.append('Village')
-            gold -= 3
-            buy_time -= 1
-            Villagecard-=1
-            query.edit_message_text('You have bought Village .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
-    if query.data=="Courtyard":
-        if (buy_turn == True) and (gold - 2 >= 0) and (Courtyardcard>0):
-            buy_temp.append('Courtyard')
-            gold -= 2
-            buy_time -= 1
-            Courtyardcard-=1
-            query.edit_message_text('You have bought Courtyard .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
-    if query.data=='Gold':
-        if (buy_turn == True) and (gold - 6 >= 0):
-            buy_temp.append('Gold')
-            gold -= 6
-            buy_time -= 1
-            query.edit_message_text('You have bought Gold .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
-    if query.data=="Harbinger":
-        if (buy_turn == True) and (gold - 3 >= 0) and(Harbingercard>0):
-            buy_temp.append('Harbinger')
-            gold -= 3
-            buy_time -= 1
-            Harbingercard-=1
-            query.edit_message_text('You have bought Harbinger .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or it is not your turn.')
-    if query.data=="Laboratory":
-        if (buy_turn == True) and (gold - 5 >= 0) and(Laboratorycard>0):
-            buy_temp.append('Laboratory')
-            gold -= 5
-            buy_time -= 1
-            Laboratorycard-=1
-            query.edit_message_text('You have bought Laboratory .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
-    if query.data=="Workshop":
-        if (buy_turn == True) and (gold - 3 >= 0) and(Workshopcard>0):
-            buy_temp.append('Workshop')
-            gold -= 3
-            buy_time -= 1
-            Workshopcard-=1
-            query.edit_message_text('You have bought Workshop .\nType /buy to continue buying cards\nType /action to use cards\nType ( /end ) to finish buying.')
-        else:
-            query.message.reply_text('You dont have enough gold or there is no more card in the pile.')
-    #end of buy section
-    if query.data=='usevillage':
-        if action>0:
-            action-=1
-            action +=2
-            if turn_count == 1:
-                hand.remove('Village')
-                grave.append('Village')
-                temp = random.choice(deckplayer1)
-                hand.append(temp)
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + ']  and you now have ' + str(action) + ' action.\nType /action to continue using cards.\nType /buy to buy cards\nType /end to end.')
-            elif turn_count == 2:
-                hand2.remove('Village')
-                grave2.append('Village')
-                temp = random.choice(deckplayer2)
-                hand2.append(temp)
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and you now have ' + str(action) + ' action.\nType /action to continue using cards.\nType /buy to buy cards\nType /end to end.')
-            elif turn_count == 3:
-                hand3.remove('Village')
-                grave3.append('Village')
-                temp = random.choice(deckplayer3)
-                hand3.append(temp)
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and you now have ' + str(action) + ' action.\nType /action to continue using cards.\nType /buy to buy cards\nType /end to end.')
-        else:
-                query.edit_message_text('You dont have enough Action.')
-    if query.data == 'usewitch':
-        if action >0:
-            action -= 1
-            if turn_count == 1:
-                hand.remove('Witch')
-                grave.append('Witch')
-                grave2.append('Curse')
-                grave3.append('Curse')
-                temp = random.choice(deckplayer1)
-                hand.append(temp)
-                tempp =random.choice(deckplayer1)
-                hand.append(tempp)
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                if tempp == 'Copper':
-                    gold += 1
-                elif tempp == 'Silver':
-                    gold += 2
-                elif tempp == 'Gold':
-                    gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-            elif turn_count == 2:
-                hand2.remove('Witch')
-                grave2.append('Witch')
-                grave.append('Curse')
-                grave3.append('Curse')
-                temp = random.choice(deckplayer2)
-                hand2.append(temp)
-                tempp = random.choice(deckplayer2)
-                hand2.append(tempp)
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                if tempp == 'Copper':
-                    gold += 1
-                elif tempp == 'Silver':
-                    gold += 2
-                elif tempp == 'Gold':
-                    gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-            elif turn_count == 3:
-                hand3.remove('Witch')
-                grave3.append('Witch')
-                grave.append('Curse')
-                grave2.append('Curse')
-                temp = random.choice(deckplayer3)
-                hand3.append(temp)
-                tempp = random.choice(deckplayer3)
-                hand3.append(tempp)
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                if tempp == 'Copper':
-                    gold += 1
-                elif tempp == 'Silver':
-                    gold += 2
-                elif tempp == 'Gold':
-                    gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nEveryone now get a Curse\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-            else:
-                query.edit_message_text('You dont have enough Action.')
-    if query.data == 'usecourtyard':
-        keyboard = [[]]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        if action >0:
-            action -= 1
-            if turn_count == 1:
-                hand.remove('Courtyard')
-                grave.append('Courtyard')
-                temp = random.choice(deckplayer1)
-                hand.append(temp)
-                if deckplayer1 == []:
-                    deckplayer1 = grave
-                    grave = []
-                tempp =random.choice(deckplayer1)
-                hand.append(tempp)
-                if deckplayer1 == []:
-                    deckplayer1 = grave
-                    grave = []
-                temppp = random.choice(deckplayer1)
-                hand.append(temppp)
-                if deckplayer1 == []:
-                    deckplayer1 = grave
-                    grave = []
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                if tempp == 'Copper':
-                    gold += 1
-                elif tempp == 'Silver':
-                    gold += 2
-                elif tempp == 'Gold':
-                    gold += 3
-                if temppp == 'Copper':
-                    gold += 1
-                elif temppp == 'Silver':
-                    gold += 2
-                elif temppp == 'Gold':
-                    gold += 3
-                for i in range(len(hand)):
-                    c_temp = hand[i]
-                    if c_temp == 'Village':
-                        keyboard.append([InlineKeyboardButton('Village', callback_data="c_village")])
-                    elif c_temp == 'Witch':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_witch")])
-                    elif c_temp == 'Duchy':
-                        keyboard.append([InlineKeyboardButton("Duchy", callback_data="c_duchy")])
-                    elif c_temp == 'Province':
-                        keyboard.append([InlineKeyboardButton("Province", callback_data="c_province")])
-                    elif c_temp == 'Laboratory':
-                        keyboard.append([InlineKeyboardButton("Laboratory", callback_data="c_laboratory")])
-                    elif c_temp == 'Moneylender':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_moneylender")])
-                    elif c_temp == 'Harbinger':
-                        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="c_harbinger")])
-                    elif c_temp == 'Workshop':
-                        keyboard.append([InlineKeyboardButton("Workshop", callback_data="c_workshop")])
-                    elif c_temp == 'Courtyard':
-                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="c_courtyard")])
-                    elif c_temp == 'Copper':
-                        keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
-                    elif c_temp == 'Silver':
-                        keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
-                    elif c_temp == 'Gold':
-                        keyboard.append([InlineKeyboardButton('Gold', callback_data="c_gold")])
-                    elif c_temp == 'Estates':
-                        keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
-                query.message.reply_text('Select a card to place on top of your deck : ', reply_markup=reply_markup)
-                query.edit_message_text('You have draw ' + str(temp) + ' , ' +str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-            elif turn_count == 2:
-                hand2.remove('Courtyard')
-                grave2.append('Courtyard')
-                temp = random.choice(deckplayer2)
-                hand2.append(temp)
-                if deckplayer2 == []:
-                    deckplayer2 = grave2
-                    grave = []
-                tempp = random.choice(deckplayer2)
-                hand2.append(tempp)
-                if deckplayer2 == []:
-                    deckplayer2 = grave2
-                    grave = []
-                temppp = random.choice(deckplayer2)
-                hand2.append(temppp)
-                if deckplayer2 == []:
-                    deckplayer2 = grave2
-                    grave = []
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                if tempp == 'Copper':
-                    gold += 1
-                elif tempp == 'Silver':
-                    gold += 2
-                elif tempp == 'Gold':
-                    gold += 3
-                if temppp == 'Copper':
-                    gold += 1
-                elif temppp == 'Silver':
-                    gold += 2
-                elif temppp == 'Gold':
-                    gold += 3
-                for i in range(len(hand2)):
-                    c_temp = hand2[i]
-                    if c_temp == 'Village':
-                        keyboard.append([InlineKeyboardButton('Village', callback_data="c_village")])
-                    elif c_temp == 'Witch':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_witch")])
-                    elif c_temp == 'Duchy':
-                        keyboard.append([InlineKeyboardButton("Duchy", callback_data="c_duchy")])
-                    elif c_temp == 'Province':
-                        keyboard.append([InlineKeyboardButton("Province", callback_data="c_province")])
-                    elif c_temp == 'Laboratory':
-                        keyboard.append([InlineKeyboardButton("Laboratory", callback_data="c_laboratory")])
-                    elif c_temp == 'Moneylender':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_moneylender")])
-                    elif c_temp == 'Harbinger':
-                        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="c_harbinger")])
-                    elif c_temp == 'Workshop':
-                        keyboard.append([InlineKeyboardButton("Workshop", callback_data="c_workshop")])
-                    elif c_temp == 'Courtyard':
-                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="c_courtyard")])
-                    elif c_temp == 'Copper':
-                        keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
-                    elif c_temp == 'Silver':
-                        keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
-                    elif c_temp == 'Gold':
-                        keyboard.append([InlineKeyboardButton('Gold', callback_data="c_gold")])
-                    elif c_temp == 'Estates':
-                        keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
-                query.message.reply_text('Select a card to place on top of your deck : ', reply_markup=reply_markup)
-                query.edit_message_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-            elif turn_count == 3:
-                hand3.remove('Courtyard')
-                grave3.append('Courtyard')
-                temp = random.choice(deckplayer3)
-                hand3.append(temp)
-                if deckplayer3 == []:
-                    deckplayer3 = grave3
-                    grave = []
-                tempp = random.choice(deckplayer3)
-                hand3.append(tempp)
-                if deckplayer3 == []:
-                    deckplayer3 = grave3
-                    grave = []
-                temppp = random.choice(deckplayer3)
-                hand3.append(temppp)
-                if deckplayer3 == []:
-                    deckplayer3 = grave3
-                    grave = []
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                if tempp == 'Copper':
-                    gold += 1
-                elif tempp == 'Silver':
-                    gold += 2
-                elif tempp == 'Gold':
-                    gold += 3
-                if temppp == 'Copper':
-                    gold += 1
-                elif temppp == 'Silver':
-                    gold += 2
-                elif temppp == 'Gold':
-                    gold += 3
-                for i in range(len(hand3)):
-                    c_temp = hand3[i]
-                    if c_temp == 'Village':
-                        keyboard.append([InlineKeyboardButton('Village', callback_data="c_village")])
-                    elif c_temp == 'Witch':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_witch")])
-                    elif c_temp == 'Duchy':
-                        keyboard.append([InlineKeyboardButton("Duchy", callback_data="c_duchy")])
-                    elif c_temp == 'Province':
-                        keyboard.append([InlineKeyboardButton("Province", callback_data="c_province")])
-                    elif c_temp == 'Laboratory':
-                        keyboard.append([InlineKeyboardButton("Laboratory", callback_data="c_laboratory")])
-                    elif c_temp == 'Moneylender':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="c_moneylender")])
-                    elif c_temp == 'Harbinger':
-                        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="c_harbinger")])
-                    elif c_temp == 'Workshop':
-                        keyboard.append([InlineKeyboardButton("Workshop", callback_data="c_workshop")])
-                    elif c_temp == 'Courtyard':
-                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="c_courtyard")])
-                    elif c_temp == 'Copper':
-                        keyboard.append([InlineKeyboardButton("Copper", callback_data="c_copper")])
-                    elif c_temp == 'Silver':
-                        keyboard.append([InlineKeyboardButton("Silver", callback_data="c_silver")])
-                    elif c_temp == 'Gold':
-                        keyboard.append([InlineKeyboardButton('Gold', callback_data="c_gold")])
-                    elif c_temp == 'Estates':
-                        keyboard.append([InlineKeyboardButton('Estates' , callback_data='c_estates')])
-                query.edit_message_text('Select a card to place on top of your deck :',replymarkup=reply_markup)
-            query.message.reply_text('You have draw ' + str(temp) + ' , ' + str(temppp) + ' and ' + str(tempp) + ' and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-        else:
-            query.edit_message_text('You dont have enough Action.')
-    if query.data == 'useharbinger':
-        keyboard = [[]]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        if action >0 :
-            if turn_count == 1:
-                for i in range(len(grave)):
-                    h_temp = grave[i]
-                    if h_temp == 'Village':
-                        keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
-                    elif h_temp == 'Witch':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
-                    elif h_temp == 'Workshop':
-                        keyboard.append([InlineKeyboardButton("Workshop", callback_data="h_workshop")])
-                    elif h_temp == 'Laboratory':
-                        keyboard.append([InlineKeyboardButton("Laboratory", callback_data="h_laboratory")])
-                    elif h_temp == 'Moneylender':
-                        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="h_moneylender")])
-                    elif h_temp == 'Duchy':
-                        keyboard.append([InlineKeyboardButton("Duchy", callback_data="h_duchy")])
-                    elif h_temp == 'Province':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_province")])
-                    elif h_temp == 'Courtyard':
-                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
-                    elif h_temp == 'Copper':
-                        keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
-                    elif h_temp == 'Silver':
-                        keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
-                    elif h_temp == 'Gold':
-                        keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
-                    elif h_temp == 'Estates':
-                        keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
-                    elif h_temp == 'Harbinger':
-                        keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
-                query.edit_message_text('You have ' + str(grave) + ' in your discarded pile,Cards available:',reply_markup=reply_markup)
-                hand.remove('Harbinger')
-                grave.append('Harbinger')
-            elif turn_count ==2 :
-                for i in range(len(grave2)):
-                    h_temp = grave2[i]
-                    if h_temp == 'Village':
-                        keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
-                    elif h_temp == 'Witch':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
-                    elif h_temp == 'Workshop':
-                        keyboard.append([InlineKeyboardButton("Workshop", callback_data="h_workshop")])
-                    elif h_temp == 'Laboratory':
-                        keyboard.append([InlineKeyboardButton("Laboratory", callback_data="h_laboratory")])
-                    elif h_temp == 'Moneylender':
-                        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="h_moneylender")])
-                    elif h_temp == 'Duchy':
-                        keyboard.append([InlineKeyboardButton("Duchy", callback_data="h_duchy")])
-                    elif h_temp == 'Province':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_province")])
-                    elif h_temp == 'Courtyard':
-                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
-                    elif h_temp == 'Copper':
-                        keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
-                    elif h_temp == 'Silver':
-                        keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
-                    elif h_temp == 'Gold':
-                        keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
-                    elif h_temp == 'Estates':
-                        keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
-                    elif h_temp == 'Harbinger':
-                        keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
-                grave2.append('Harbinger')
-                hand2.remove('Harbinger')
-                query.edit_message_text('You have ' + str(grave2) + ' in your discarded pile,Cards availble:',reply_markup=reply_markup)
-            elif turn_count == 3 :
-                for i in range(len(grave3)):
-                    h_temp = grave3[i]
-                    if h_temp == 'Village':
-                        keyboard.append([InlineKeyboardButton('Village', callback_data="h_village")])
-                    elif h_temp == 'Witch':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_witch")])
-                    elif h_temp == 'Workshop':
-                        keyboard.append([InlineKeyboardButton("Workshop", callback_data="h_workshop")])
-                    elif h_temp == 'Laboratory':
-                        keyboard.append([InlineKeyboardButton("Laboratory", callback_data="h_laboratory")])
-                    elif h_temp == 'Moneylender':
-                        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="h_moneylender")])
-                    elif h_temp == 'Duchy':
-                        keyboard.append([InlineKeyboardButton("Duchy", callback_data="h_duchy")])
-                    elif h_temp == 'Province':
-                        keyboard.append([InlineKeyboardButton("Witch", callback_data="h_province")])
-                    elif h_temp == 'Courtyard':
-                        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="h_courtyard")])
-                    elif h_temp == 'Copper':
-                        keyboard.append([InlineKeyboardButton("Copper", callback_data="h_copper")])
-                    elif h_temp == 'Silver':
-                        keyboard.append([InlineKeyboardButton("Silver", callback_data="h_silver")])
-                    elif h_temp == 'Gold':
-                        keyboard.append([InlineKeyboardButton('Gold', callback_data="h_gold")])
-                    elif h_temp == 'Estates':
-                        keyboard.append([InlineKeyboardButton('Estates', callback_data='h_estates')])
-                    elif h_temp == 'Harbinger':
-                        keyboard.append([InlineKeyboardButton('Harbinger', callback_data='h_harbinger')])
-                grave3.append('Harbinger')
-                hand.remove('Harbinger')
-                query.edit_message_text('You have ' + str(grave3) + ' in your discarded pile,Cards available',reply_markup=reply_markup)
-        else:
-            query.message.reply_text('You dont have enough action')
-    if query.data == 'uselaboratory':
-        if action >0:
-            action -= 1
-            action +=1
-            if turn_count == 1:
-                hand.remove('Laboratory')
-                grave.append('Laboratory')
-                temp = random.choice(deckplayer1)
-                hand.append(temp)
-                tempp =random.choice(deckplayer1)
-                hand.append(tempp)
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                if tempp == 'Copper':
-                    gold += 1
-                elif tempp == 'Silver':
-                    gold += 2
-                elif tempp == 'Gold':
-                    gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-            elif turn_count == 2:
-                hand2.remove('Laboratory')
-                grave2.append('Laboratory')
-                temp = random.choice(deckplayer2)
-                hand2.append(temp)
-                tempp = random.choice(deckplayer2)
-                hand2.append(tempp)
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                if tempp == 'Copper':
-                    gold += 1
-                elif tempp == 'Silver':
-                    gold += 2
-                elif tempp == 'Gold':
-                    gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-            elif turn_count == 3:
-                hand3.remove('Laboratory')
-                grave3.append('Laboratory')
-                temp = random.choice(deckplayer3)
-                hand3.append(temp)
-                tempp = random.choice(deckplayer3)
-                hand3.append(tempp)
-                if temp == 'Copper':
-                    gold += 1
-                elif temp == 'Silver':
-                    gold += 2
-                elif temp == 'Gold':
-                    gold += 3
-                if tempp == 'Copper':
-                    gold += 1
-                elif tempp == 'Silver':
-                    gold += 2
-                elif tempp == 'Gold':
-                    gold += 3
-                query.edit_message_text('You have draw [' + str(temp) + '] and [' + str(tempp) + '] and you now have ' + str(action) + ' action.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-            else:
-                query.edit_message_text('You dont have enough Action.')
-    if query.data == 'useworkshop':
-        keyboard=[[]]
-        reply_markup=InlineKeyboardMarkup(keyboard)
-        if action>0:
-            action -=1
-            if turn_count == 1:
-                hand.remove('Workshop')
-                grave.append('Workshop')
-            elif turn_count == 2:
-                hand2.remove('Workshop')
-                grave2.append('Workshop')
-            elif turn_count == 3:
-                hand3.remove('Workshop')
-                grave3.append('Workshop')
-            keyboard.append([InlineKeyboardButton("Estates", callback_data="w_estates")])
-            keyboard.append([InlineKeyboardButton("Workshop", callback_data="w_workshop")])
-            keyboard.append([InlineKeyboardButton("Harbinger", callback_data="w_harbinger")])
-            keyboard.append([InlineKeyboardButton("Village", callback_data="w_village")])
-            keyboard.append([InlineKeyboardButton("Silver", callback_data="w_silver")])
-            keyboard.append([InlineKeyboardButton("Courtyard", callback_data="w_courtyard")])
-            keyboard.append([InlineKeyboardButton("Moneylender", callback_data="w_moneylender")])
-            keyboard.append([InlineKeyboardButton("Copper", callback_data="w_copper")])
-            query.edit_message_text('Gain a card cost not more than 4 dollars :',reply_markup=reply_markup)
-        else:
-            query.edit_message_text('You dont have enough action')
+    filter_result = [[]]
+    if query.data == 'cancel':
+        query.edit_message_text('[ OK ] Canceled.')
 
-    if query.data == 'c_witch':
-        if turn_count == 1:
-            temp_deck_top.append('Witch')
-            hand.remove('Witch')
-        elif turn_count ==2:
-            temp_deck_top2.append('Witch')
-            hand2.remove('Witch')
-        elif turn_count==3:
-            temp_deck_top3.append('Witch')
-            hand3.remove('Witch')
-        query.edit_message_text('Witch is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_village':
-        if turn_count == 1:
-            temp_deck_top.append('Village')
-            hand.remove('Village')
-        elif turn_count == 2:
-            temp_deck_top2.append('Village')
-            hand2.remove('Village')
-        elif turn_count == 3:
-            temp_deck_top3.append('Village')
-            hand3.remove('Village')
-        query.edit_message_text('Village is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_courtyard':
-        if turn_count == 1:
-            temp_deck_top.append('Courtyard')
-            hand.remove('Courtyard')
-        elif turn_count == 2:
-            temp_deck_top2.append('Courtyard')
-            hand2.remove('Courtyard')
-        elif turn_count == 3:
-            temp_deck_top3.append('Courtyard')
-            hand3.remove('Courtyard')
-        query.edit_message_text('Courtyard is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_copper':
-        if turn_count == 1:
-            temp_deck_top.append('Copper')
-            hand.remove('Copper')
-        elif turn_count == 2:
-            temp_deck_top2.append('Copper')
-            hand2.remove('Copper')
-        elif turn_count == 3:
-            temp_deck_top3.append('Copper')
-            hand3.remove('Copper')
-        query.edit_message_text('Copper is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_silver':
-        if turn_count == 1:
-            temp_deck_top.append('Silver')
-            hand.remove('Silver')
-        elif turn_count == 2:
-            temp_deck_top2.append('Silver')
-            hand2.remove('Silver')
-        elif turn_count == 3:
-            temp_deck_top3.append('Silver')
-            hand3.remove('Silver')
-        query.edit_message_text('Silver is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_gold':
-        if turn_count == 1:
-            temp_deck_top.append('Gold')
-            hand.remove('Gold')
-        elif turn_count == 2:
-            temp_deck_top2.append('Gold')
-            hand2.remove('Gold')
-        elif turn_count == 3:
-            temp_deck_top3.append('Gold')
-            hand3.remove('Gold')
-        query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_estates':
-        if turn_count == 1:
-            temp_deck_top.append('Estates')
-            hand.remove('Estates')
-        elif turn_count == 2:
-            temp_deck_top2.append('Estates')
-            hand2.remove('Estates')
-        elif turn_count == 3:
-            temp_deck_top3.append('Estates')
-            hand3.remove('Estates')
-        query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_duchy':
-        if turn_count == 1:
-            temp_deck_top.append('Duchy')
-            hand.remove('Duchy')
-        elif turn_count == 2:
-            temp_deck_top2.append('Duchy')
-            hand2.remove('Duchy')
-        elif turn_count == 3:
-            temp_deck_top3.append('Duchy')
-            hand3.remove('Duchy')
-        query.edit_message_text('Duchy is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_province':
-        if turn_count == 1:
-            temp_deck_top.append('Province')
-            hand.remove('Province')
-        elif turn_count == 2:
-            temp_deck_top2.append('Province')
-            hand2.remove('Province')
-        elif turn_count == 3:
-            temp_deck_top3.append('Province')
-            hand3.remove('Province')
-        query.edit_message_text('Province is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_harbinger':
-        if turn_count == 1:
-            temp_deck_top.append('Harbinger')
-            hand.remove('Harbinger')
-        elif turn_count == 2:
-            temp_deck_top2.append('Harbinger')
-            hand2.remove('Harbinger')
-        elif turn_count == 3:
-            temp_deck_top3.append('Harbinger')
-            hand3.remove('Harbinger')
-        query.edit_message_text('Harbinger is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_workshop':
-        if turn_count == 1:
-            temp_deck_top.append('Workshop')
-            hand.remove('Workshop')
-        elif turn_count == 2:
-            temp_deck_top2.append('Workshop')
-            hand2.remove('Workshop')
-        elif turn_count == 3:
-            temp_deck_top3.append('Workshop')
-            hand3.remove('Workshop')
-        query.edit_message_text('Workshop is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_laboratory':
-        if turn_count == 1:
-            temp_deck_top.append('Laboratory')
-            hand.remove('Laboratory')
-        elif turn_count == 2:
-            temp_deck_top2.append('Laboratory')
-            hand2.remove('Laboratory')
-        elif turn_count == 3:
-            temp_deck_top3.append('Laboratory')
-            hand3.remove('Laboratory')
-        query.edit_message_text('Laboratory is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'c_moneylender':
-        if turn_count == 1:
-            temp_deck_top.append('Moneylender')
-            hand.remove('Moneylender')
-        elif turn_count == 2:
-            temp_deck_top2.append('Moneylender')
-            hand2.remove('Moneylender')
-        elif turn_count == 3:
-            temp_deck_top3.append('Moneylender')
-            hand3.remove('Moneylender')
-        query.edit_message_text('Moneylender is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-
-    if query.data == 'h_witch':
-        if turn_count == 1:
-            temp_deck_top.append('Witch')
-            grave.remove('Witch')
-        elif turn_count ==2:
-            temp_deck_top2.append('Witch')
-            grave2.remove('Witch')
-        elif turn_count==3:
-            temp_deck_top3.append('Witch')
-            grave3.remove('Witch')
-        query.edit_message_text('Witch is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_village':
-        if turn_count == 1:
-            temp_deck_top.append('Village')
-            grave.remove('Village')
-        elif turn_count == 2:
-            temp_deck_top2.append('Village')
-            grave2.remove('Village')
-        elif turn_count == 3:
-            temp_deck_top3.append('Village')
-            grave3.remove('Village')
-        query.edit_message_text('Village is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_courtyard':
-        if turn_count == 1:
-            temp_deck_top.append('Courtyard')
-            grave.remove('Courtyard')
-        elif turn_count == 2:
-            temp_deck_top2.append('Courtyard')
-            grave2.remove('Courtyard')
-        elif turn_count == 3:
-            temp_deck_top3.append('Courtyard')
-            grave3.remove('Courtyard')
-        query.edit_message_text('Courtyard is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_copper':
-        if turn_count == 1:
-            temp_deck_top.append('Copper')
-            grave.remove('Copper')
-        elif turn_count == 2:
-            temp_deck_top2.append('Copper')
-            grave2.remove('Copper')
-        elif turn_count == 3:
-            temp_deck_top3.append('Copper')
-            grave3.remove('Copper')
-        query.edit_message_text('Copper is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_silver':
-        if turn_count == 1:
-            temp_deck_top.append('Silver')
-            grave.remove('Silver')
-        elif turn_count == 2:
-            temp_deck_top2.append('Silver')
-            grave2.remove('Silver')
-        elif turn_count == 3:
-            temp_deck_top3.append('Silver')
-            grave3.remove('Silver')
-        query.edit_message_text('Silver is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_gold':
-        if turn_count == 1:
-            temp_deck_top.append('Gold')
-            grave.remove('Gold')
-        elif turn_count == 2:
-            temp_deck_top2.append('Gold')
-            grave2.remove('Gold')
-        elif turn_count == 3:
-            temp_deck_top3.append('Gold')
-            grave3.remove('Gold')
-        query.edit_message_text('Gold is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_estates':
-        if turn_count == 1:
-            temp_deck_top.append('Estates')
-            grave.remove('Estates')
-        elif turn_count == 2:
-            temp_deck_top2.append('Estates')
-            grave2.remove('Estates')
-        elif turn_count == 3:
-            temp_deck_top3.append('Estates')
-            grave3.remove('Estates')
-        query.edit_message_text('Estates is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_harbinger':
-        if turn_count == 1:
-            temp_deck_top.append('Harbinger')
-            grave.remove('Harbinger')
-        elif turn_count == 2:
-            temp_deck_top2.append('Harbinger')
-            grave2.remove('Harbinger')
-        elif turn_count == 3:
-            temp_deck_top3.append('Harbinger')
-            grave3.remove('Harbinger')
-        query.edit_message_text('Harbinger is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_moneylender':
-        if turn_count == 1:
-            temp_deck_top.append('Moneylender')
-            grave.remove('Moneylender')
-        elif turn_count ==2:
-            temp_deck_top2.append('Moneylender')
-            grave2.remove('Moneylender')
-        elif turn_count==3:
-            temp_deck_top3.append('Moneylender')
-            grave3.remove('Moneylender')
-        query.edit_message_text('Moneylender is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_duchy':
-        if turn_count == 1:
-            temp_deck_top.append('Duchy')
-            grave.remove('Duchy')
-        elif turn_count ==2:
-            temp_deck_top2.append('Duchy')
-            grave2.remove('Duchy')
-        elif turn_count==3:
-            temp_deck_top3.append('Duchy')
-            grave3.remove('Duchy')
-        query.edit_message_text('Duchy is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_province':
-        if turn_count == 1:
-            temp_deck_top.append('Province')
-            grave.remove('Province')
-        elif turn_count ==2:
-            temp_deck_top2.append('Province')
-            grave2.remove('Province')
-        elif turn_count==3:
-            temp_deck_top3.append('Province')
-            grave3.remove('Province')
-        query.edit_message_text('Province is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_laboratory':
-        if turn_count == 1:
-            temp_deck_top.append('Laboratory')
-            grave.remove('Laboratory')
-        elif turn_count ==2:
-            temp_deck_top2.append('Laboratory')
-            grave2.remove('Laboratory')
-        elif turn_count==3:
-            temp_deck_top3.append('Laboratory')
-            grave3.remove('Laboratory')
-        query.edit_message_text('Laboratory is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'h_workshop':
-        if turn_count == 1:
-            temp_deck_top.append('Workshop')
-            grave.remove('Workshop')
-        elif turn_count ==2:
-            temp_deck_top2.append('Workshop')
-            grave2.remove('Workshop')
-        elif turn_count==3:
-            temp_deck_top3.append('Workshop')
-            grave3.remove('Workshop')
-        query.edit_message_text('Workshop is placed on top of your deck.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-
-    if query.data == 'w_village':
-        if turn_count == 1:
-            grave.append('Village')
-        elif turn_count == 2:
-            grave2.append('Village')
-        elif turn_count == 3:
-            grave3.append('Village')
-        query.edit_message_text('Village is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'w_courtyard':
-        if turn_count == 1:
-            grave.append('Courtyard')
-        elif turn_count == 2:
-            grave2.append('Courtyard')
-        elif turn_count == 3:
-            grave3.append('Courtyard')
-        query.edit_message_text('Courtyard is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'w_copper':
-        if turn_count == 1:
-            grave.append('Copper')
-        elif turn_count == 2:
-            grave2.append('Copper')
-        elif turn_count == 3:
-            grave3.append('Copper')
-        query.edit_message_text('Copper is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'w_silver':
-        if turn_count == 1:
-            grave.append('Silver')
-        elif turn_count == 2:
-            grave2.append('Silver')
-        elif turn_count == 3:
-            grave3.append('Silver')
-        query.edit_message_text('Silver is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'w_workshop':
-        if turn_count == 1:
-            grave.append('Workshop')
-        elif turn_count == 2:
-            grave2.append('Workshop')
-        elif turn_count == 3:
-            grave3.append('Workshop')
-        query.edit_message_text('Workshop is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'w_harbinger':
-        if turn_count == 1:
-            grave.append('Harbinger')
-        elif turn_count == 2:
-            grave2.append('Harbinger')
-        elif turn_count == 3:
-            grave3.append('Harbinger')
-        query.edit_message_text('Harbinger is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'w_estates':
-        if turn_count == 1:
-            grave.append('Estates')
-        elif turn_count == 2:
-            grave2.append('Estates')
-        elif turn_count == 3:
-            grave3.append('Estates')
-        query.edit_message_text('Estates is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-    if query.data == 'w_moneylender':
-        if turn_count == 1:
-            grave.append('Moneylender')
-        elif turn_count == 2:
-            grave2.append('Moneylender')
-        elif turn_count == 3:
-            grave3.append('Moneylender')
-        query.edit_message_text('Moneylender is gained into your discarded pile.\nType /buy to buy cards\nType /action to continue using cards.\nType /end to end.')
-
-    if query.data == 'usemoneylender':
-        if turn_count == 1:
-            if 'Copper' in hand:
-                hand.remove('Copper')
-                gold -= 1
-                hand.remove('Moneylender')
-                grave.append('Moneylender')
-                gold+=3
-                query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
-                query.message.reply_text(chat_id=user1_id,text='You have' + str(hand) + 'after using Moneylender')
-            else:
-                query.edit_message_text('You dont have Copper')
-        if turn_count == 2:
-            if 'Copper' in hand2:
-                hand2.remove('Copper')
-                gold -= 1
-                hand2.remove('Moneylender')
-                grave2.append('Moneylender')
-                gold+=3
-                query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
-                query.message.reply_text(chat_id=user2_id, text='You have' + str(hand2) + 'after using Moneylender')
-            else:
-                query.edit_message_text('You dont have Copper')
-        if turn_count ==3 :
-            if 'Copper' in hand3:
-                hand3.remove('Copper')
-                gold -= 1
-                hand3.remove('Moneylender')
-                grave3.append('Moneylender')
-                gold+=3
-                query.edit_message_text('A Copper is trashed. You have gained 3 dollars this turn.')
-                query.message.reply_text(chat_id=user3_id, text='You have' + str(hand3) + 'after using Moneylender')
-            else:
-                query.edit_message_text('You dont have Copper')
-
-    
-
-def join(bot,update):
-    global user1_id
-    global user2_id
-    global user3_id
-    global user1_name
-    global user2_name
-    global user3_name
-    global user1_tag,user2_tag,user3_tag
-    if start_game == True:
-       update.message.reply_text('The Loby is closed')
-    else:
-        if str(update.message.from_user.id) == user1_id or str(update.message.from_user.id) == user2_id or str(update.message.from_user.id) == user3_id:
-            update.message.reply_text('You have already joined the game.')
-        else:
-            update.message.reply_text('Welcome ' + str(update.message.from_user.first_name) + str(update.message.from_user.last_name) + ' [ ' + str(update.message.from_user.id) + ' / ' + '@' + str(update.message.from_user.username) + ' ] ')
-            if user1_id == 'null':
-                user1_id = str(update.message.from_user.id)
-                user1_name = str(update.message.from_user.first_name) + str(update.message.from_user.last_name)
-                user1_tag = str(update.message.from_user.username)
-            elif user2_id== 'null':
-                user2_id = str(update.message.from_user.id)
-                user2_name = str(update.message.from_user.first_name) + str(update.message.from_user.last_name)
-                user2_tag = str(update.message.from_user.username)
-            elif user3_id == 'null':
-                user3_id = str(update.message.from_user.id)
-                user3_name = str(update.message.from_user.first_name) + str(update.message.from_user.last_name)
-                user3_tag = str(update.message.from_user.username)
-            update.message.reply_text('Current player list :\n [' + str(user1_name) + ' / ' + str(user2_name) + ' / ' + str(user3_name) + ']\nType /join to join the game.\nType /startgame to start the game.')
+    TR_temp = update.callback_query.data
+    global use_TR
+    for i in range(len(card_market)):
+        if card_market[i].name == TR_temp:
+            use_TR = card_market[i]
+    if TR_status is True:
+        keyboard = [[InlineKeyboardButton(str(use_TR.name), callback_data=str(use_TR.name))]]
+        query.message.reply_text('[ THRONE_ROOM ]\nPlay the card again', reply_markup=InlineKeyboardMarkup(keyboard))
+        TR_status = False
 
 
-
-def actionphase(bot,update):
-    keyboard = [[]]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    if turn_count == 1:
-        bot.sendMessage(chat_id=user1_id,text=str(user1_name) + ', you have : ' + str(hand))
-        for i in range(len(hand)):
-            tempp = hand[i]
-            if tempp == 'Village':
-                keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
-            elif tempp == 'Moneylender':
-                keyboard.append([InlineKeyboardButton("Moneylender", callback_data="usemoneylender")])
-            elif tempp == 'Witch':
-                keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
-            elif tempp == 'Courtyard':
-                keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
-            elif tempp == 'Harbinger':
-                keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
-            elif tempp == 'Laboratory':
-                keyboard.append([InlineKeyboardButton("Laboratory", callback_data="uselaboratory")])
-            elif tempp == 'Workshop':
-                keyboard.append([InlineKeyboardButton("Workshop", callback_data="useworkshop")])
-        update.message.reply_text('Cards available : ', reply_markup=reply_markup)
-    elif turn_count == 2:
-        bot.sendMessage(chat_id=user2_id,text=str(user2_name) + ', you have : ' + str(hand2))
-        for i in range(len(hand2)):
-            tempp = hand2[i]
-            if tempp == 'Village':
-                keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
-            elif tempp == 'Moneylender':
-                keyboard.append([InlineKeyboardButton("Moneylender", callback_data="usemoneylender")])
-            elif tempp == 'Witch':
-                keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
-            elif tempp == 'Courtyard':
-                keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
-            elif tempp == 'Harbinger':
-                keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
-            elif tempp == 'Laboratory':
-                keyboard.append([InlineKeyboardButton("Laboratory", callback_data="uselaboratory")])
-            elif tempp == 'Workshop':
-                keyboard.append([InlineKeyboardButton("Workshop", callback_data="useworkshop")])
-        update.message.reply_text('Cards available : ', reply_markup=reply_markup)
-    elif turn_count == 3:
-        bot.sendMessage(chat_id=user3_id,text=str(user3_name) + ', you have : ' + str(hand3))
-        for i in range(len(hand3)):
-            tempp = hand3[i]
-            if tempp == 'Village':
-                keyboard.append([InlineKeyboardButton('Village', callback_data="usevillage")])
-            elif tempp == 'Moneylender':
-                keyboard.append([InlineKeyboardButton("Moneylender", callback_data="usemoneylender")])
-            elif tempp == 'Witch':
-                keyboard.append([InlineKeyboardButton("Witch", callback_data="usewitch")])
-            elif tempp == 'Courtyard':
-                keyboard.append([InlineKeyboardButton("Courtyard", callback_data="usecourtyard")])
-            elif tempp == 'Harbinger':
-                keyboard.append([InlineKeyboardButton("Harbinger", callback_data="useharbinger")])
-            elif tempp == 'Laboratory':
-                keyboard.append([InlineKeyboardButton("Laboratory", callback_data="uselaboratory")])
-            elif tempp == 'workshop':
-                keyboard.append([InlineKeyboardButton("Workshop", callback_data="useworkshop")])
-        update.message.reply_text('Cards available : ', reply_markup=reply_markup)
-
-
-
-def buy(bot,update):
-    global gold
-    global buy_turn
-    global buy_time
-    if turn_count == 1:
-        bot.sendMessage(chat_id=user1_id,text='You have <' + str(gold) + '> dollar')
-    elif turn_count == 2:
-        bot.sendMessage(chat_id=user2_id,text='You have <' + str(gold) + '> dollar')
-    else:
-        bot.sendMessage(chat_id=user3_id,text='You have <' + str(gold) + '> dollar')
-    buy_turn = True
-    keyboard = [[]]
-    if gold >=8:
-        keyboard.append([InlineKeyboardButton('Province', callback_data='Province')])
-        keyboard.append([InlineKeyboardButton('Gold', callback_data='Gold')])
-        keyboard.append([InlineKeyboardButton("Duchy", callback_data="Duchy")])
-        keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
-        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
-        keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
-        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
-        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
-        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
-        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
-        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
-        keyboard.append([InlineKeyboardButton("Cancel", callback_data="Cancel")])
-        update.message.reply_text('Buy Province for 8 dollar\nBuy Gold costs 6 dollars\nBuy Duchy For 5 dollar\nBuy Laboratory costs 5 dollars\nBuy Witch costs 5 dollars\nBuy Moneylender costs 4 dollar\nBuy Workshop costs 4 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar\nClick Cancel to cancel buying')
-    elif gold == 7 or gold == 6 :
-        keyboard.append([InlineKeyboardButton('Gold', callback_data='Gold')])
-        keyboard.append([InlineKeyboardButton("Duchy", callback_data="Duchy")])
-        keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
-        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
-        keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
-        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
-        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
-        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
-        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
-        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
-        keyboard.append([InlineKeyboardButton("Cancel", callback_data="Cancel")])
-        update.message.reply_text('Buy Gold costs 6 dollars\nBuy Duchy For 5 dollar\nBuy Laboratory costs 5 dollars\nBuy Witch costs 5 dollars\nBuy Moneylender costs 4 dollar\nBuy Workshop costs 4 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar\nClick Cancel to cancel buying')
-    elif gold == 5:
-        keyboard.append([InlineKeyboardButton("Duchy", callback_data="Duchy")])
-        keyboard.append([InlineKeyboardButton("Laboratory", callback_data="Laboratory")])
-        keyboard.append([InlineKeyboardButton("Witch", callback_data="Witch")])
-        keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
-        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
-        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
-        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
-        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
-        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
-        keyboard.append([InlineKeyboardButton("Cancel", callback_data="Cancel")])
-        update.message.reply_text('Buy Duchy For 5 dollar\nBuy Witch costs 5 dollars\nBuy Laboratory costs 5 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar\nClick Cancel to cancel buying')
-    elif gold == 4:
-        update.message.reply_text('Buy Moneylender costs 4 dollar\nBuy Workshop costs 3 dollar\nBuy Harbinger costs 3 dollars\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar\nClick Cancel to cancel buying')
-        keyboard.append([InlineKeyboardButton("Moneylender", callback_data="Moneylender")])
-        keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
-        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
-        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
-        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
-        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
-        keyboard.append([InlineKeyboardButton("Cancel", callback_data="Cancel")])
-    elif gold == 3 :
-        update.message.reply_text('Buy Harbinger costs 3 dollars\nBuy Workshop costs 3 dollar\nBuy Village costs 3 dollars\nBuy Silver costs 3 dollars\nBuy Courtyard costs 2 dollar\nBuy Copper for 0 dollar\nClick Cancel to cancel buying')
-        keyboard.append([InlineKeyboardButton("Workshop", callback_data="Workshop")])
-        keyboard.append([InlineKeyboardButton("Harbinger", callback_data="Harbinger")])
-        keyboard.append([InlineKeyboardButton("Village", callback_data="Village")])
-        keyboard.append([InlineKeyboardButton("Silver", callback_data="Silver")])
-        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
-        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
-        keyboard.append([InlineKeyboardButton("Cancel", callback_data="Cancel")])
-    elif gold == 2:
-        update.message.reply_text('Buy Courtyard costs 2 dollar\nBuy Copper for 0 dollar\nClick Cancel to cancel buying')
-        keyboard.append([InlineKeyboardButton("Courtyard", callback_data="Courtyard")])
-        keyboard.append([InlineKeyboardButton("Estates", callback_data="Estates")])
-        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
-        keyboard.append([InlineKeyboardButton("Cancel", callback_data="Cancel")])
-    elif gold == 0:
-        update.message.reply_text('Buy Copper for 0 dollar\nClick Cancel to cancel buying')
-        keyboard.append([InlineKeyboardButton("Copper", callback_data="Copper")])
-        keyboard.append([InlineKeyboardButton("Cancel", callback_data="Cancel")])
-    update.message.reply_text('Cards available : ',reply_markup=InlineKeyboardMarkup(keyboard))
-    buy_time-=1
-
-
-
-def end(bot,update):
-    global a,b,c,d
-    global chat_id
-    global gold
-    global deckplayer1
-    global deckplayer2
-    global deckplayer3
-    global grave
-    global grave2
-    global grave3
-    global buy_temp
-    global hand
-    global hand2
-    global hand3
-    global gold1, gold2, gold3, points, points2, points3, buy_turn, buy_time, action, user1_id, user1_name, user2_id, user2_name, user3_id, user3_name, current_player, inlinehand, courtyard_temp, turn_count, turnnum, start_game
-    global turn
-    global hand
-    global user1_tag, user2_tag, user3_tag
-    global Provincecard, Duchycard, Estatescard, Villagecard, Laboratorycard, Workshopcard, Harbingercard, Courtyardcard, Witchcard
-    global temp_deck_top, temp_deck_top2, temp_deck_top3
-    global Endgame
-    turn = False
-    turnnum += 1
-    turn=False
-    action = 1
-    gold = 0
-    if Endgame == True:
-        if turn_count == 1:
-            grave += buy_temp
-        elif turn_count == 2:
-            grave2 += buy_temp
-        elif turn_count == 3:
-            grave3 += buy_temp
-        update.message.reply_text('Game has ended.')
-        grave += hand
-        grave += deckplayer1
-        grave += temp_deck_top
-        for i in range(len(grave)):
-            temp = grave[i]
-            if temp == 'Estates':
-                points += 1
-                a += 1
-            elif temp == 'Duchy':
-                points += 3
-                b +=1
-            elif temp == 'Province':
-                points += 6
-                c += 1
-            elif temp == 'Curse':
-                points -=1
-                d += 1
-        grave2 += hand
-        grave2 += deckplayer1
-        grave2 += temp_deck_top
-        for i in range(len(grave2)):
-            temp = grave2[i]
-            if temp == 'Estates':
-                points2 += 1
-            elif temp == 'Duchy':
-                points2 += 3
-            elif temp == 'Province':
-                points2 += 6
-            elif temp == 'Curse':
-                points2 -= 1
-        grave3 += hand
-        grave3 += deckplayer1
-        grave3 += temp_deck_top
-        for i in range(len(grave3)):
-            temp = grave3[i]
-            if temp == 'Estates':
-                points3 += 1
-            elif temp == 'Duchy':
-                points3 += 3
-            elif temp == 'Province':
-                points3 += 6
-            elif temp == 'Curse':
-                points3 -= 1
-        grave2 += hand
-        if user3_name == 'null':
-            update.message.reply_text(user1_name+' have ' + str(points)+' points\n'+user2_name+' have'+ str(points2)+' points')
-        else:
-            update.message.reply_text(user1_name + ' have ' + str(points) + ' points\n' + user2_name + ' have' + str(points2) + ' points\n'+user3_name+'have'+ str(points3)+'points')
-        if points > (points2 and points3):
-            update.message.reply_text('The winner is '+ user1_name +'!')
-        elif points2 >(points and points3):
-            update.message.reply_text('The winner is ' + user2_name + '!')
-        elif points3 > (points and points2):
-            update.message.reply_text('The winner is ' + user3_name + '!')
-        update.message.reply_text('Game has ended, Type /join to join a new game.')
-
-        deckplayer1 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
-                       'Estates']
-        deckplayer2 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
-                       'Estates']
-        deckplayer3 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
-                       'Estates']
-        grave = []
-        grave2 = []
-        grave3 = []
-        buy_temp = []
-        hand = []
-        hand2 = []
-        hand3 = []
-        temp_deck_top = []
-        temp_deck_top2 = []
-        temp_deck_top3 = []
-        gold = 0
-        gold1 = 0
-        gold2 = 0
-        gold3 = 0
-        points = 0
-        points2 = 0
-        points3 = 0
-        turn = False
-        buy_turn = False
-        buy_time = 1
-        action = 1
-        chat_id = 'null'
-        user1_id = 'null'
-        user2_id = 'null'
-        user3_id = 'null'
-        user1_name = 'null'
-        user2_name = 'null'
-        user3_name = 'null'
-        user1_tag = 'null'
-        user2_tag = 'null'
-        user3_tag = 'null'
-        current_player = 1
-        courtyard_temp = 0
-        inlinehand = []
-        turn_count = 0
-        turnnum = 0
-        start_game = False
-        Provincecard = 10
-        Duchycard = 10
-        Estatescard = 10
-        Villagecard = 10
-        Harbingercard = 10
-        Laboratorycard = 10
-        Witchcard = 10
-        Workshopcard = 10
-        Courtyardcard = 10
-        Endgame = False
-    elif  turn_count == 1 :
-        if str(update.message.from_user.id) != user1_id:
-            update.message.reply_text('It is not your turn.')
-        else:
-            grave += hand
-            grave += buy_temp
-            hand = []
-            buy_temp = []
-            if str(update.message.from_user.id) == user1_id and turn_count == 1:
-                gold1 = 0
-                if temp_deck_top != []:
-                    c = temp_deck_top[0]
-                    if c == 'Copper':
-                        gold2 += 1
-                    elif c == 'Silver':
-                        gold2 += 2
-                    elif c == 'Gold':
-                        gold2 += 3
-                    hand.append(c)
-                    temp_deck_top = []
-                    for i in range(4):
-                        temp = (random.choice(deckplayer1))
-                        hand.append(temp)
-                        deckplayer1.remove(temp)
-                        if temp == 'Copper':
-                            gold1 += 1
-                        elif temp == 'Silver':
-                            gold1 += 2
-                        elif temp == 'Gold':
-                            gold1 += 3
-                        if deckplayer1 == []:
-                            deckplayer1 = grave
-                            grave = []
-                        turn = True
+    if query.data == 'action':
+        for i in range(6):
+            if i == getturn():
+                use_me = user_list['user' + str(i)]
+                if use_me['Action'] <= 0:
+                    query.message.reply_text('[ ! ]\nYou dont have enough Action')
                 else:
-                    for i in range(5):
-                        temp = (random.choice(deckplayer1))
-                        hand.append(temp)
-                        deckplayer1.remove(temp)
-                        if temp == 'Copper':
-                            gold1 += 1
-                        elif temp == 'Silver':
-                            gold1 += 2
-                        elif temp == 'Gold':
-                            gold1 += 3
-                        if deckplayer1 == []:
-                            deckplayer1 = grave
-                            grave = []
-                        turn = True
-            bot.sendMessage(chat_id=str(user1_id), text='Turn '+ str(turnnum) + '\nYou got ' + str(hand) + 'after shufle.' )
-            gold = gold2
-            update.message.reply_text(str(user1_name) + ' is done!\nIts now your turn , ' + str(user2_name) + ' @' + user2_tag +'\nType ( /action ) or ( /buy ) to proceed')
-            turn_count += 1
-    elif turn_count == 2 :
-        if str(update.message.from_user.id) != user2_id:
-            update.message.reply_text('It is not your turn.')
-        else:
-            gold2 = 0
-            grave2 += hand2
-            grave2 += buy_temp
-            hand2 = []
-            buy_temp = []
-            if temp_deck_top2 != []:
-                c = temp_deck_top2[0]
-                hand2.append(c)
-                if c == 'Copper':
-                    gold2 += 1
-                elif c == 'Silver':
-                    gold2 += 2
-                elif c == 'Gold':
-                    gold2 += 3
-                temp_deck_top2 = []
-                for i in range(4):
-                    temp = (random.choice(deckplayer2))
-                    hand2.append(temp)
-                    deckplayer2.remove(temp)
-                    if temp == 'Copper':
-                        gold2 += 1
-                    elif temp == 'Silver':
-                        gold2 += 2
-                    elif temp == 'Gold':
-                        gold2 += 3
-                    if deckplayer2 == []:
-                        deckplayer2 = grave2
-                        grave2 = []
-                    turn = True
+                    det(user_list['user'+str(i)]['Hand'])
+                    if result_hand == []:
+                        query.answer(text = "[ ! ]\nYou don't have any action card",show_alert = True)
+                    else:
+                        for i in range(len(result_hand)):
+                            filter_result.append([InlineKeyboardButton(str(result_hand[i].name),callback_data=str(result_hand[i].name))])
+                        filter_result.append([InlineKeyboardButton('Cancel',callback_data='cancel')])
+                        query.message.reply_text(text = '[ SELECT ]\nPlease select a Action card to play.',reply_markup = InlineKeyboardMarkup(filter_result))
+
+    for i in range(len(card_market)):
+        if str(query.data) == str(card_market[i].name + '_b'):
+            temp = card_market[i]
+            for i in range(player_in_game):
+                use_me = user_list['user' + str(i)]
+                if i == getturn():
+                    use_me['Buy_temp'].append(temp)
+                    use_me['Gold'] -= temp.cost
+                    use_me['Buy'] -= 1
+                    temp.usage -= 1
+                    query.edit_message_text('[ INFO ]\nYou have bought '+ str(temp.name) +'.')
+                    query.answer(text = '[ INFO ]\nYou have bought '+ str(temp.name) +'.',show_alert = True)
+                    try:
+                        bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                        bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                    except:
+                        print('something wrong right here')
+                    bot.sendMessage(chat_id = chat_id,text = '[ Buy ]\n('+'Turn '+str(turn)+')Player '+str(use_me['user_name'])+' has bought [ '+ str(temp.name) +' ].')
+            empty = 0
+            for i in range(len(card_market)):
+                if card_market[i].name == 'Province':
+                    if card_market[i].usage == 0:
+                        EndGame = True
+                elif card_market[i].usage == 0:
+                    empty +=1
+            if empty >= 3 :
+                EndGame = True
+
+    if query.data == 'Cellar':
+        cellar_counter = 0
+        keyboard = [[]]
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Cellar)
+                use_me['Action'] += 1
+                for i in range(len(use_me['Hand'])):
+                    keyboard.append([InlineKeyboardButton(str(use_me['Hand'][i].name),callback_data=str(use_me['Hand'][i].name)+'_d')])
+                keyboard.append([InlineKeyboardButton('Cancel', callback_data='cancel')])
+                keyboard.append([InlineKeyboardButton('Done',callback_data='done_d')])
+                query.edit_message_text('[ SELECT ]\nChoose any amount of card to discard, press DONE when done.',reply_markup = InlineKeyboardMarkup(keyboard))
+                bot.sendMessage(chat_id = chat_id,text= GroupInfo(use_me,Cellar.name,'ACTION'))
+                bot.edit_message_text(chat_id = getChat_id_private(use_me),text = getUpdateHand_text(use_me),message_id = getHand_Message_id(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me),text= getUpdateStatus_text(use_me),message_id=getStatus_Message_id(use_me))
+
+    if query.data == 'Chapel':
+        keyboard = [[]]
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Chapel)
+                for i in range(len(use_me['Hand'])):
+                    keyboard.append([InlineKeyboardButton(str(use_me['Hand'][i].name),callback_data=str(use_me['Hand'][i].name)+'_chapel')])
+                keyboard.append([InlineKeyboardButton('Cancel', callback_data='cancel')])
+                keyboard.append([InlineKeyboardButton('Done',callback_data='done_chapel')])
+                query.edit_message_text('[ SELECT ]\nChoose up to 4 cards to trash, press DONE when done.',reply_markup = InlineKeyboardMarkup(keyboard))
+                bot.sendMessage(chat_id = chat_id,text= GroupInfo(use_me,Chapel.name,'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text= getUpdateStatus_text(use_me), chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me),text= getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+
+    if query.data == 'Moat':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Moat)
+                display_temp = []
+                for i in range(2):
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                        use_me['Discard'].clear()
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    gold_b(tempp,use_me)
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Moat.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                query.edit_message_text('[ MOAT ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
+
+    if query.data == 'Harbinger':
+        for i in range(player_in_game):
+            if i == getturn():
+                keyboard = [[]]
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Harbinger)
+                use_me['Action'] += 1
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp,use_me)
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Harbinger.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                query.edit_message_text('[ HARBINGER ]\nYou have drawn[ ' + str(tempp.name) + ' ].')
+                if len(use_me['Discard']) == 0:
+                    query.message.reply_text('[ ! ]\nYou have no cards in your discarded pile.')
+                else:
+                    for g in range(len(use_me['Discard'])):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Discard'][g].name),callback_data=str(use_me['Discard'][g].name) + '_har')])
+                    keyboard.append([InlineKeyboardButton('Cancel',callback_data='cancel')])
+                    query.message.reply_text('[ SELECT ]\nPlease select a card to place on top of your deck from the discarded pile.',reply_markup = InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Merchant':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Merchant)
+                use_me['Action'] += 1
+                query.edit_message_text("[ NOTE ]\nAs Dominion Bot auto-plays treasures for you, Merchant's Original effect(The first time you play a Silver this turn, +$1) is changed to\n[ When you own a Silver in your hand(single or multiple), you gain $1 this round. Playing this card multiple times in the same round will only be effective once.]\nThe effect remains mostly unchanged.")
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp, use_me)
+                if Silver in use_me['Hand'] and merchant_status is False:
+                    use_me['Gold'] += 1
+                    merchant_status = True
+                query.message.reply_text('[ MERCHANT ]\nYou have drawn [ '+ str(tempp.name) + ' ].')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Merchant.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+
+    if query.data == 'Vassal':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Vassal)
+                tempppp = use_me['Deck'].pop(0)
+                use_me['Gold'] += 2
+                use_me['Discard'].append(tempppp)
+                if isinstance(tempppp,action):
+                    keyboard = [[InlineKeyboardButton('Yes',callback_data= str(tempppp.name))],[InlineKeyboardButton('No',callback_data='No')]]
+                    vassal_status = True
+                    query.edit_message_text('[ VASSAL ]\n' + str(tempppp.name) + ' is revealed. Do you want to play it?',reply_markup = InlineKeyboardMarkup(keyboard))
+                    bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Vassal.name, 'ACTION'))
+                    bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                    bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                else:
+                    query.edit_message_text('[ VASSAL ]\n' + str(tempppp.name) + ' is revealed and is not an action card, therefore discarded.')
+                    bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Vassal.name, 'ACTION'))
+                    bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                    bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+
+
+    if query.data == 'Village':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Village)
+                use_me['Action'] += 2
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp, use_me)
+                query.edit_message_text('[ VILLAGE ]\nYou have drawn[ ' + str(tempp.name) + ' ].')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Village.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+
+    if query.data == 'Workshop':
+        for i in range(player_in_game):
+            if i == getturn():
+                keyboard = [[]]
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Workshop)
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Workshop.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                for i in range(len(card_market)):
+                        if card_market[i].cost <= 4:
+                            keyboard.append([InlineKeyboardButton(str(card_market[i].name + '(Cost : ' +str(card_market[i].cost) + ')'),callback_data=str(card_market[i].name)+'_ws')])
+                query.edit_message_text('[ SELECT ]\nGain a Card costing up to $4',reply_markup = InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Bureaucrat':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Bureaucrat)
+                use_me['Deck'].insert(0,Silver)
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Bureaucrat.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                bot.sendMessage(chat_id=chat_id, text='[ ACTION ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(use_me['user_name']) + ' has played [ BUREAUCRAT ].')
+                query.edit_message_text('[ BUREAUCRAT ]\nYou have gained a silver on to your Deck.')
+                bu_counter = [str(1),str(len(user_list))]
+                query.message.reply_text('[ AWAIT ]\nWaiting for other players to select their card.  ' + str(' / '.join(bu_counter)))
+                bot.edit_message_text(text = '[ AWAIT ]\nWaiting for user to complete',chat_id = use_me['user_id'],message_id = use_me['Menu'].message_id)
             else:
-                for i in range(5):
-                    temp = (random.choice(deckplayer2))
-                    hand2.append(temp)
-                    deckplayer2.remove(temp)
-                    if temp == 'Copper':
-                        gold2 += 1
-                    elif temp == 'Silver':
-                        gold2 += 2
-                    elif temp == 'Gold':
-                        gold2 += 3
-                    if deckplayer2 == []:
-                        deckplayer2 = grave2
-                        grave2 = []
-                    turn = True
-            turn_count += 1
-            bot.sendMessage(chat_id=str(user2_id), text='Turn '+ str(turnnum) + '\nYou got ' + str(hand2) + 'after shufle.')
-            if user3_name == 'null' and turn_count == 3:
-                turn_count = 1
-            if turn_count == 1:
-                gold = gold1
-                update.message.reply_text(str(user2_name) + ' is done!\nIts now your turn , ' + str( user1_name) + ' @' + user1_tag + '\nType ( /action ) or ( /buy ) to proceed')
-            elif turn_count == 3:
-                gold=gold3
-                update.message.reply_text(str(user2_name) + ' is done!\nIts now your turn , ' + str(user3_name) + ' @' + user3_tag + '\nType ( /action ) or ( /buy ) to proceed')
-    elif turn_count == 3 :
-        if str(update.message.from_user.id) != user3_id:
-            update.message.reply_text('It is not your turn.')
-        else:
-            gold3 = 0
-            grave3 += hand3
-            grave3 += buy_temp
-            hand3 = []
-            buy_temp = []
-            if temp_deck_top != []:
-                c = temp_deck_top3[0]
-                if c == 'Copper':
-                    gold3 += 1
-                elif c == 'Silver':
-                    gold3 += 2
-                elif c == 'Gold':
-                    gold3 += 3
-                hand3.append(c)
-                temp_deck_top3 = []
-                for i in range(4):
-                    temp = (random.choice(deckplayer3))
-                    hand3.append(temp)
-                    deckplayer3.remove(temp)
-                    if temp == 'Copper':
-                        gold3 += 1
-                    elif temp == 'Silver':
-                        gold3 += 2
-                    elif temp == 'Gold':
-                        gold3 += 3
-                    if deckplayer3 == []:
-                        deckplayer3 = grave3
-                        grave3 = []
-                    turn = True
+                use_me = user_list[str('user' + str(i))]
+                if Moat in use_me['Hand']:
+                    bot.sendMessage(text = '[ MOAT ]\nPlayer' + str(user_list[str('user' + str(getturn()))]['user_name']) + ' wants to play Bureaucrat\n[ Effect : Each other player reveals a Victory card from his hand and puts it on his deck (or reveals a hand with no Victory cards).  ]\nBut Moat protects you and you have not been affected.' ,chat_id=use_me['user_id'])
+                    bot.sendMessage(chat_id=chat_id,text = ('[ MOAT ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(use_me['user_name']) + ' has revealed [ MOAT ] to be immune from [ BUREAUCRAT ].'))
+                    bu_counter[0] = str(int(bu_counter[0]) + 1)
+                    if str(bu_counter[0]) == str(bu_counter[1]):
+                        keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                     InlineKeyboardButton('Buy', callback_data="buy"),
+                                     InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                        bot.edit_message_text(text='[ SELECT ]\nPlease Select :', reply_markup=reply_markup,
+                                              chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                              message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                    bot.sendMessage(chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                    text='Player Done.  ' + str(' / '.join(bu_counter)))
+                else:
+                    keyboard = [[]]
+                    display_temp = []
+                    for g in range(len(use_me['Hand'])):
+                        display_temp.append(use_me['Hand'][g].name)
+                        if isinstance(use_me['Hand'][g],victory):
+                            keyboard.append([InlineKeyboardButton(str(use_me['Hand'][g].name),callback_data=str(use_me['Hand'][g].name +str(i) +'_select_v'))])
+                    if keyboard == [[]]:
+                        bot.sendMessage(chat_id=chat_id,text = '[ BUREAUCRAT ]\nPlayer' + str(use_me['user_name'] + ' has no victory in hand, therefore hand is revealed.\n' + str('\n'.join(display_temp))))
+                        bu_counter[0] = str(int(bu_counter[0]) + 1)
+                        if str(bu_counter[0]) == str(bu_counter[1]):
+                            keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                         InlineKeyboardButton('Buy', callback_data="buy"),
+                                         InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                            reply_markup = InlineKeyboardMarkup(keyboard)
+                            bot.edit_message_text(text='[ SELECT ]\nPlease Select :', reply_markup=reply_markup,
+                                                  chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                                  message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                        bot.sendMessage(chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                        text='Player Done.  ' + str(' / '.join(bu_counter)))
+                        for k in range(player_in_game):
+                            use_me = user_list[str('user' + str(k))]
+                            bot.sendMessage(chat_id=use_me['user_id'],text='[ LOG ]\nHand revealed in Group.')
+                    else:
+                        bot.sendMessage(chat_id = use_me['user_id'],text = '[ SELECT ]\nChoose a victory to place on top of your Deck.',reply_markup=InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Militia':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Militia)
+                use_me['Gold'] += 2
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Militia.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                query.edit_message_text('[ MILITIA ]\nYou have gained $2 .')
+                militia_counter = [str(1),str(len(user_list))]
+                query.message.reply_text('[ AWAIT ]\nWaiting for other players to select their card.  ' + str(' / '.join(militia_counter)))
+                bot.edit_message_text(text = '[ AWAIT ]\nWaiting for user to complete',chat_id = use_me['user_id'],message_id = use_me['Menu'].message_id)
             else:
-                for i in range(5):
-                    temp = (random.choice(deckplayer3))
-                    hand3.append(temp)
-                    deckplayer3.remove(temp)
-                    if temp == 'Copper':
-                        gold3 += 1
-                    elif temp == 'Silver':
-                        gold3 += 2
-                    elif temp == 'Gold':
-                        gold3 += 3
-                    if deckplayer3 == []:
-                        deckplayer3 = grave3
-                        grave3 = []
-                    turn = True
-            bot.sendMessage(chat_id=str(user3_id), text='Turn '+ str(turnnum) + '\nYou got ' + str(hand3) + 'after shufle.')
-            update.message.reply_text(str(user3_name) + ' is done!\nIts now your turn , ' + str(user1_name) + ' @' + user1_tag + '\nType ( /action ) or ( /buy ) to proceed')
-            gold=gold1
-            turn_count += 1
-            if turn_count == 4:
-                turn_count = 1
-    else:
-        update.message.reply_text('You havent join the game yet.')
+                use_me = user_list[str('user' + str(i))]
+                if Moat in use_me['Hand']:
+                    bot.sendMessage(text = '[ MOAT ]\nPlayer' + str(user_list[str('user' + str(getturn()))]['user_name']) + ' wants to play Militia\n[ Effect : Each other player discards down to 3 cards in his hand. ]\nBut Moat protects you and you have not been affected.' ,chat_id=use_me['user_id'])
+                    bot.sendMessage(chat_id=chat_id,text = ('[ MOAT ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(use_me['user_name']) + ' has revealed [ MOAT ] to be immune from [ MILITIA ].'))
+                    militia_counter[0] = str(int(militia_counter[0]) + 1)
+                    if str(militia_counter[0]) == str(militia_counter[1]):
+                        keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                     InlineKeyboardButton('Buy', callback_data="buy"),
+                                     InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                        bot.edit_message_text(text='[ SELECT ]\nPlease Select :', reply_markup=reply_markup,
+                                              chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                              message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                    bot.sendMessage(chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                    text='Player Done.  ' + str(' / '.join(militia_counter)))
+                elif len(use_me['Hand']) <= 3:
+                    militia_counter[0] = str(int(militia_counter[0]) + 1)
+                    bot.sendMessage(chat_id=use_me['user_id'],text = '[ MILITIA ]\nCards in hand equal or less then 3 therefore ignored.')
+                    if str(militia_counter[0]) == str(militia_counter[1]):
+                        keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                     InlineKeyboardButton('Buy', callback_data="buy"),
+                                     InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                        bot.edit_message_text(text='[ SELECT ]\nPlease Select :', reply_markup=reply_markup,
+                                              chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                              message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                    bot.sendMessage(chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                    text='Player Done.  ' + str(' / '.join(militia_counter)))
+                else:
+                    keyboard = [[]]
+                    for g in range(len(use_me['Hand'])):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Hand'][g].name),callback_data=str(use_me['Hand'][g].name +str(i) +'_select_mil'))])
+                    bot.sendMessage(chat_id = use_me['user_id'],text = '[ SELECT ]\nDiscard down to 3 cards in hand.',reply_markup=InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Moneylender':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Moneylender)
+                if Copper in use_me['Hand']:
+                    use_me['Hand'].remove(Copper)
+                    use_me['Gold'] += 2
+                    query.edit_message_text('[ MONEYLENDER ]\nA copper is trashed from your hand and you have gained $3 this turn.')
+                else:
+                    query.edit_message_text('[ ! ]\nYou dont have any Copper in your hand.')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Moneylender.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+
+    if query.data == 'Poacher':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Poacher)
+                use_me['Action'] += 1
+                use_me['Gold'] +=1
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp, use_me)
+                emp_count = 0
+                for i in range(len(card_market)):
+                    if card_market[i].usage  == 0:
+                        emp_count +=1
+                if emp_count == 0:
+                    bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Poacher.name, 'ACTION'))
+                    bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                    bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                    query.edit_message_text('[ POACHER ]\nYou have drawn ' + str(tempp.name) + '.')
+                else:
+                    keyboard = [[]]
+                    for i in range(len(use_me['Hand'])):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Hand'][i].name),callback_data=str(use_me['Hand'][i].name+'_poa'))])
+                    query.edit_message_text('[ SELECT ]\nSelect ' + str(emp_count) + 'cards to discard.',reply_markup = InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Remodel':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Remodel)
+                keyboard = [[]]
+                for i in range(len(use_me['Hand'])):
+                    keyboard.append([InlineKeyboardButton(str(use_me['Hand'][i].name  + '(Cost : ' +str(use_me['Hand'][i].cost) + ')'),callback_data=str(use_me['Hand'][i].name + '_remodel'))])
+                query.edit_message_text('[ REMODEL ]\nSelect a card to trash.',reply_markup = InlineKeyboardMarkup(keyboard))
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Remodel.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+
+    if query.data == 'Smithy':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                display_temp = []
+                usecard(use_me,Smithy)
+                for i in range(3):
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                        use_me['Discard'].clear()
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    gold_b(tempp, use_me)
+                query.edit_message_text('[ SMITHY ]\nYou have drawn ' + str('\n'.join(tempp.name)) + '.')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Smithy.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+
+    if query.data == 'Throne Room':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Throne_Room)
+                keyboard = [[]]
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Throne_Room.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                for i in range(len(use_me['Hand'])):
+                    if isinstance(use_me['Hand'][i],action):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Hand'][i].name),callback_data=str(use_me['Hand'][i].name))])
+                if keyboard != [[]]:
+                    TR_status = True
+                    query.edit_message_text('[ THRONE ROOM ]\nSelect a card to play twice.\nNote : You cannot play any other card in between.',reply_markup = InlineKeyboardMarkup(keyboard))
+                else:
+                    query.edit_message_text('[ ! ]\nYou dont have any Action cards.')
+
+    if query.data == 'Bandit':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Bandit)
+                use_me['Discard'].append(Gold)
+                query.edit_message_text('[ BANDIT ]\nYou have gained a Gold into your discarded pile.')
+                bandit_counter = [str(1),str(len(user_list))]
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me,Bandit.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                query.message.reply_text('[ AWAIT ]\nWaiting for other players to select their card.  ' + str(' / '.join(bandit_counter)))
+                bot.edit_message_text(text = '[ AWAIT ]\nWaiting for user to complete',chat_id = use_me['user_id'],message_id = use_me['Menu'].message_id)
+            else:
+                use_me = user_list[str('user' + str(i))]
+                if Moat in use_me['Hand']:
+                    bot.sendMessage(text = '[ MOAT ]\nPlayer' + str(user_list[str('user' + str(getturn()))]['user_name']) + ' wants to play Bandit\n[ Effect : Each other player reveals the top 2 cards of their deck, trashes a revealed Treasure other than Copper, and discards the rest.  ]\nBut Moat protects you and you have not been affected.' ,chat_id=use_me['user_id'])
+                    bot.sendMessage(chat_id=chat_id,text = ('[ MOAT ]\n(' + 'Turn ' + str(turn) + ')Player ' + str(use_me['user_name']) + ' has revealed [ MOAT ] to be immune from [ BANDIT ].'))
+                    bandit_counter[0] = str(int(bandit_counter[0]) + 1)
+                    if str(bandit_counter[0]) == str(bandit_counter[1]):
+                        keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                     InlineKeyboardButton('Buy', callback_data="buy"),
+                                     InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                        bot.edit_message_text(text='[ SELECT ]\nPlease Select :', reply_markup=reply_markup,
+                                              chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                              message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                    bot.sendMessage(chat_id=user_list[str('user' + str(getturn()))]['user_id'],
+                                    text='Player Done.  ' + str(' / '.join(bandit_counter)))
+                else:
+                    temp = []
+                    bandit_use_me = []
+                    for i in range(2):
+                        here = use_me['Deck'].pop(0)
+                        temp.append(here)
+                    for i in range(len(temp)):
+                        if temp[i].name != 'Copper' and isinstance(temp[i],treasure):
+                            bandit_use_me.append(temp[i])
+                        else:
+                            use_me['Discard'].append(temp[i])
+                            query.message.reply_text('[ BANDIT ]\n' + str(temp[i].name) + ' is discarded.')
+                    if len(bandit_use_me) > 1:
+                        if Silver in bandit_use_me:
+                            query.message.reply_text('[ BANDIT ]\nSilver is trashed. ')
+                            bandit_use_me.remove(Silver)
+                            use_me['Discard'].append(bandit_use_me[0])
+                        else:
+                            query.message.reply_text('[ BANDIT ]\nGold is trashed. ')
+                            bandit_use_me.remove(Gold)
+                            use_me['Discard'].append(bandit_use_me[0])
+                        bandit_counter[0] = str(int(bandit_counter[0]) + 1)
+                        if str(bandit_counter[0]) == str(bandit_counter[1]):
+                            keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                             InlineKeyboardButton('Buy', callback_data="buy"),
+                                             InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                            reply_markup = InlineKeyboardMarkup(keyboard)
+                            bot.edit_message_text(text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup, chat_id=user_list[str('user' + str(getturn()))]['user_id'],message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                        bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(bandit_counter)))
+                    elif len(bandit_use_me) == 1 :
+                        query.message.reply_text('[ BANDIT ]\n' + str(bandit_use_me[0].name) + ' is trashed.')
+                        bandit_counter[0] = str(int(bandit_counter[0]) + 1)
+                        if str(bandit_counter[0]) == str(bandit_counter[1]):
+                            keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                             InlineKeyboardButton('Buy', callback_data="buy"),
+                                             InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                            reply_markup = InlineKeyboardMarkup(keyboard)
+                            bot.edit_message_text(text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup, chat_id=user_list[str('user' + str(getturn()))]['user_id'],message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                        bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(bandit_counter)))
+                    elif len(bandit_use_me) == 0:
+                        query.message.reply_text('[ BANDIT ]\nNo card is trashed.')
+                        bandit_counter[0] = str(int(bandit_counter[0]) + 1)
+                        if str(bandit_counter[0]) == str(bandit_counter[1]):
+                            keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                             InlineKeyboardButton('Buy', callback_data="buy"),
+                                             InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                            reply_markup = InlineKeyboardMarkup(keyboard)
+                            bot.edit_message_text(text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup, chat_id=user_list[str('user' + str(getturn()))]['user_id'],message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                        bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(bandit_counter)))
+
+    if query.data == 'Council Room':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Council_Room)
+                display_temp = []
+                use_me['Buy'] += 1
+                for i in range(4):
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                        use_me['Discard'].clear()
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    gold_b(tempp, use_me)
+                query.edit_message_text('[ COUNCIL ROOM ]\nYou have drawn ' + str('\n'.join(tempp.name)) + '.')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Council_Room.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                    chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                    message_id=getHand_Message_id(use_me))
+            else:
+                use_me = user_list[str('user' + str(i))]
+                display_temp = []
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp, use_me)
+                bot.sendMessage(chat_id = use_me['user_id'],text = '[ COUNCIL ROOM ]\nYou have drawn ' + str(tempp.name) + '.')
+
+    if query.data == 'Festival':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Festival)
+                use_me['Action'] += 2
+                use_me['Buy'] += 1
+                use_me['Gold'] += 2
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Festival.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                    chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                    message_id=getHand_Message_id(use_me))
 
 
-def playerlist(bot,update):
-    update.message.reply_text('Current player list :\n [' + str(user1_name) + ' / ' + str(user2_name) + ' / ' + str(user3_name) + ']\nSupport Max to 3 player')
-
-def money(bot,update):
-    update.message.reply_text('You have <' + str(gold) + '> dollar')
-
-def point(bot,update):
-    update.message.reply_text('You have <' + str(points) + '> points')
-
-def reset(bot,update):
-    global chat_id
-    global gold
-    global deckplayer1
-    global deckplayer2
-    global deckplayer3
-    global grave
-    global grave2
-    global grave3
-    global buy_temp
-    global hand
-    global hand2
-    global hand3
-    global gold1,gold2,gold3,points,points2,points3,buy_turn,buy_time,action,user1_id,user1_name,user2_id,user2_name,user3_id,user3_name,current_player,inlinehand,courtyard_temp,turn_count,turnnum,start_game
-    global turn
-    global hand
-    global user1_tag,user2_tag,user3_tag
-    global Provincecard, Duchycard, Estatescard, Villagecard, Laboratorycard, Workshopcard, Harbingercard, Courtyardcard,Witchcard,Moneylendercard
-    global temp_deck_top,temp_deck_top2,temp_deck_top3
-    global Endgame
-    deckplayer1 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
-                   'Estates']
-    deckplayer2 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
-                   'Estates']
-    deckplayer3 = ['Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Estates', 'Estates',
-                   'Estates']
-    grave = []
-    grave2 = []
-    grave3 = []
-    buy_temp = []
-    hand = []
-    hand2 = []
-    hand3 = []
-    temp_deck_top = []
-    temp_deck_top2 = []
-    temp_deck_top3 = []
-    gold = 0
-    gold1 = 0
-    gold2 = 0
-    gold3 = 0
-    points = 0
-    points2 = 0
-    points3 = 0
-    turn = False
-    buy_turn = False
-    buy_time = 1
-    action = 1
-    chat_id = 'null'
-    user1_id = 'null'
-    user2_id = 'null'
-    user3_id = 'null'
-    user1_name = 'null'
-    user2_name = 'null'
-    user3_name = 'null'
-    user1_tag = 'null'
-    user2_tag = 'null'
-    user3_tag = 'null'
-    current_player = 1
-    courtyard_temp = 0
-    inlinehand = []
-    turn_count = 0
-    turnnum = 0
-    start_game = False
-    Provincecard = 10
-    Duchycard = 10
-    Estatescard = 10
-    Villagecard = 10
-    Harbingercard = 10
-    Laboratorycard = 10
-    Witchcard = 10
-    Workshopcard = 10
-    Courtyardcard = 10
-    Moneylendercard = 10
-    Endgame = False
-    update.message.reply_text('Success')
-
-def status(bot,update):
-    update.message.reply_text('Normal\nv 2.0.13 (Close Beta Development)')
+    if query.data == 'Laboratory':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Laboratory)
+                use_me['Action'] += 1
+                display_temp = []
+                for i in range(2):
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                        use_me['Discard'].clear()
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    gold_b(tempp, use_me)
+                query.edit_message_text('[ LABORATORY ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Laboratory.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                    chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                    message_id=getHand_Message_id(use_me))
 
 
-def show (bot,update):
-    update.message.reply_text('Action:'+str(action)+'\nTurn count is '+str(turn_count)+'\n'+str(hand)+'\n'+str(hand2)+'\n'+str(hand3))
-    update.message.reply_text(user1_id+ '\n' +str(update.message.from_user.id))
-    update.message.reply_text('Grave\n'+str(grave)+'\n'+str(grave2)+'\n'+str(grave3))
-    update.message.reply_text('Deck\n'+str(deckplayer1)+'\n'+str(deckplayer2)+'\n'+str(deckplayer3))
-    update.message.reply_text(str(a) +'\n' +str(b) +'\n'+ str(c) +'\n'+str(d))
-
-def admin(bot,update):
-    update.message.reply_text(chat_id)
-
-def error(bot,update,error):
-    logger.warning('Update "%s" caused error "%s"', update, error)
-
-def log(bot,update):
-    fp = open('logging.txt', "r")
-    lines = fp.readlines()
-    fp.close()
-    n = len(lines) -20
-    for i in range(20):
-        temp = (str(lines[n]))
-        n += 1
-        update.message.reply_text(str(temp))
-
-def lg(bot,update):
-    fp = open('logging.txt', "r")
-    lines = fp.readlines()
-    fp.close()
-    n = len(lines) - 3
-    for i in range(3):
-        temp = (str(lines[n]))
-        n += 1
-        update.message.reply_text(str(temp))
-
-def record(bot,update):
-    fp = open('record.txt', "r")
-    lines = fp.readlines()
-    fp.close()
-    n = len(lines) - 10
-    for i in range(10):
-        temp = (str(lines[n]))
-        n += 1
-        update.message.reply_text(str(temp))
-
-def allcommand(bot,update):
-    update.message.reply_text('Command List:\nquick\n/buy\n/end\n/join\n/point\n/money\n/startgame\n/action\n/playerlist\nstatus\nreset\nshow\nlog\nlg')
-
-def start(bot,update):
-    update.message.reply_text('Welcome to Dominion Bot!')
-
-def quick(bot,update):
-    global Provincecard
-    global gold1,gold2,gold3
-    Provincecard = 1
-    gold1 = 8
-    gold2 = 8
-    gold3 = 8
-    update.message.reply_text('Success')
+    if query.data == 'Library':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me, Library)
+                display_temp = []
+                while len(use_me['Hand']) <= 7:
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        use_me['Discard'].clear()
+                        try:
+                            tempp = use_me['Deck'].pop(0)
+                        except IndexError:
+                            query.message.reply_text('[ ! ]You dont have any cards in you deck.')
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                    if not isinstance(tempp,action):
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    else:
+                        keyboard = [[InlineKeyboardButton('Yes',callback_data = tempp.name + '_library_yes'),InlineKeyboardButton('No',callback_data = tempp.name + '_library_no')]]
+                        query.edit_message_text('[ LIBRARY ]\nYou have drawn [ ' + tempp.name + ' ]. Do you want to discard it?',reply_markup = InlineKeyboardMarkup(keyboard))
+                        while library_status == False :
+                            if library_status == True:
+                                library_status = False
+                                break
+                    gold_b(tempp,use_me)
 
 
+    if query.data == 'Market':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Market)
+                use_me['Action'] += 1
+                use_me['Buy'] += 1
+                use_me['Gold'] += 1
+                display_temp = []
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                    gold_b(tempp, use_me)
+                query.edit_message_text('[ MARKET ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Market.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                    chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                    message_id=getHand_Message_id(use_me))
 
-def reply(bot,update):
-    global allow
-    if (update.message.from_user.id == 322858632 or update.message.from_user.id == 566661007) and allow == True:
-        answer = ['啱啊','我同意','好','好 ! ','係咩','pass','pass','pass','pass']
-        result = random.choice(answer)
-        if result != 'pass':
-            update.message.reply_text(result)
-        else:
-            bot.sendMessage(text = 'passed.',chat_id=436384576)
+    if query.data == 'Mine':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me,Mine)
+                result_mining = mining(use_me['Hand'])
+                keyboard = []
+                if len(result_mining) > 0 :
+                    for i in range(len(result_mining)):
+                        keyboard.append(InlineKeyboardButton(str(result_mining[i].name),callback_data = str(result_mining[i].name) + '_mining'))
+                    query.message.reply_text('[ MINE ]\nSelect a treasure to trash.',reply_markup = InlineKeyboardMarkup(keyboard))
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Mine.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                    chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                    message_id=getHand_Message_id(use_me))
+
+    if query.data == 'Sentry':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me, Sentry)
+                use_me['Action'] += 1
+                display_temp = []
+                if len(use_me['Deck']) == 0:
+                    use_me['Deck'] += use_me['Discard']
+                    random.shuffle(use_me['Deck'])
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                    use_me['Discard'].clear()
+                else:
+                    tempp = use_me['Deck'].pop(0)
+                    display_temp.append(str(tempp.name))
+                    use_me['Hand'].append(tempp)
+                gold_b(tempp, use_me)
+                query.edit_message_text('[ SENTRY ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) + ' ].')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Market.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                top = []
+                for i in range(2):
+                    temppppp = use_me['Deck'].pop(0)
+                    top.append(temppppp)
+                keyboard = [[InlineKeyboardButton(str(top[0].name),callback_data=str(top[0].name) + '_sen_sel'),InlineKeyboardButton(str(top[1].name),callback_data=str(top[1].name) + '_sen_sel')]]
+                query.edit_message_text('[ SENTRY ]\nYou have drawn[ ' + str(' ,'.join(top)) + ' ].You can choose to Trash, Discard or Put them back in any order.The second card you select will be on top if you choose to put both of them back',reply_markup=InlineKeyboardMarkup(keyboard))
+
+    if query.data == 'Witch':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me, Witch)
+                display_temp = []
+                for i in range(2):
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                        use_me['Discard'].clear()
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    gold_b(tempp, use_me)
+                query.edit_message_text('[ WITCH ]\nYou have drawn ' + str('\n'.join(tempp.name)) + '.')
+                bot.sendMessage(chat_id=chat_id, text=GroupInfo(use_me, Smithy.name, 'ACTION'))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+            else:
+                use_me = user_list[str('user' + str(i))]
+                bot.sendMessage(chat_id=getChat_id_private(use_me),text = '[ Witch ]\nYou have gained a Curse.')
+                use_me['Discard'].append(Curse)
+
+    if query.data == 'Artisan':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                usecard(use_me, Artisan)
+                keyboard = []
+                for i in range(len(card_market)):
+                    if card_market[i].cost <= 5 :
+                        keyboard.append(InlineKeyboardButton(card_market[i].name,callback_data= str(card_market[i].name) + '_art'))
+                query.edit_message_text('[ ARTISAN ]\n Select a card to gain.',reply_markup = InlineKeyboardMarkup(keyboard))
+
+    for i in range(player_in_game):
+        use_me = user_list[str('user' + str(i))]
+        for g in range(len(use_me['Hand'])):
+            if query.data == str(use_me['Hand'][g].name +'_mining'):
+                value = use_me['Hand'].cost
+                value += 3
+                keyboard = []
+                for i in range(len(card_market)):
+                    if isinstance(card_market[i],treasure) and card_market[i].cost >= value:
+                        keyboard.append(InlineKeyboardButton(str(card_market[i].name),callback_data=str(card_market[i].name + '_m_gain')))
+                query.edit_message_text('[ MINE ]\nSelect a card to gain to your hand.',reply_markup=InlineKeyboardMarkup(keyboard))
+                bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+            if query.data == str(use_me['Hand'][g].name +str(i) +'_select_v'):
+                query.edit_message_text('[ BUREAUCRAT ]\n' + str(use_me['Hand'][g].name) + ' is placed on top of your Deck.')
+                temp = use_me['Hand']
+                use_me['Deck'].insert(0, temp[g])
+                use_me['Hand'].remove(temp[g])
+                bot.edit_message_text(message_id= getHand_preview_message_id(use_me), text= getUpdateHand_preview(use_me))
+                bu_counter[0] = str(int(bu_counter[0]) + 1)
+                if str(bu_counter[0]) == str(bu_counter[1]):
+                    keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                 InlineKeyboardButton('Buy', callback_data="buy"),
+                                 InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                    reply_markup = InlineKeyboardMarkup(keyboard)
+                    bot.edit_message_text(text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup, chat_id=user_list[str('user' + str(getturn()))]['user_id'],message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(bu_counter)))
+                break
+            if query.data == str(use_me['Hand'][g].name +str(i) +'_select_mil'):
+                query.edit_message_text('[ MILITIA ]\n' + str(use_me['Hand'][g].name) + ' is discarded.')
+                temp = use_me['Hand']
+                use_me['Discard'].append(temp[g])
+                use_me['Hand'].remove(temp[g])
+                bot.edit_message_text(message_id=getHand_preview_message_id(use_me), text=getUpdateHand_preview(use_me))
+                if len(use_me['Hand']) <= 3:
+                    militia_counter[0] = str(int(militia_counter[0]) + 1)
+                    if str(militia_counter[0]) == str(militia_counter[1]):
+                        keyboard = [[InlineKeyboardButton('Action', callback_data="action"),
+                                     InlineKeyboardButton('Buy', callback_data="buy"),
+                                     InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                        bot.edit_message_text(text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup, chat_id=user_list[str('user' + str(getturn()))]['user_id'],message_id=user_list[str('user' + str(getturn()))]['Menu'].message_id)
+                    bot.sendMessage(chat_id = user_list[str('user' + str(getturn()))]['user_id'],text = 'Player Done.  ' + str(' / '.join(militia_counter)))
+                else:
+                    keyboard = [[]]
+                    for g in range(len(use_me['Hand'])):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Hand'][g].name), callback_data=str(
+                            use_me['Hand'][g].name + str(i) + '_select_mil'))])
+                    bot.sendMessage(chat_id=use_me['user_id'], text='[ SELECT ]\nDiscard down to 3 cards in hand.',
+                                    reply_markup=InlineKeyboardMarkup(keyboard))
+                break
+            if query.data == str(use_me['Hand'][g].name +'_poa'):
+                temp = use_me['Hand']
+                use_me['Hand'].remove(temp[g])
+                use_me['Discard'].append(temp[g])
+                query.message.reply_text('[ POACHER ]\nYou have discarded ' + str(temp[g].name))
+                bot.edit_message_text(message_id=getHand_Message_id(use_me), text=getUpdateHand_text(use_me), chat_id=getChat_id_private(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me),text=getUpdateStatus_text(use_me),message_id=getStatus_Message_id(use_me))
+                if emp_count >0:
+                    emp_count -= 1
+                    keyboard = [[]]
+                    for i in range(len(use_me['Hand'])):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Hand'][i].name),callback_data=str(use_me['Hand'][i].name + '_poa'))])
+                    query.edit_message_text('[ SELECT ]\nSelect ' + str(emp_count) + 'cards to discard.',
+                                            reply_markup=InlineKeyboardMarkup(keyboard))
+                else:
+                    query.edit_message_text('[ POACHER ]\nDone.')
+            if query.data == str(use_me['Hand'][g].name + '_remodel'):
+                temp = use_me['Hand'][g]
+                use_me['Hand'].remove(temp)
+                keyboard = [[]]
+                for i in range(len(card_market)):
+                    if card_market[i].cost <= (temp.cost + 2):
+                        keyboard.append([InlineKeyboardButton(str(card_market[i].name + '(Cost : ' +str(card_market[i].cost) + ')'),callback_data= str(card_market[i].name)+ '_g_rem')])
+                query.edit_message_text('[ REMODEL ]\nSelect a card to gain.',reply_markup = InlineKeyboardMarkup(keyboard))
+            if query.data == str(use_me['Hand'][g].name) + '_art_ins':
+                use_me['Deck'].insert(0,use_me['Hand'][g])
+                temp = use_me['Hand'][g]
+                query.edit_message_text('[ ARTISAN ]\nYou have placed [ ' + str(temp) +' ] on top of your deck.')
+                use_me['Hand'].remove(temp)
+
+
+    for i in range(player_in_game):
+        if i == getturn():
+            use_me = user_list[str('user' + str(i))]
+            for i in range(len(use_me['Discard'])):
+                if query.data == str(use_me['Discard'][i].name) + '_har':
+                    use_me['Deck'].insert(0,use_me['Discard'][i])
+                    query.edit_message_text('[ HARBINGER ]\nYou have placed [ ' + str(use_me['Discard'][i].name) + ' ] on top of your Deck.')
+                    break
+
+    for i in range(player_in_game):
+        if i == getturn():
+            use_me = user_list[str('user'+str(i))]
+            for i in range(len(card_market)):
+                if query.data == str(card_market[i].name)+'_ws':
+                    use_me['Buy_temp'].append(card_market[i])
+                    query.edit_message_text('[ WORKSHOP ]\nYou have gained [ ' + str(card_market[i].name) + ' ] .')
+                    bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                    bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                    break
+                if query.data == str(card_market[i].name)+'_art':
+                    use_me['Hand'].append(card_market[i])
+                    query.edit_message_text('[ ARTSIAN ]\nYou have gained [ ' + str(card_market[i].name) + ' ] .')
+                    bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),chat_id=getChat_id_private(use_me))
+                    bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                    keyboard = []
+                    for i in range(len(use_me['Hand'])):
+                        keyboard.append(InlineKeyboardButton(use_me['Hand'][i].name,callback_data= str(use_me['Hand'][i].name) + '_art_ins'))
+                    query.message.reply_text('[ ARTSIAN ]\nPut a card from your hand onto your deck.',reply_markup = InlineKeyboardMarkup(keyboard))
+                    break
+                if query.data == str(card_market[i].name) + '_g_rem':
+                    use_me['Buy_temp'].append(card_market[i])
+                    query.edit_message_text('[ REMODEL ]\nYou have gained [ ' + str(card_market[i].name) + ' ] .')
+                if query.data == str(card_market[i].name) + '_library_yes':
+                    use_me['Discard'].append(card_market[i])
+                    library_status = True
+                    query.edit_message_text('[ LIBRARY ]\nDiscarded [ ' + str(card_market[i].name) + ' ].')
+                if query.data == str(card_market[i].name) + 'library_no':
+                    use_me['Hand'].append(card_market[i])
+                    library_status = True
+                    query.edit_message_text('[ LIBRARY ]\nDrawn [ ' + str(card_market[i].name) + ' ].')
+                if query.data == str(card_market[i].name + '_m_gain'):
+                    use_me['Hand'].append(card_market[i])
+                    query.edit_message_text('[ MINE ]\nYou have gained [' + str(card_market[i].name) + ' ] in to your hand.')
+                    bot.edit_message_text(message_id=getStatus_Message_id(use_me), text=getUpdateStatus_text(use_me),
+                        chat_id=getChat_id_private(use_me))
+                    bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),
+                        message_id=getHand_Message_id(use_me))
+                if query.data == str(card_market[i].name) +  '_sen_sel':
+                    keyboard = [[InlineKeyboardButton('Trash',callback_data=str(card_market[i].name) +  '_sen_tra'),InlineKeyboardButton('Discard',callback_data=str(card_market[i].name) +  '_sen_dis'),InlineKeyboardButton('Put it back',callback_data=str(card_market[i].name) +  '_sen_back')]]
+                    query.message.reply_text('[ SENTRY ]\nChoose a option.',reply_markup = InlineKeyboardMarkup(keyboard))
+
+                if query.data == str(card_market[i].name) +  '_sen_tra':
+                    try:
+                        top.remove(card_market[i])
+                    except:
+                        print('Sentry Error encountered.')
+                    if len(top) > 0:
+                        keyboard = [[InlineKeyboardButton(top[0].name,callback_data=top[0].name + '_sen_sel')]]
+                        query.message.reply_text('[ SENTRY ]\nSelect for the second card.',reply_markup = InlineKeyboardMarkup(keyboard))
+                if query.data == str(card_market[i].name) +  '_sen_dis':
+                    try:
+                        top.remove(card_market[i])
+                    except:
+                        print('Sentry Error encountered.')
+                    use_me['Discard'].append(card_market[i])
+                    if len(top) > 0:
+                        keyboard = [[InlineKeyboardButton(top[0].name, callback_data=top[0].name + '_sen_sel')]]
+                        query.message.reply_text('[ SENTRY ]\nSelect for the second card.',reply_markup=InlineKeyboardMarkup(keyboard))
+                if query.data == str(card_market[i].name) + '_sen_back':
+                    try:
+                        top.remove(card_market[i])
+                    except:
+                        print('Sentry Error encountered.')
+                    use_me['Deck'].insert(0,card_market[i])
+                    if len(top) > 0:
+                        keyboard = [[InlineKeyboardButton(top[0].name, callback_data=top[0].name + '_sen_sel')]]
+                        query.message.reply_text('[ SENTRY ]\nSelect for the second card.',reply_markup=InlineKeyboardMarkup(keyboard))
+
+
+
+    for i in range(player_in_game):
+        if i == getturn():
+            use_me = user_list[str('user' + str(i))]
+            for i in range(len(use_me['Hand'])):
+                if query.data == str(use_me['Hand'][i].name) + '_d':
+                    cellar_counter += 1
+                    keyboard = [[]]
+                    temppp = use_me['Hand']
+                    bot.sendMessage(chat_id=use_me['user_id'],text='[ CELLAR ]\nYou have discarded ' + str(temppp[i].name) + '.')
+                    use_me['Use'].append(temppp[i])
+                    use_me['Hand'].remove(temppp[i])
+                    for g in range(len(use_me['Hand'])):
+                        keyboard.append([InlineKeyboardButton(str(use_me['Hand'][g].name),callback_data=str(use_me['Hand'][g].name)+'_d')])
+                    keyboard.append([InlineKeyboardButton('Done', callback_data='done_d')])
+                    bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                    bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateStatus_text(use_me),message_id=getStatus_Message_id(use_me))
+                    query.edit_message_text('[ SELECT ]\nChoose any amount of card to discard, press DONE when done.\nkey:' + str(uuid4()),reply_markup=InlineKeyboardMarkup(keyboard))
+                    break
+                if query.data == str(use_me['Hand'][i].name) + '_chapel':
+                    if chapel_counter < 3:
+                        chapel_counter += 1
+                        keyboard = [[]]
+                        temppp = use_me['Hand']
+                        bot.sendMessage(chat_id=use_me['user_id'],text='[ CHAPEL ]\nYou have trashed ' + str(temppp[i].name) + '.')
+                        bot.sendMessage(chat_id=chat_id,text='[ CHAPEL ]\nPlayer '+str(use_me['user_name'])+ 'have trashed ' + str(temppp[i].name) + '.')
+                        use_me['Hand'].remove(temppp[i])
+                        for g in range(len(use_me['Hand'])):
+                            keyboard.append([InlineKeyboardButton(str(use_me['Hand'][g].name),callback_data=str(use_me['Hand'][g].name) + '_chapel')])
+                        keyboard.append([InlineKeyboardButton('Done', callback_data='done_chapel')])
+                        bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                        bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateStatus_text(use_me),message_id=getStatus_Message_id(use_me))
+                        query.edit_message_text('[ SELECT ]\nChoose any amount of card to discard, press DONE when done.\nkey:' + str(uuid4()), reply_markup=InlineKeyboardMarkup(keyboard))
+                        break
+                    elif chapel_counter >= 3:
+                        chapel_counter = 0
+                        query.edit_message_text('[ CHAPEL ]\nDone.')
+                        temppp = use_me['Hand']
+                        bot.sendMessage(chat_id=use_me['user_id'],text='[ CHAPEL ]\nYou have trashed ' + str(temppp[i].name) + '.')
+                        bot.sendMessage(chat_id=chat_id,text='[ CHAPEL ]\nPlayer ' + str(use_me['user_name']) + 'have trashed ' + str(temppp[i].name) + '.')
+                        use_me['Hand'].remove(temppp[i])
+                        bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                        bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateStatus_text(use_me),message_id=getStatus_Message_id(use_me))
+
+    if query.data == 'done_chapel':
+        query.edit_message_text('[ CHAPEL ]\nDone.')
+
+    if query.data == 'done_d':
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                display_temp = []
+                for i in range(cellar_counter):
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                        use_me['Discard'].clear()
+                    else:
+                        tempp = use_me['Deck'].pop(0)
+                        display_temp.append(str(tempp.name))
+                        use_me['Hand'].append(tempp)
+                    gold_b(tempp,use_me)
+                query.edit_message_text('[ CELLAR ]\nYou have drawn[ ' + str(' ,'.join(display_temp)) +' ].')
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateHand_text(use_me),message_id=getHand_Message_id(use_me))
+                bot.edit_message_text(chat_id=getChat_id_private(use_me), text=getUpdateStatus_text(use_me),message_id=getStatus_Message_id(use_me))
+
+    if query.data == 'buy':
+        keyboard = [[]]
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list[str('user' + str(i))]
+                buy_time = use_me['Buy']
+                if buy_time > 0:
+                    for i in range(len(card_market)):
+                        if card_market[i].usage <= 0:
+                            query.message.reply_text('[ ! ]\nThere is no more ' + card_market[i].name + '  in the pile.')
+                        elif card_market[i].cost <= use_me['Gold'] :
+                            keyboard.append([InlineKeyboardButton(str(card_market[i].name + '(Cost : ' +str(card_market[i].cost) + ')'),callback_data = str(card_market[i].name)+'_b')])
+
+                    keyboard.append([InlineKeyboardButton('Cancel',callback_data='cancel')])
+                    query.message.reply_text('[ SELECT ]\nPlease select a card to buy',reply_markup = InlineKeyboardMarkup(keyboard))
+                else:
+                    query.message.reply_text('[ ! ]\nYou dont have enough Buy.')
+
+
+
+
+
+    if query.data == 'cleanup':
+        query.edit_message_text('[ IN PROGRESS ]')
+        for i in range(player_in_game):
+            if i == getturn():
+                use_me = user_list['user' + str(i)]
+                bot.edit_message_text(chat_id=use_me['user_id'], text='[ ! ]\nNo longer Available.',message_id=use_me['Menu'].message_id)
+                use_me['Discard'] += use_me['Buy_temp']
+                use_me['Discard'] += use_me['Use']
+                use_me['Discard'] += use_me['Hand']
+                use_me['Buy_temp'].clear()
+                use_me['Use'].clear()
+                use_me['Hand'].clear()
+                for g in range(5):
+                    if len(use_me['Deck']) == 0:
+                        use_me['Deck'] += use_me['Discard']
+                        random.shuffle(use_me['Deck'])
+                        use_me['Hand'].append(use_me['Deck'].pop(0))
+                        use_me['Discard'].clear()
+                    else:
+                        use_me['Hand'].append(use_me['Deck'].pop(0))
+                use_me['Buy'] = 1
+                use_me['Action'] = 1
+                query.answer(text='[ INFO ]\nYou turn has ended.' ,show_alert = True)
+                use_me['Hand_preview'] = bot.sendMessage(text='[ LOG ]' + ' Turn' + str(turn) + '\nThis is your Hand for next turn \n----------------\n' + str('\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+                bot.sendMessage(text='[ Clean Up ]\n(Turn '+ str(turn) + ')Player'+str(use_me['user_name']) + ' has ended.',chat_id= chat_id)
+        if EndGame == False:
+            turn += 1
+            for i in range(player_in_game):
+                if i == getturn():
+                    use_me = user_list['user' + str(i)]
+                    getgold(use_me)
+                    use_me = user_list['user' + str(i)]
+                    bot.sendMessage(chat_id = chat_id,text = '[ INFO ]'+' Turn '+str(turn)+'\nIt is now Player ' + str(user_list['user' + str(i)]['user_name'])+"'s turn.")
+                    use_me['Hand_message'] = bot.sendMessage(text='[ INFO ]'+ ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+                    use_me['Message'] = bot.sendMessage(text='[ INFO ] Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(use_me['Buy']) + '\nGold : ' + str(use_me['Gold']), chat_id=use_me['user_id'])
+                    keyboard = [[InlineKeyboardButton('Action', callback_data="action"),InlineKeyboardButton('Buy', callback_data="buy"),InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+                    reply_markup = InlineKeyboardMarkup(keyboard)
+                    use_me['Menu'] = bot.sendMessage(chat_id=use_me['user_id'],text = '[ SELECT ]\nPlease Select :',reply_markup = reply_markup)
+                    getgold(use_me)
+                    vassal_status = False
+                    merchant_status = False
+                elif i != getturn():
+                    use_me = user_list['user' + str(i)]
+                    bot.sendMessage(text = "[ AWAIT ] Waiting for other player's turn",chat_id= use_me['user_id'])
+        elif EndGame == True:
+            rank = []
+            for i in range(player_in_game):
+                use_me = user_list['user'+str(i)]
+                query.message.reply_text('[ INFO ]\n Game will be ended\nFinal adjustment in progress.')
+                use_me['Discard'] += use_me['Hand']
+                use_me['Discard'] += use_me['Deck']
+                use_me['Hand'].clear()
+                use_me['Deck'].clear()
+                getpoint(use_me['Discard'])
+                rank.append([counter,str(use_me['user_name'])])
+            rank.sort(reverse = True,key = ty)
+            bot.sendMessage(chat_id=chat_id, text='Game has ended')
+            for i in range(len(rank)):
+                bot.sendMessage(chat_id = chat_id,text = 'Rank '+str(i+1)+'\n' + str(rank[i][1] + ' has scored : ' + str(rank[i][0])))
+            user_list = {}
+            display_list = []
+            display_card_list = []
+            game_status = False
+            EndGame = False
+            chat_id = None
+            turn = 0
+            result_hand = []
+
+
+def mining(hand):
+    result_mining = list(filter(lambda a: not isinstance(a,treasure), hand))
+    return result_mining
+
+def force(bot,update):
+    Province.usage = 1
+    user_list['user0']['Gold'] = 100
+    print('OK')
+
+def summon(bot,update):
+    for i in range(player_in_game):
+        if i == getturn():
+            use_me = user_list['user' + str(i)]
+            bot.sendMessage(text='[ INFO ]'+ ' Turn' + str(turn) + 'This is your Hand\n==========================\n' + str('\n'.join(map(getname, use_me["Hand"]))), chat_id=use_me["user_id"])
+    keyboard = [[InlineKeyboardButton('Action', callback_data="action"), InlineKeyboardButton('Buy', callback_data="buy"),InlineKeyboardButton('Clean Up', callback_data="cleanup")]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    for i in range(player_in_game):
+        if i == getturn():
+            use_me = user_list['user' + str(i)]
+            user_list['user' + str(i)]['Message'] = bot.sendMessage(
+                text='[ INFO ]Status:\nAction : ' + str(use_me['Action']) + '\nBuy : ' + str(
+                    use_me['Buy']) + '\nGold : ' + str(use_me['Gold']), chat_id=use_me['user_id'])
+            use_me['Menu'] = bot.sendMessage(chat_id=use_me['user_id'], text='[ SELECT ]\nPlease Select :',reply_markup=reply_markup)
+
+
+def say(bot,update,user_data):
+    global sender
+    content = update.message.text.partition(' ')[2]
+    for i in range(player_in_game):
+        if user_list['user' + str(i)]['user_id'] == update.message.from_user.id:
+            sender = user_list['user' + str(i)]
+            update.message.reply_text('[ LOG ]\nSent.')
+
+    for i in range(player_in_game):
+        if sender == user_list['user' + str(i)]:
             pass
-    if 'allow_off' in update.message.text:
-        allow = False
-        update.message.reply_text('Allow_FALSE\n' + str(allow))
-    if 'allow_on' in  update.message.text:
-        allow = True
-        update.message.reply_text('Allow_True\n' + str(allow))
+        else:
+            use_me = user_list['user' + str(i)]
+            bot.sendMessage(text = '[ CONV ] Sent from '+ str(sender['user_name']) +'\nMessage : ' + str(content),chat_id= use_me['user_id'])
+    bot.sendMessage(text='[ CONV ] Sent from' + str(sender['user_name']) + '\nMessage : ' + str(content),chat_id=chat_id)
 
+
+def getHand_Message_id(self):
+    message_id = self['Hand_message'].message_id
+    return message_id
+
+def getStatus_Message_id(self):
+    message_id = self['Message'].message_id
+    return message_id
+
+def getChat_id_private(self):
+    chat_id_private = self["user_id"]
+    return chat_id_private
+
+def getUpdateHand_text(self):
+    text = '[ INFO ]' + ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str(
+        '\n'.join(map(getname, self["Hand"]))) + '\n\nkey:' + str(uuid4())
+    return text
+
+def getUpdateStatus_text(self):
+    content = '[ INFO ] Status:\nAction : ' + str(self['Action']) + '\nBuy : ' + str(self['Buy']) + '\nGold : ' + str(self['Gold']) + '\n\nkey:' +str(uuid4())
+    return content
+
+def GroupInfo(self,card_name,type):
+    text = '[ ' + type + ' ]\n('+'Turn '+str(turn)+')Player '+str(self['user_name'])+' has played [ '+ card_name + ' ].'
+    return text
+
+def getUpdateHand_preview(self):
+    text = '[ INFO ]' + ' Turn' + str(turn) + '\nThis is your Hand\n==========================\n' + str('\n'.join(map(getname, self["Hand"]))) +'\n\nkey:' + str(uuid4())
+    return text
+def getHand_preview_message_id(self):
+    text = self['Hand_preview'].message_id
+    return text
+
+# Detect action card for Action Button=======================
+def detaction(self):
+    if isinstance(self,action) or isinstance(self,action_attack) or isinstance(self,action_reaction):
+        return self
+    else:
+        return 'ignore'
+
+def det(self):
+    global result_hand
+    temp = list(map(detaction, self))
+    result_hand = list(filter(lambda a: a != 'ignore', temp))
+    return result_hand
+
+# Ends here=====================================================
+def getcost(self):
+    return self.cost
+
+def getname(self):
+    return self.name
+
+def gold_b(self,user):
+    if self == Copper:
+        user['Gold'] += 1
+    if self == Silver:
+        user['Gold'] += 2
+    if self == Gold:
+        user['Gold'] += 3
+
+
+def getgold(self):
+    temp_copper = self['Hand'].count(Copper)
+    temp_silver = self['Hand'].count(Silver)
+    temp_gold = self['Hand'].count(Gold)
+    self["Gold"] = temp_copper + (temp_silver *2) + (temp_gold *3)
+    return self['Gold']
+
+def getturn():
+    result = (turn % player_in_game) -1
+    if result == -1:
+        result = (player_in_game -1)
+    return result
+
+def getpoint(self):
+    global counter
+    counter = 0
+    for i in range(len(self)):
+        counter += self[i].points
+
+    return counter
+
+def usecard(self,card_name):
+    if (vassal_status and TR_status) is False:
+        self['Action'] -= 1
+        self['Hand'].remove(card_name)
+        self['Use'].append(card_name)
+
+def ty(self):
+    return self[0]
+
+
+def restart(bot,update):
+    global user_list,display_list,display_card_list,EndGame,chat_id,turn,result_hand,game_status
+    user_list = {}
+    display_list = []
+    display_card_list = []
+    EndGame = False
+    chat_id = None
+    turn = 0
+    result_hand = []
+    game_status = False
+    update.message.reply_text('OK')
+
+def notiall(bot,update):
+    with open(dir_path + '/game_id/game_id.csv', 'r')as all_gp:
+        read_inside = csv.DictReader(all_gp,delimiter = ',')
+        list = []
+        for row in read_inside:
+            if row['group_id'] not in list:
+                list.append(row['group_id'])
+        print(list)
+    for i in range(len(list)):
+        bot.sendMessage(text = '[ NOTIFICATION ]\nHey Everyone. Glad to announce that DOMINON BOT is officialy in FULLY FUNCTIONAL BETA TEST.\nBugs exsists and are meant to be fix.Please notify me if you have encountered any bug.\nP.S. Games could only run on ! at a time for now ,will be fixed next patch.\nThanks for playing DOMINION BETA BOT.',chat_id = list[i])
+
+
+logger = logging.getLogger(__name__)
 
 def main():
-    updater = Updater('599551578:AAE709inuNhedfLCwIVKF9fWXJNJ-pqv5lg')
+    updater = Updater('851835971:AAGVgxB8TGLM9hF9AhL6IGwOGXwcBjszHN8')
     test = updater.dispatcher
-    # test.add_handler(CommandHandler('money',money))
-    # test.add_handler(CommandHandler('point',point))
-    # test.add_handler(CommandHandler('buy',buy))
-    # test.add_handler(CommandHandler('end',end))
-    # test.add_handler(CommandHandler('join',join))
-    # test.add_handler(CommandHandler('startgame',startgame))
-    # test.add_handler(CommandHandler('action',actionphase))
-    # test.add_handler(CommandHandler('playerlist',playerlist))
-    # test.add_handler(CommandHandler('all',allcommand))
-    # test.add_handler(RegexHandler('.*status.*',status))
-    # test.add_handler(RegexHandler('.*reset.*', reset))
-    # test.add_handler(RegexHandler('admin',admin))
-    # test.add_handler(RegexHandler('.*show.*',show))
-    # test.add_handler(RegexHandler('.*log.*',log))
-    # test.add_handler(RegexHandler('.*lg.*', lg))
-    # test.add_handler(RegexHandler('.*quick.*',quick))
-    # test.add_handler(RegexHandler('.*record.*', record))
-    test.add_handler(RegexHandler('.*.*',reply))
-    test.add_error_handler(error)
+    test.add_handler(CommandHandler('start',start))
+    test.add_handler(CommandHandler('join',join))
+    test.add_handler(CommandHandler('startgame',startgame))
+    test.add_handler(CommandHandler('new',new))
+    test.add_handler(CommandHandler('force',force))
+    test.add_handler(CommandHandler('summon',summon))
     test.add_handler(CallbackQueryHandler(button))
+    test.add_handler(CommandHandler('say',say,pass_user_data= True))
+    test.add_handler(CommandHandler('restart',restart))
+    test.add_handler(CommandHandler('notiall',notiall))
     updater.start_polling()
     updater.idle()
 
