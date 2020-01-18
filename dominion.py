@@ -1428,22 +1428,34 @@ def log(bot,update):
     lines = fp.readlines()
     fp.close()
     n = len(lines) -20
+    bot.sendMessage(text='\n---------starts here-----------\n', chat_id=337412327)
     for i in range(20):
         temp = (str(lines[n]))
         n += 1
         bot.sendMessage(text = str(temp),chat_id= 337412327)
+    bot.sendMessage(text='\n---------ends here-----------\n', chat_id=337412327)
     update.message.reply_text('Sent.')
 
 def lg(bot,update):
     fp = open('new_log.txt', "r")
     lines = fp.readlines()
     fp.close()
+    bot.sendMessage(text='\n---------starts here-----------\n', chat_id=337412327)
     n = len(lines) - 3
     for i in range(3):
         temp = (str(lines[n]))
         n += 1
         bot.sendMessage(text = str(temp),chat_id= 337412327)
+    bot.sendMessage(text='\n---------ends here-----------\n', chat_id=337412327)
     update.message.reply_text('Sent.')
+
+def info(bot,update):
+    info_list = []
+    for i in range(len(card_market)):
+        info_list.append(str(card_market[i]) + ' | ' + str(card_market[i].description))
+    update.message.reply_text(str('\n'.join(info_list)))
+
+
 
 logger = logging.getLogger(__name__)
 
@@ -1458,10 +1470,11 @@ def main():
     test.add_handler(CommandHandler('summon',summon))
     test.add_handler(CallbackQueryHandler(button))
     test.add_handler(CommandHandler('say',say,pass_user_data= True))
-    test.add_handler(CommandHandler('restart',restart))
+    test.add_handler(RegexHandler('.*restart.*',restart))
     test.add_handler(CommandHandler('notiall',notiall))
     test.add_handler(CommandHandler('quicknoti', quicknoti, pass_user_data=True))
-    test.add_handler(RegexHandler('.*log.*',log))
+    test.add_handler(CommandHandler('info',info))
+    test.add_handler(RegexHandler('.*log.*', log))
     test.add_handler(RegexHandler('.*lg.*', lg))
     updater.start_polling()
     updater.idle()

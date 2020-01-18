@@ -3277,3 +3277,12 @@ Traceback (most recent call last):
   File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\bot.py", line 76, in decorator
     url, data = func(self, *args, **kwargs)
 TypeError: send_message() got multiple values for argument 'chat_id'
+2019-07-17 15:59:15,359 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "E:\Program\GITHUB\dominion\venv\lib\site-packages\telegram\ext\commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "E:/Program/GITHUB/dominion/dominion.py", line 1263, in force
+    user_list['user0']['Gold'] = 100
+KeyError: 'user0'
